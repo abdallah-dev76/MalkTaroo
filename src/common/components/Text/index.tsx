@@ -1,6 +1,6 @@
-import { useAppTheme } from '@theme/index';
 import { PropsWithChildren } from 'react';
 import { Text as RNText } from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
 import { ITextProps } from './types';
 
@@ -11,7 +11,7 @@ export const Text = ({
   textAlign = 'left',
   ...props
 }: ITextProps & PropsWithChildren) => {
-  const { colors } = useAppTheme();
+  const { theme } = useUnistyles();
 
   styles.useVariants({
     variant,
@@ -19,7 +19,7 @@ export const Text = ({
 
   return (
     <RNText
-      style={[styles.text, { color: colors[color], textAlign }]}
+      style={[styles.text, { color: theme[color], textAlign }]}
       {...props}
     >
       {children}
