@@ -17,6 +17,7 @@ export const Button = ({
   leftIcon,
   rightIcon,
 
+  style,
   ...pressableProps
 }: ButtonProps) => {
   const isDisabled = disabled || loading;
@@ -32,7 +33,11 @@ export const Button = ({
     <Pressable
       {...pressableProps}
       disabled={isDisabled}
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      style={state => [
+        styles.button,
+        state.pressed && styles.pressed,
+        typeof style === 'function' ? style(state) : style,
+      ]}
     >
       {loading ? (
         <ActivityIndicator />
@@ -48,3 +53,5 @@ export const Button = ({
     </Pressable>
   );
 };
+
+export default Button;

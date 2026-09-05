@@ -9,3 +9,8 @@ export const changeLanguage = async (lang: 'en' | 'ar') => {
   I18nManager.allowRTL(isArabic);
   I18nManager.forceRTL(isArabic);
 };
+
+
+export const getLanguage = () => {
+  return i18n.language;
+};

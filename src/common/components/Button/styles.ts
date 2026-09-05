@@ -1,3 +1,4 @@
+import { fontScale, hScale, wScale } from '@common/utils/normalize';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create(theme => ({
@@ -5,7 +6,7 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    gap: wScale(8),
 
     variants: {
       variant: {
@@ -15,13 +16,13 @@ export const styles = StyleSheet.create(theme => ({
 
         secondary: {
           backgroundColor: theme.buttonSecondaryBackground,
-          borderWidth: 1,
+          borderWidth: wScale(1),
           borderColor: theme.buttonSecondaryBorder,
         },
 
         outline: {
           backgroundColor: 'transparent',
-          borderWidth: 1,
+          borderWidth: wScale(1),
           borderColor: theme.primary,
         },
 
@@ -40,21 +41,21 @@ export const styles = StyleSheet.create(theme => ({
 
       size: {
         small: {
-          height: 36,
-          paddingHorizontal: 16,
-          borderRadius: 10,
+          height: hScale(36),
+          paddingHorizontal: wScale(16),
+          borderRadius: wScale(10),
         },
 
         medium: {
-          height: 44,
-          paddingHorizontal: 20,
-          borderRadius: 12,
+          height: hScale(44),
+          paddingHorizontal: wScale(20),
+          borderRadius: wScale(12),
         },
 
         large: {
-          height: 52,
-          paddingHorizontal: 24,
-          borderRadius: 14,
+          height: hScale(52),
+          paddingHorizontal: wScale(24),
+          borderRadius: wScale(14),
         },
       },
 
@@ -106,15 +107,15 @@ export const styles = StyleSheet.create(theme => ({
 
       size: {
         small: {
-          fontSize: 14,
+          fontSize: fontScale(14),
         },
 
         medium: {
-          fontSize: 16,
+          fontSize: fontScale(16),
         },
 
         large: {
-          fontSize: 16,
+          fontSize: fontScale(16),
         },
       },
 

@@ -1,8 +1,18 @@
 import { fontScale } from '@common/utils/normalize';
+import { Colors } from '@theme/index';
 import { StyleSheet } from 'react-native-unistyles';
 
-export const styles = StyleSheet.create({
-  text: {
+export const styles = StyleSheet.create(theme => ({
+  // color/textAlign are dynamic per-instance, so they're resolved via a style function
+  // instead of `useUnistyles`, avoiding a re-render subscription on every theme change.
+  text: (
+    color: Colors | (string & {}),
+    textAlign: 'left' | 'center' | 'right',
+  ) => ({
+    // fall back to the raw value when `color` isn't a known theme color name
+    color: color in theme ? theme[color as Colors] : color,
+    textAlign,
+
     variants: {
       variant: {
         display: {
@@ -72,5 +82,5 @@ export const styles = StyleSheet.create({
         },
       },
     },
-  },
-});
+  }),
+}));

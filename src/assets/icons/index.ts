@@ -1,7 +1,9 @@
-import ReactNative from './react-native.svg';
+import closeEye from './closeEye.svg';
+import openEye from './openEye.svg';
 
 export const icons = {
-  reactNative: ReactNative,
+  closeEye,
+  openEye,
 } as const;
 
 export type IconName = keyof typeof icons;

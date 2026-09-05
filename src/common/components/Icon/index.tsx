@@ -6,7 +6,7 @@ type Props = {
   color?: string;
 };
 
-const Icon = ({ name, size = 24, color = '#749' }: Props) => {
+export const Icon = ({ name, size = 24, color = '#749' }: Props) => {
   const SvgIcon = icons[name];
 
   return <SvgIcon width={size} height={size} color={color} />;
