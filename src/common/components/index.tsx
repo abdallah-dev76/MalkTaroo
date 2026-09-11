@@ -3,3 +3,4 @@ export { Button } from './Button';
 export { Icon } from './Icon';
 export { Avatar } from './Avatar';
 export { TextInput } from './TextInput';
+export { MainLayout } from './MainLayout';

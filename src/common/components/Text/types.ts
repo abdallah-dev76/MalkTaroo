@@ -1,4 +1,4 @@
-import { Colors } from '@theme/index';
+import { Colors } from '@theme/theme';
 import { TextProps } from 'react-native';
 
 export type TextVariant =

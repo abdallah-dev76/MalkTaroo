@@ -2,8 +2,8 @@
  * @format
  */
 
-import './src/theme/index';
-import './src/translation/index';
+import './src/theme';
+import './src/translation';
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';

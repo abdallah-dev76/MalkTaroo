@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import Text from '../Text';
 import { styles } from './styles';
 import { lightColors, palette } from '@theme/colors';
-import { getLanguage } from '@common/utils/changeLanguage';
+import { getLanguage } from '@common/utils/toggleLanguage';
 import { useUnistyles } from 'react-native-unistyles';
 import { Icon } from '../Icon';
 import { wScale } from '@common/utils/normalize';

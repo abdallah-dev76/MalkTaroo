@@ -1,3 +1,9 @@
 {
-  "helloWorld": "مرحبا بالعالم"
+  "helloWorld": "مرحبا بالعالم",
+  "home": "الرئيسية",
+  "tarot": "التاروت",
+  "zodiaccompatibility": "التوافق",
+  "zodiac": "الأبراج",
+  "mainPage": "الصفحة الرئيسية",
+  "profile": "الملف الشخصي"
 }

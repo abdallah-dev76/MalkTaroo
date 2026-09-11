@@ -1,5 +1,5 @@
 import { fontScale } from '@common/utils/normalize';
-import { Colors } from '@theme/index';
+import { Colors } from '@theme/theme';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create(theme => ({
