@@ -187,7 +187,7 @@ export const lightColors = {
 
   textInverse: '#FFFFFF',
 
-  textGold: '#9D722F',
+  textGold: '#7439A6',
   textAccent: '#7439A6',
 
   // Icons

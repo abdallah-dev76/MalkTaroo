@@ -19,6 +19,7 @@ const FLEX_GROW_ONE = { flexGrow: 1 } as const;
 export const MainLayout = ({
   children,
   style,
+  header,
   backgroundColor = 'background',
   edges = DEFAULT_EDGES,
   statusBarStyle = 'dark-content',
@@ -93,6 +94,12 @@ export const MainLayout = ({
             insets.top,
           )}
         />
+      )}
+
+      {header && (
+        <View style={{ paddingLeft: leftInset, paddingRight: rightInset }}>
+          {header}
+        </View>
       )}
 
       {keyboardAvoiding ? (

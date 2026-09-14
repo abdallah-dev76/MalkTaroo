@@ -1,22 +1,17 @@
-import { Button, Text } from '@common/components';
+import { appImages } from '@assets/images';
+import { Button, MainLayout, Text, ZodiacCard } from '@common/components';
+import { useTranslation } from 'react-i18next';
 import { RootStackParamList } from '@common/types.ts';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { View } from 'react-native';
 
 export const Splash = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { t } = useTranslation();
   return (
-    <View>
+    <MainLayout style={{ gap: 24 }}>
       <Text>Splash</Text>
-      <Button
-        onPress={() => {
-          navigation.navigate('MainTabs');
-        }}
-      >
-        X
-      </Button>
-    </View>
+
+     
+    </MainLayout>
   );
 };

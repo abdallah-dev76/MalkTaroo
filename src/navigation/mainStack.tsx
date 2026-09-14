@@ -8,6 +8,7 @@ function MainStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, gestureEnabled: false }}
+      initialRouteName='MainTabs'
     >
       <Stack.Screen name='Splash' component={Splash} />
       <Stack.Screen name='MainTabs' component={MainTabs} />

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { Colors } from '@theme/theme';
+import { spacing } from '@theme/index';
 
 type ColorInput = Colors | (string & {});
 
@@ -17,6 +18,7 @@ const resolveColor = (
 export const styles = StyleSheet.create(theme => ({
   container: (backgroundColor?: Colors | (string & {})) => ({
     flex: 1,
+    paddingHorizontal: spacing.sm,
     backgroundColor: resolveColor(theme, backgroundColor, theme.background),
   }),
 

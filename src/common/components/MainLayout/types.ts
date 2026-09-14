@@ -10,6 +10,9 @@ export interface IMainLayoutProps {
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
 
+  /** Optional header component rendered at the top. */
+  header?: ReactNode;
+
   /** Screen background color. Accepts a theme color name or a raw CSS color. */
   backgroundColor?: Colors | (string & {});
 

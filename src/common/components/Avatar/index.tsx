@@ -11,20 +11,27 @@ export const Avatar = ({
   imageUrl,
   isGirl = false,
   onPress,
+  isBorder,
   ...props
 }: AvatarProps) => {
   const imageSource = useMemo(() => {
-    if (imageUrl) return { uri: imageUrl };
-    if (localImage) return localImage;
-    if (isGirl) return appImages.woman;
+    if (imageUrl) {
+      return { uri: imageUrl };
+    }
+    if (localImage) {
+      return localImage;
+    }
+    if (isGirl) {
+      return appImages.woman;
+    }
     return appImages.man;
-  }, [imageUrl, localImage]);
+  }, [imageUrl, isGirl, localImage]);
 
   styles.useVariants({ size });
 
   return (
     <Pressable
-      style={styles.container}
+      style={styles.container(isBorder)}
       onPress={onPress}
       pointerEvents={onPress ? 'auto' : 'none'}
     >

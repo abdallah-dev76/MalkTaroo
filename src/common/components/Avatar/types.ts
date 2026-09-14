@@ -7,5 +7,7 @@ export interface AvatarProps extends ImageProps {
   localImage?: ImageSourcePropType;
   imageUrl?: string;
   isGirl?: boolean;
+  isBorder?: boolean;
   onPress?: () => void;
+  
 }

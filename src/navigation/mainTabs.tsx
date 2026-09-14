@@ -105,9 +105,11 @@ function MainTabs() {
 const styles = StyleSheet.create(theme => ({
   tabBarContainer: (bottomInset: number) => ({
     flexDirection: 'row' as const,
-    backgroundColor: theme.background,
-    padding: 16,
+    backgroundColor: theme.tabBarBackground,
+    padding: spacing.md,
     paddingBottom: bottomInset,
+    borderTopWidth: 1,
+    borderColor: theme.tabBarBorder,
   }),
   tabButton: {
     flex: 1,

@@ -15,7 +15,6 @@ export const TextInput = ({
   label,
   errorMessage,
   isPassword = false,
-  style,
   ...props
 }: BaseTextInputProps) => {
   const { theme } = useUnistyles();
