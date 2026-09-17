@@ -5,3 +5,5 @@ export { Avatar } from './Avatar';
 export { TextInput } from './TextInput';
 export { MainLayout } from './MainLayout';
 export { ZodiacCard } from './ZodiacCard';
+export { CompatibilityCircle } from './CompatibilityCircle';
+export { Header } from './Header';

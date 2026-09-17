@@ -4,15 +4,15 @@ import Svg, { Circle } from 'react-native-svg';
 import Text from '../Text';
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
-import { getCompatibilityLabelKey } from '@common/utils/compatibility';
-
+import { getCompatibilityLabelKey } from '@common/utils';
+import { styles } from './styles';
+const ANIMATION_DURATION = 1200;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 type Props = {
   percentage: number;
   size?: number;
   strokeWidth?: number;
-  duration?: number;
   /** Overrides the default label derived from the percentage bucket. */
   label?: string;
 };
@@ -21,7 +21,6 @@ export const CompatibilityCircle = ({
   percentage,
   size = 180,
   strokeWidth = 12,
-  duration = 1200,
   label,
 }: Props) => {
   const { theme } = useUnistyles();
@@ -44,44 +43,31 @@ export const CompatibilityCircle = ({
 
     Animated.timing(animatedPercentage, {
       toValue: percentage,
-      duration,
+      duration: ANIMATION_DURATION,
       useNativeDriver: false,
     }).start();
 
     Animated.timing(labelOpacity, {
       toValue: 1,
-      duration: 1200,
+      duration: ANIMATION_DURATION,
       useNativeDriver: true,
+      //useNativeDriver: true → "Run this animation outside the JS thread for smoother performance
     }).start();
 
     return () => animatedPercentage.removeListener(listenerId);
-  }, [percentage, duration, animatedPercentage, labelOpacity]);
+  }, [percentage, animatedPercentage, labelOpacity]);
 
   const strokeDashoffset = animatedPercentage.interpolate({
-    inputRange: [0, 100],
-    outputRange: [circumference, 0],
+    inputRange: [0, 0],
+    outputRange: [circumference, 100],
     extrapolate: 'clamp',
   });
 
   const resolvedLabel = label ?? t(getCompatibilityLabelKey(percentage));
 
   return (
-    <View
-      style={{
-        width: size,
-        height: size,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Svg
-        width={size}
-        height={size}
-        style={{
-          position: 'absolute',
-          transform: [{ rotate: '-90deg' }],
-        }}
-      >
+    <View style={styles.container(size)}>
+      <Svg width={size} height={size} style={styles.circle}>
         {/* background circle */}
         <Circle
           cx={size / 2}
@@ -105,9 +91,8 @@ export const CompatibilityCircle = ({
           strokeDashoffset={strokeDashoffset}
         />
       </Svg>
-      <Animated.View style={{ opacity: labelOpacity }}>
+      <Animated.View style={[styles.label, { opacity: labelOpacity }]}>
         <Text variant='heading1'>{displayPercentage}%</Text>
-
         <Text variant='caption'>{resolvedLabel}</Text>
       </Animated.View>
     </View>

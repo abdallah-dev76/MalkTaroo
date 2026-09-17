@@ -1,4 +1,4 @@
-import { fontScale } from '@common/utils/normalize';
+import { fontScale } from '@common/utils';
 import { Colors } from '@theme/theme';
 import { StyleSheet } from 'react-native-unistyles';
 

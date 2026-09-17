@@ -1,7 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import {
   KeyboardAvoidingView,
-  I18nManager,
   Platform,
   ScrollView,
   StatusBar,
@@ -10,7 +9,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { IMainLayoutProps, MainLayoutEdge } from './types';
-import { useUnistyles } from 'react-native-unistyles';
+import { isArabic, isDark } from '@common/utils';
 
 const DEFAULT_EDGES: MainLayoutEdge[] = ['top', 'right', 'bottom', 'left'];
 
@@ -34,9 +33,6 @@ export const MainLayout = ({
   keyboardAvoiding = true,
 }: IMainLayoutProps) => {
   const insets = useSafeAreaInsets();
-  const { rt } = useUnistyles();
-
-  const isDark = rt.themeName === 'dark';
 
   const topInset =
     edges.includes('top') && !statusBarTranslucent ? insets.top : 0;
@@ -54,16 +50,16 @@ export const MainLayout = ({
   const bodyPaddingStyle = useMemo(
     () => ({
       paddingBottom: bottomInset,
-      paddingLeft: I18nManager.isRTL ? rightInset : leftInset,
-      paddingRight: I18nManager.isRTL ? leftInset : rightInset,
+      paddingLeft: isArabic ? rightInset : leftInset,
+      paddingRight: isArabic ? leftInset : rightInset,
     }),
     [bottomInset, leftInset, rightInset],
   );
 
   const headerPaddingStyle = useMemo(
     () => ({
-      paddingLeft: I18nManager.isRTL ? rightInset : leftInset,
-      paddingRight: I18nManager.isRTL ? leftInset : rightInset,
+      paddingLeft: isArabic ? rightInset : leftInset,
+      paddingRight: isArabic ? leftInset : rightInset,
     }),
     [leftInset, rightInset],
   );

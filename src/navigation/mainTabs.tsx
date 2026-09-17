@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { Home } from '@features/home';
 import { Tarot } from '@features/tarot';
-import { I18nManager, View } from 'react-native';
+import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { PlatformPressable } from '@react-navigation/elements';
 import { useLinkBuilder } from '@react-navigation/native';
@@ -15,6 +15,7 @@ import { IconName } from '@assets/icons';
 import { spacing } from '@theme/spacing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CompatibilityStack } from './compatibilityStack';
+import { isArabic } from '@common/utils/appSettings';
 
 const iconsName: IconName[] = ['home', 'cards', 'heart', 'profile'];
 
@@ -108,9 +109,7 @@ function MainTabs() {
 
 const styles = StyleSheet.create(theme => ({
   tabBarContainer: (bottomInset: number) => ({
-    flexDirection: I18nManager.isRTL
-      ? ('row-reverse' as const)
-      : ('row' as const),
+    flexDirection: isArabic ? ('row-reverse' as const) : ('row' as const),
     backgroundColor: theme.tabBarBackground,
     padding: spacing.md,
     paddingBottom: bottomInset + spacing.md,

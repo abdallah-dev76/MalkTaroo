@@ -15,7 +15,7 @@ export type TextVariant =
   | 'small';
 
 export interface ITextProps extends TextProps {
-  // accepts a theme color name for autocomplete, or any raw CSS color string (e.g. 'red', '#fff')
+  //When using & {} => TypeScript can preserve the literal union for autocomplete, while still allowing arbitrary strings.
   color?: Colors | (string & {});
   textAlign?: 'left' | 'center' | 'right' | 'start' | 'end';
   variant?: TextVariant;

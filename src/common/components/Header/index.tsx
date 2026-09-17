@@ -34,5 +34,3 @@ Header.Title = ({ children }: PropsWithChildren) => {
     </View>
   );
 };
-
-export default Header;

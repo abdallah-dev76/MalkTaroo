@@ -1,5 +1,6 @@
-import { wScale } from '@common/utils/normalize';
+import { wScale } from '@common/utils';
 import { lightColors } from '@theme/colors';
+import { radius } from '@theme/spacing';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create({
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: lightColors.surface,
-    borderRadius: 9999,
+    borderRadius: radius.full,
     borderWidth: isBorder ? 1 : 0,
     borderColor: lightColors.borderGold,
 

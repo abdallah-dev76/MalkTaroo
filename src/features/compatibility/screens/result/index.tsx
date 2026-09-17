@@ -1,4 +1,10 @@
-import { Button, Icon, MainLayout, Text } from '@common/components';
+import {
+  Button,
+  Icon,
+  MainLayout,
+  Text,
+  CompatibilityCircle,
+} from '@common/components';
 import { Animated, Share, View } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useEffect, useRef, useContext } from 'react';
@@ -8,7 +14,6 @@ import {
   CompatibilityContext,
   CompatibilityContextType,
 } from '../../../../navigation/compatibilityStack';
-import { CompatibilityCircle } from '@common/components/CompatibilityCircle';
 import Avatar from '@common/components/Avatar';
 import { useUnistyles } from 'react-native-unistyles';
 import { Header } from '@common/components/Header';

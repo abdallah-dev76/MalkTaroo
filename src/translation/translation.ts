@@ -2,20 +2,22 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import en from './en.json';
 import ar from './ar.json';
-import { getLocales } from 'react-native-localize';
 import { Storage, StorageKeys } from '@common/storage';
-import {
-  applyAppDirection,
-  getSupportedLanguage,
-} from '@common/utils/direction';
-
-const deviceLanguage = getLocales()[0]?.languageCode;
+import { getLocales } from 'react-native-localize';
+import { I18nManager } from 'react-native';
 
 const storedLanguage = Storage.getString(StorageKeys.Language);
+const deviceLanguage = getLocales()[0]?.languageCode;
+const initialLanguage =
+  storedLanguage === 'ar' || storedLanguage === 'en'
+    ? storedLanguage
+    : deviceLanguage === 'ar' || deviceLanguage === 'en'
+    ? deviceLanguage
+    : 'ar';
 
-const initialLanguage = getSupportedLanguage(storedLanguage ?? deviceLanguage);
-
-applyAppDirection(initialLanguage);
+const isRTL = initialLanguage === 'ar';
+I18nManager.allowRTL(isRTL);
+I18nManager.forceRTL(isRTL);
 
 const resources = {
   en: {

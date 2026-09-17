@@ -1,4 +1,3 @@
-import { ImageSourcePropType } from 'react-native';
 import man from './man.jpeg';
 import woman from './woman.jpeg';
 import leo from './leo.jpeg';
@@ -37,4 +36,4 @@ export const appImages = {
   couples,
   tarot,
   splash,
-} as const satisfies Record<string, ImageSourcePropType>;
+} as const;

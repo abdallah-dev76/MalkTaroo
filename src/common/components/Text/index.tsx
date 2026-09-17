@@ -1,15 +1,16 @@
 import { PropsWithChildren } from 'react';
-import { I18nManager, Text as RNText } from 'react-native';
+import { Text as RNText } from 'react-native';
 import { styles } from './styles';
 import { ITextProps } from './types';
+import { isArabic } from '@common/utils/appSettings';
 
 const resolveTextAlign = (textAlign: NonNullable<ITextProps['textAlign']>) => {
   if (textAlign === 'start') {
-    return I18nManager.isRTL ? 'right' : 'left';
+    return isArabic ? 'right' : 'left';
   }
 
   if (textAlign === 'end') {
-    return I18nManager.isRTL ? 'left' : 'right';
+    return isArabic ? 'left' : 'right';
   }
 
   return textAlign;
