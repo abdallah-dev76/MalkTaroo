@@ -1,6 +1,6 @@
 import type { ImageProps, ImageSourcePropType } from 'react-native';
 
-type AvatarSize = 'small' | 'medium' | 'large';
+type AvatarSize = 'small' | 'medium' | 'large' | 'xLarge';
 
 export interface AvatarProps extends ImageProps {
   size?: AvatarSize;

@@ -17,6 +17,6 @@ export type TextVariant =
 export interface ITextProps extends TextProps {
   // accepts a theme color name for autocomplete, or any raw CSS color string (e.g. 'red', '#fff')
   color?: Colors | (string & {});
-  textAlign?: 'left' | 'center' | 'right';
+  textAlign?: 'left' | 'center' | 'right' | 'start' | 'end';
   variant?: TextVariant;
 }

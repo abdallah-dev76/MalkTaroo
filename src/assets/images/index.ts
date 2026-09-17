@@ -13,6 +13,10 @@ import sagittarius from './sagittarius.jpeg';
 import scorpio from './scorpio.jpeg';
 import taurus from './taurus.jpeg';
 import virgo from './virgo.jpeg';
+import zodiac from './zodiac.jpeg';
+import couples from './couples.jpeg';
+import tarot from './tarot.jpeg';
+import splash from './splash.jpeg';
 
 export const appImages = {
   man,
@@ -29,4 +33,8 @@ export const appImages = {
   scorpio,
   taurus,
   virgo,
+  zodiac,
+  couples,
+  tarot,
+  splash,
 } as const satisfies Record<string, ImageSourcePropType>;

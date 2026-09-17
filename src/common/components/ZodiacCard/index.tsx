@@ -2,17 +2,11 @@ import { View } from 'react-native';
 import Avatar from '../Avatar';
 import Text from '../Text';
 import { ZodiacCardProps } from './types';
-import { spacing } from '@theme/index';
+import { styles } from './styles';
 
-export const ZodiacCard = ({ name, image, duration }: ZodiacCardProps) => {
+export const ZodiacCard = ({ name, image, date }: ZodiacCardProps) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        gap: spacing.sm,
-      }}
-    >
+    <View style={styles.container}>
       <Avatar source={image} isBorder />
 
       <View>
@@ -20,7 +14,7 @@ export const ZodiacCard = ({ name, image, duration }: ZodiacCardProps) => {
           {name}
         </Text>
         <Text variant='small' color='textSecondary' textAlign='center'>
-          {duration}
+          {date}
         </Text>
       </View>
     </View>

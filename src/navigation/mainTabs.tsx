@@ -3,9 +3,8 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import { Home } from '@features/home';
-import { ZodiacCompatibility } from '@features/zodiacCompatibility';
 import { Tarot } from '@features/tarot';
-import { View } from 'react-native';
+import { I18nManager, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { PlatformPressable } from '@react-navigation/elements';
 import { useLinkBuilder } from '@react-navigation/native';
@@ -15,6 +14,7 @@ import { Profile } from '@features/profile';
 import { IconName } from '@assets/icons';
 import { spacing } from '@theme/spacing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { CompatibilityStack } from './compatibilityStack';
 
 const iconsName: IconName[] = ['home', 'cards', 'heart', 'profile'];
 
@@ -93,10 +93,14 @@ const tabBar = (props: BottomTabBarProps) => <MyTabBar {...props} />;
 
 function MainTabs() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={tabBar}>
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      tabBar={tabBar}
+      initialRouteName='Compatibility'
+    >
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Tarot' component={Tarot} />
-      <Tab.Screen name='ZodiacCompatibility' component={ZodiacCompatibility} />
+      <Tab.Screen name='Compatibility' component={CompatibilityStack} />
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
   );
@@ -104,10 +108,12 @@ function MainTabs() {
 
 const styles = StyleSheet.create(theme => ({
   tabBarContainer: (bottomInset: number) => ({
-    flexDirection: 'row' as const,
+    flexDirection: I18nManager.isRTL
+      ? ('row-reverse' as const)
+      : ('row' as const),
     backgroundColor: theme.tabBarBackground,
     padding: spacing.md,
-    paddingBottom: bottomInset,
+    paddingBottom: bottomInset + spacing.md,
     borderTopWidth: 1,
     borderColor: theme.tabBarBorder,
   }),

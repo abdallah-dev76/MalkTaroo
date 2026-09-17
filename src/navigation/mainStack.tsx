@@ -7,8 +7,11 @@ const Stack = createNativeStackNavigator();
 function MainStack() {
   return (
     <Stack.Navigator
-      screenOptions={{ headerShown: false, gestureEnabled: false }}
-      initialRouteName='MainTabs'
+      screenOptions={{
+        headerShown: false,
+        gestureEnabled: false,
+        animation: 'fade',
+      }}
     >
       <Stack.Screen name='Splash' component={Splash} />
       <Stack.Screen name='MainTabs' component={MainTabs} />

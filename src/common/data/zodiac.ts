@@ -1,7 +1,20 @@
 import { t } from 'i18next';
 import { appImages } from '@assets/images';
+import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
 
-export const zodiacList = [
+export const zodiacList: ZodiacCardProps[] = [
+  {
+    id: 'aquarius',
+    name: t('aquarius'),
+    image: appImages.aquarius,
+    date: t('dates.aquarius'),
+  },
+  {
+    id: 'pisces',
+    name: t('pisces'),
+    image: appImages.pisces,
+    date: t('dates.pisces'),
+  },
   {
     id: 'aries',
     name: t('aries'),
@@ -61,17 +74,5 @@ export const zodiacList = [
     name: t('capricorn'),
     image: appImages.capricorn,
     date: t('dates.capricorn'),
-  },
-  {
-    id: 'aquarius',
-    name: t('aquarius'),
-    image: appImages.aquarius,
-    date: t('dates.aquarius'),
-  },
-  {
-    id: 'pisces',
-    name: t('pisces'),
-    image: appImages.pisces,
-    date: t('dates.pisces'),
   },
 ];

@@ -1,6 +1,5 @@
 import { wScale } from '@common/utils/normalize';
 import { lightColors } from '@theme/colors';
-import { spacing } from '@theme/index';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create({
@@ -19,6 +18,7 @@ export const styles = StyleSheet.create({
         small: { width: wScale(40) },
         medium: { width: wScale(60) },
         large: { width: wScale(100) },
+        xLarge: { width: wScale(130) },
       },
     },
   }),

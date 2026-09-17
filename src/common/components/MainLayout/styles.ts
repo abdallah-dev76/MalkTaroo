@@ -18,7 +18,7 @@ const resolveColor = (
 export const styles = StyleSheet.create(theme => ({
   container: (backgroundColor?: Colors | (string & {})) => ({
     flex: 1,
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: spacing.lg,
     backgroundColor: resolveColor(theme, backgroundColor, theme.background),
   }),
 

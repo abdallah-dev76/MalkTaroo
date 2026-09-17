@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import {
   KeyboardAvoidingView,
+  I18nManager,
   Platform,
   ScrollView,
   StatusBar,
@@ -9,6 +10,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { IMainLayoutProps, MainLayoutEdge } from './types';
+import { useUnistyles } from 'react-native-unistyles';
 
 const DEFAULT_EDGES: MainLayoutEdge[] = ['top', 'right', 'bottom', 'left'];
 
@@ -22,7 +24,7 @@ export const MainLayout = ({
   header,
   backgroundColor = 'background',
   edges = DEFAULT_EDGES,
-  statusBarStyle = 'dark-content',
+  statusBarStyle,
   statusBarHidden = false,
   statusBarAnimated = true,
   statusBarTranslucent = false,
@@ -32,6 +34,9 @@ export const MainLayout = ({
   keyboardAvoiding = true,
 }: IMainLayoutProps) => {
   const insets = useSafeAreaInsets();
+  const { rt } = useUnistyles();
+
+  const isDark = rt.themeName === 'dark';
 
   const topInset =
     edges.includes('top') && !statusBarTranslucent ? insets.top : 0;
@@ -49,10 +54,18 @@ export const MainLayout = ({
   const bodyPaddingStyle = useMemo(
     () => ({
       paddingBottom: bottomInset,
-      paddingLeft: leftInset,
-      paddingRight: rightInset,
+      paddingLeft: I18nManager.isRTL ? rightInset : leftInset,
+      paddingRight: I18nManager.isRTL ? leftInset : rightInset,
     }),
     [bottomInset, leftInset, rightInset],
+  );
+
+  const headerPaddingStyle = useMemo(
+    () => ({
+      paddingLeft: I18nManager.isRTL ? rightInset : leftInset,
+      paddingRight: I18nManager.isRTL ? leftInset : rightInset,
+    }),
+    [leftInset, rightInset],
   );
 
   const body = scrollable ? (
@@ -77,10 +90,7 @@ export const MainLayout = ({
       <StatusBar
         animated={statusBarAnimated}
         hidden={statusBarHidden}
-        barStyle={statusBarStyle}
-        // Always edge-to-edge at the native level; the reserved-space look for
-        // `statusBarTranslucent === false` is achieved via the painted spacer + padding below,
-        // which behaves identically on iOS and Android (incl. Android 15 edge-to-edge enforcement).
+        barStyle={statusBarStyle ?? (isDark ? 'light-content' : 'dark-content')}
         translucent
         backgroundColor={Platform.OS === 'android' ? 'transparent' : undefined}
       />
@@ -96,11 +106,7 @@ export const MainLayout = ({
         />
       )}
 
-      {header && (
-        <View style={{ paddingLeft: leftInset, paddingRight: rightInset }}>
-          {header}
-        </View>
-      )}
+      {header && <View style={headerPaddingStyle}>{header}</View>}
 
       {keyboardAvoiding ? (
         <KeyboardAvoidingView

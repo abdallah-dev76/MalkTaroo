@@ -1,13 +1,25 @@
 import { PropsWithChildren } from 'react';
-import { Text as RNText } from 'react-native';
+import { I18nManager, Text as RNText } from 'react-native';
 import { styles } from './styles';
 import { ITextProps } from './types';
+
+const resolveTextAlign = (textAlign: NonNullable<ITextProps['textAlign']>) => {
+  if (textAlign === 'start') {
+    return I18nManager.isRTL ? 'right' : 'left';
+  }
+
+  if (textAlign === 'end') {
+    return I18nManager.isRTL ? 'left' : 'right';
+  }
+
+  return textAlign;
+};
 
 export const Text = ({
   children,
   variant = 'title',
   color = 'textPrimary',
-  textAlign = 'left',
+  textAlign = 'start',
   style,
   ...props
 }: ITextProps & PropsWithChildren) => {
@@ -16,7 +28,10 @@ export const Text = ({
   });
 
   return (
-    <RNText style={[styles.text(color, textAlign), style]} {...props}>
+    <RNText
+      style={[styles.text(color, resolveTextAlign(textAlign)), style]}
+      {...props}
+    >
       {children}
     </RNText>
   );

@@ -1,9 +1,13 @@
-import { Pressable, TextInput as TextInputBase, View } from 'react-native';
+import {
+  I18nManager,
+  Pressable,
+  TextInput as TextInputBase,
+  View,
+} from 'react-native';
 import React, { useCallback, useState } from 'react';
 import Text from '../Text';
 import { styles } from './styles';
 import { lightColors, palette } from '@theme/colors';
-import { getLanguage } from '@common/utils/toggleLanguage';
 import { useUnistyles } from 'react-native-unistyles';
 import { Icon } from '../Icon';
 import { wScale } from '@common/utils/normalize';
@@ -48,7 +52,7 @@ export const TextInput = ({
             onChangeText={onChangeHandler}
             numberOfLines={1}
             secureTextEntry={isPassword && showPassword}
-            textAlign={getLanguage() === 'ar' ? 'right' : 'left'}
+            textAlign={I18nManager.isRTL ? 'right' : 'left'}
             {...props}
           />
           {isPassword && (

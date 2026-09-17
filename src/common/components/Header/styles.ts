@@ -1,11 +1,12 @@
 import { spacing } from '@theme/spacing';
+import { I18nManager } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const ICON_CONTAINER_WIDTH = 40;
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: spacing.md,

@@ -6,6 +6,7 @@ import profile from './profile.svg';
 import home from './home.svg';
 import leftArrow from './leftArrow.svg';
 import rightArrow from './rightArrow.svg';
+import share from './share.svg';
 
 export const icons = {
   closeEye,
@@ -16,6 +17,7 @@ export const icons = {
   home,
   leftArrow,
   rightArrow,
+  share,
 } as const;
 
 export type IconName = keyof typeof icons;

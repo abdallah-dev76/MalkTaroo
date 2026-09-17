@@ -2,7 +2,7 @@
   "helloWorld": "Hello World!",
   "home": "Home",
   "tarot": "Tarot",
-  "zodiaccompatibility": "Compatibility",
+  "compatibility": "Compatibility",
   "zodiac": "Zodiac",
   "mainPage": "Main Page",
   "profile": "Profile",
@@ -31,5 +31,30 @@
     "capricorn": "December 22 - January 19",
     "aquarius": "January 20 - February 18",
     "pisces": "February 19 - March 20"
-  }
+  },
+  "startNow": "Start Now",
+  "startDescription": "Discover the compatibility between you through the energy of the zodiac signs",
+  "chooseZodiac": "Choose Your Zodiac",
+  "chooseSecondZodiac": "Choose Your Partner's Zodiac",
+  "calculatingResult": "Calculating Result",
+  "calculatingResultDescription": "We are analyzing the positions of the planets and their effects between your signs",
+  "randomText": "Gemini and Cancer have a unique compatibility in love, as Gemini tends to think, while Cancer tends to be emotional.",
+  "strongConnection": "Strong Connection",
+  "compatibilityResult": "Compatibility Result",
+  "love": "Love",
+  "friendship": "Friendship",
+  "work": "Work",
+  "compatibilityLabels": {
+    "veryLow": "Very Low Connection",
+    "low": "Low Connection",
+    "weak": "Weak Connection",
+    "belowAverage": "Below Average Connection",
+    "average": "Average Connection",
+    "aboveAverage": "Above Average Connection",
+    "good": "Good Connection",
+    "strong": "Strong Connection",
+    "excellent": "Excellent Connection",
+    "perfectMatch": "Perfect Match"
+  },
+  "tryAnother": "Try Another Match"
 }

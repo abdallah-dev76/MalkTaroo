@@ -2,7 +2,7 @@
   "helloWorld": "مرحبا بالعالم",
   "home": "الرئيسية",
   "tarot": "التاروت",
-  "zodiaccompatibility": "التوافق",
+  "compatibility": "التوافق",
   "zodiac": "الأبراج",
   "mainPage": "الصفحة الرئيسية",
   "profile": "الملف الشخصي",
@@ -32,5 +32,30 @@
     "capricorn": "22 ديسمبر - 19 يناير",
     "aquarius": "20 يناير - 18 فبراير",
     "pisces": "19 فبراير - 20 مارس"
-  }
+  },
+  "startNow": "ابدأ الآن",
+  "startDescription": "اكتشف مدى الانسجام بينكما من خلال طاقة الأبراج",
+  "chooseZodiac": "اختر برجك",
+  "chooseSecondZodiac": "اختر برج شريكك",
+  "calculatingResult": "جار تحليل التوافق",
+  "calculatingResultDescription": "نحن نحلل مواقع الكواكب و تأثيرتها بين برجكما",
+  "randomText": "القمر في منزلك الثاني يطالبك أن تحافظ اليوم على توازن نفقاتك وسلوكك ومن المهم أن تعتني بخطواتك وحساباتك ولا تهمل ذلك.",
+  "strongConnection": "توافق قوي",
+  "compatibilityResult": "نتيجة التوافق",
+  "love": "الحب",
+  "friendship": "الصداقة",
+  "work": "العمل",
+  "compatibilityLabels": {
+    "veryLow": "توافق ضعيف جدًا",
+    "low": "توافق ضعيف",
+    "weak": "توافق منخفض",
+    "belowAverage": "توافق أقل من المتوسط",
+    "average": "توافق متوسط",
+    "aboveAverage": "توافق أعلى من المتوسط",
+    "good": "توافق جيد",
+    "strong": "توافق قوي",
+    "excellent": "توافق ممتاز",
+    "perfectMatch": "توافق مثالي"
+  },
+  "tryAnother": "جرب توافق آخر"
 }

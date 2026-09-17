@@ -1,9 +1,10 @@
 import { fontScale, hScale, wScale } from '@common/utils/normalize';
+import { I18nManager } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create(theme => ({
   button: {
-    flexDirection: 'row',
+    flexDirection: I18nManager.isRTL ? 'row-reverse' : 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: wScale(8),

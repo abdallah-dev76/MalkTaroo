@@ -4,12 +4,18 @@ import en from './en.json';
 import ar from './ar.json';
 import { getLocales } from 'react-native-localize';
 import { Storage, StorageKeys } from '@common/storage';
+import {
+  applyAppDirection,
+  getSupportedLanguage,
+} from '@common/utils/direction';
 
 const deviceLanguage = getLocales()[0]?.languageCode;
 
 const storedLanguage = Storage.getString(StorageKeys.Language);
 
-const initialLanguage = storedLanguage ?? deviceLanguage ?? 'ar';
+const initialLanguage = getSupportedLanguage(storedLanguage ?? deviceLanguage);
+
+applyAppDirection(initialLanguage);
 
 const resources = {
   en: {

@@ -1,8 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 
 import { styles } from './styles';
 import { ButtonProps } from './types';
+import Text from '../Text';
 
 export const Button = ({
   children,
@@ -45,7 +46,9 @@ export const Button = ({
         <>
           {leftIcon && <View style={styles.icon}>{leftIcon}</View>}
 
-          <Text style={styles.text}>{children}</Text>
+          <Text style={styles.text} variant='button'>
+            {children}
+          </Text>
 
           {rightIcon && <View style={styles.icon}>{rightIcon}</View>}
         </>

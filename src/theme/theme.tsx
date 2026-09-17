@@ -21,9 +21,9 @@ const storedTheme = Storage.getString(StorageKeys.Theme);
 StyleSheet.configure({
   themes,
   settings: {
-    initialTheme: (storedTheme as 'light' | 'dark') ?? 'light',
+    initialTheme: (storedTheme as 'light' | 'dark') ?? 'dark',
     adaptiveThemes: false,
   },
 });
 
-Storage.setString(StorageKeys.Theme, storedTheme ?? 'light');
+Storage.setString(StorageKeys.Theme, storedTheme ?? 'dark');
