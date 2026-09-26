@@ -4,15 +4,25 @@ import { ImageBackground, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { appImages } from '@assets/images';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { styles } from './styles';
 import { CompatibilityStackParamList } from '@common/types.ts';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {
+  CompatibilityContext,
+  CompatibilityContextType,
+} from '../../../../navigation/compatibilityStack';
+import { addResult, useAppDispatch } from '@store';
+import { getCompatibilityPercentage } from '@common/utils';
 
 export const CalculatingResult = () => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
+  const dispatch = useAppDispatch();
+  const { zodiac } = useContext(
+    CompatibilityContext,
+  ) as CompatibilityContextType;
   const [dots, setDots] = useState('.');
 
   useEffect(() => {
@@ -24,10 +34,20 @@ export const CalculatingResult = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
+      const [first, second] = zodiac;
+      if (first?.id && second?.id) {
+        dispatch(
+          addResult({
+            firstZodiacId: first.id,
+            secondZodiacId: second.id,
+            percentage: getCompatibilityPercentage(first.id, second.id),
+          }),
+        );
+      }
       navigation.navigate('Result');
     }, 5000);
     return () => clearTimeout(timeout);
-  }, [navigation]);
+  }, [navigation, zodiac, dispatch]);
 
   return (
     <MainLayout
@@ -45,7 +65,7 @@ export const CalculatingResult = () => {
             {t('calculatingResult')}
             {dots}
           </Text>
-          <Text variant="heading3" color='textSecondary' textAlign='center'>
+          <Text variant='heading3' color='textSecondary' textAlign='center'>
             {t('calculatingResultDescription')}
           </Text>
         </View>

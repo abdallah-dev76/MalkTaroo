@@ -8,12 +8,7 @@ import { I18nManager } from 'react-native';
 
 const storedLanguage = Storage.getString(StorageKeys.Language);
 const deviceLanguage = getLocales()[0]?.languageCode;
-const initialLanguage =
-  storedLanguage === 'ar' || storedLanguage === 'en'
-    ? storedLanguage
-    : deviceLanguage === 'ar' || deviceLanguage === 'en'
-    ? deviceLanguage
-    : 'ar';
+const initialLanguage = storedLanguage || deviceLanguage || 'ar';
 
 const isRTL = initialLanguage === 'ar';
 I18nManager.allowRTL(isRTL);

@@ -1,8 +1,8 @@
 import { Storage, StorageKeys } from '@common/storage';
-import i18n from '@translation/translation';
 import { UnistylesRuntime } from 'react-native-unistyles';
 import { getLocales } from 'react-native-localize';
 import { I18nManager } from 'react-native';
+import RNRestart from 'react-native-restart';
 
 export type AppDirection = 'rtl' | 'ltr';
 
@@ -10,13 +10,15 @@ export const isDark = Storage.getString('theme') === 'dark' || true;
 
 export const isArabic = Storage.getString('language') === 'ar' || true;
 
-export const toggleLanguage = async () => {
+export const toggleLanguage = () => {
   const storedLang = Storage.getString(StorageKeys.Language);
   const newLang = storedLang === 'ar' ? 'en' : 'ar';
 
   Storage.setString(StorageKeys.Language, newLang);
 
-  await i18n.changeLanguage(newLang);
+  I18nManager.allowRTL(newLang === 'ar');
+  I18nManager.forceRTL(newLang === 'ar');
+  RNRestart.Restart();
   applyAppDirection();
 };
 

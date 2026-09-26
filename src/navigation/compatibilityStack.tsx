@@ -21,7 +21,7 @@ export const CompatibilityContext =
 export const CompatibilityStack = () => {
   const [zodiac, setZodiac] = useState<Partial<ZodiacCardProps>[]>([]);
 
-  const values = useMemo(() => ({ zodiac, setZodiac }), [zodiac, setZodiac]);
+  const values = useMemo(() => ({ zodiac, setZodiac }), [zodiac]);
 
   return (
     <CompatibilityContext.Provider value={values}>

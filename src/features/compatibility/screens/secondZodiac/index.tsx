@@ -1,4 +1,4 @@
-import { ChooseZodiac } from '../chooseZodiac';
+import { ChooseZodiac, ZodiacId } from '../chooseZodiac';
 import { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,6 +18,7 @@ export const SecondZodiac = () => {
   return (
     <ChooseZodiac
       title='chooseSecondZodiac'
+      id={ZodiacId.SecondZodiac}
       onCardPress={item => {
         if (setZodiac) {
           setZodiac(prev => [

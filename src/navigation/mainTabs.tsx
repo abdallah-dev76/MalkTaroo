@@ -16,6 +16,7 @@ import { spacing } from '@theme/spacing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CompatibilityStack } from './compatibilityStack';
 import { isArabic } from '@common/utils/appSettings';
+import { TarotStack } from './TarotStack';
 
 const iconsName: IconName[] = ['home', 'cards', 'heart', 'profile'];
 
@@ -94,13 +95,9 @@ const tabBar = (props: BottomTabBarProps) => <MyTabBar {...props} />;
 
 function MainTabs() {
   return (
-    <Tab.Navigator
-      screenOptions={{ headerShown: false }}
-      tabBar={tabBar}
-      initialRouteName='Compatibility'
-    >
+    <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={tabBar}>
       <Tab.Screen name='Home' component={Home} />
-      <Tab.Screen name='Tarot' component={Tarot} />
+      <Tab.Screen name='Tarot' component={TarotStack} />
       <Tab.Screen name='Compatibility' component={CompatibilityStack} />
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>

@@ -14,8 +14,11 @@ import taurus from './taurus.jpeg';
 import virgo from './virgo.jpeg';
 import zodiac from './zodiac.jpeg';
 import couples from './couples.jpeg';
-import tarot from './tarot.jpeg';
+import tarot from './tarot.png';
 import splash from './splash.jpeg';
+import tarotCard from './tarotCard.jpeg';
+import swords from './swords.jpg';
+import dailyMessage from './dailyMessage.png';
 
 export const appImages = {
   man,
@@ -36,4 +39,7 @@ export const appImages = {
   couples,
   tarot,
   splash,
+  tarotCard,
+  swords,
+  dailyMessage,
 } as const;

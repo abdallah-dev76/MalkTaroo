@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
 import { spacing } from '@theme/spacing';
 import { hScale, wScale } from '@common/utils';
+import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create({
   layout: {
@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     paddingBottom: spacing.xxxl,
   },
   loader: {
-    width: wScale(180),
-    height: hScale(180),
+    width: wScale(150),
+    height: hScale(150),
   },
 });

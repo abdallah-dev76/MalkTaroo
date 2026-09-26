@@ -1,6 +1,10 @@
 export type RootStackParamList = {
   Splash: undefined;
   MainTabs: undefined;
+  CompatibilityHistory: undefined;
+  CompatibilityDetail: { id: string };
+  TarotHistory: undefined;
+  TarotDetail: { id: string };
 };
 
 export type CompatibilityStackParamList = {
@@ -9,4 +13,11 @@ export type CompatibilityStackParamList = {
   SecondZodiac: undefined;
   CalculatingResult: undefined;
   Result: undefined;
+};
+
+export type TarotStackParamList = {
+  Start: undefined;
+  ReadingType: undefined;
+  OneCardReading: undefined;
+  ThreeCardReading: undefined;
 };

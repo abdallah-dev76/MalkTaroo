@@ -8,12 +8,19 @@ import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
 import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
 
+export enum ZodiacId {
+  FirstZodiac = 'firstZodiac',
+  SecondZodiac = 'secondZodiac',
+}
+
 export const ChooseZodiac = ({
   title,
   onCardPress,
+  id,
 }: {
   title: string;
   onCardPress: (item: ZodiacCardProps) => void;
+  id: string;
 }) => {
   const navigation = useNavigation();
   const { t } = useTranslation();
@@ -24,12 +31,14 @@ export const ChooseZodiac = ({
       edges={['top', 'right', 'left']}
       header={
         <Header>
-          <Header.Icon
-            name='rightArrow'
-            color={theme.iconPrimary}
-            size={24}
-            onPress={() => navigation.goBack()}
-          />
+          {id !== ZodiacId.FirstZodiac && (
+            <Header.Icon
+              name='rightArrow'
+              color={theme.iconPrimary}
+              size={24}
+              onPress={() => navigation.goBack()}
+            />
+          )}
           <Header.Title>{t(title)}</Header.Title>
         </Header>
       }

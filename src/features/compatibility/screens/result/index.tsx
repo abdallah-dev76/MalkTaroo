@@ -1,25 +1,19 @@
-import {
-  Button,
-  Icon,
-  MainLayout,
-  Text,
-  CompatibilityCircle,
-} from '@common/components';
-import { Animated, Share, View } from 'react-native';
+import { Button, MainLayout } from '@common/components';
+import { View } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useEffect, useRef, useContext } from 'react';
+import { useRef, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import {
   CompatibilityContext,
   CompatibilityContextType,
 } from '../../../../navigation/compatibilityStack';
-import Avatar from '@common/components/Avatar';
 import { useUnistyles } from 'react-native-unistyles';
 import { Header } from '@common/components/Header';
-import { captureRef } from 'react-native-view-shot';
 import { styles } from './styles';
 import { CompatibilityStackParamList } from '@common/types.ts';
+import { getCompatibilityPercentage } from '@common/utils';
+import { ResultView, shareResultView } from '../../components/ResultView';
 
 export const Result = () => {
   const { theme } = useUnistyles();
@@ -30,45 +24,14 @@ export const Result = () => {
   const { zodiac } = useContext(
     CompatibilityContext,
   ) as CompatibilityContextType;
+  const percentage = getCompatibilityPercentage(zodiac[0]?.id, zodiac[1]?.id);
 
   const imageRef = useRef<View>(null);
-  const handleShare = async () => {
-    if (!imageRef.current) {
-      return;
-    }
-
-    try {
-      const imageUrl = await captureRef(imageRef.current, {
-        format: 'png',
-        quality: 1,
-      });
-      await Share.share({
-        url: imageUrl,
-        message: `Check out the compatibility result for ${zodiac[0]?.name} and ${zodiac[1]?.name}!`,
-      });
-    } catch {}
-  };
-
-  const pulseAnim = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-    const pulse = Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.25,
-          duration: 600,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 600,
-          useNativeDriver: true,
-        }),
-      ]),
+  const handleShare = () =>
+    shareResultView(
+      imageRef,
+      `Check out the compatibility result for ${zodiac[0]?.name} and ${zodiac[1]?.name}!`,
     );
-    pulse.start();
-    return () => pulse.stop();
-  }, [pulseAnim]);
 
   return (
     <MainLayout
@@ -87,30 +50,12 @@ export const Result = () => {
         </Header>
       }
     >
-      <View ref={imageRef} collapsable={false} style={styles.content}>
-        <View style={styles.zodiacRow}>
-          {zodiac.map((zodiacData, index) => (
-            <View key={index} style={styles.zodiacItem}>
-              <Avatar source={zodiacData?.image} size='xLarge' isBorder />
-              <Text variant='heading3'>{zodiacData?.name}</Text>
-            </View>
-          ))}
-          <View style={styles.divider} />
-          <View style={styles.heartWrapper}>
-            <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
-              <Icon name='heart' color={theme.borderGold} size={28} isFocused />
-            </Animated.View>
-          </View>
-        </View>
-        <View style={styles.compatibilityWrapper}>
-          <CompatibilityCircle percentage={79} />
-        </View>
-        <View style={styles.descriptionBox}>
-          <Text textAlign='center' variant='body'>
-            {t('randomText')}
-          </Text>
-        </View>
-      </View>
+      <ResultView
+        ref={imageRef}
+        firstZodiacId={zodiac[0]?.id}
+        secondZodiacId={zodiac[1]?.id}
+        percentage={percentage}
+      />
       <Button onPress={() => navigation.navigate('FirstZodiac')}>
         {t('tryAnother')}
       </Button>

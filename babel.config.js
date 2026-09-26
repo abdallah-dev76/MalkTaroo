@@ -12,6 +12,7 @@ module.exports = {
           '@features': './src/features',
           '@theme': './src/theme',
           '@translation': './src/translation',
+          '@store': './src/store',
         },
       },
     ],

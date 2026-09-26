@@ -4,6 +4,7 @@ import Text from '../Text';
 import Icon from '../Icon';
 import { IconName } from '@assets/icons';
 import { styles } from './styles';
+import { useUnistyles } from 'react-native-unistyles';
 
 export const Header = ({ children }: PropsWithChildren) => {
   return <View style={styles.container}>{children}</View>;
@@ -16,8 +17,8 @@ Header.Icon = ({
   onPress,
 }: {
   name: IconName;
-  color: string;
-  size: number;
+  color?: string;
+  size?: number;
   onPress: () => void;
 }) => {
   return (
@@ -31,6 +32,16 @@ Header.Title = ({ children }: PropsWithChildren) => {
   return (
     <View style={styles.titleContainer}>
       <Text textAlign='center'>{children}</Text>
+    </View>
+  );
+};
+
+Header.Hello = ({ children }: PropsWithChildren) => {
+  return (
+    <View style={styles.helloContainer}>
+      <Text variant='heading2' style={styles.helloText}>
+        {children}
+      </Text>
     </View>
   );
 };
