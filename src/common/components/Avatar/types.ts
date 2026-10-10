@@ -9,5 +9,5 @@ export interface AvatarProps extends ImageProps {
   isGirl?: boolean;
   isBorder?: boolean;
   onPress?: () => void;
-  
+  noSquare?: boolean;
 }

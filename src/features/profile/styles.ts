@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { radius, spacing } from '@theme/spacing';
+import { hScale, wScale } from '@common/utils';
 
 export const styles = StyleSheet.create(theme => ({
   layout: {
@@ -38,14 +39,9 @@ export const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.backgroundElevated,
   },
   iconCircle: {
-    width: 44,
-    height: 44,
-    borderRadius: radius.full,
-    borderWidth: 1,
-    borderColor: theme.borderGold,
-    backgroundColor: theme.zodiacBackground,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: spacing.sm,
   },
   section: {
     borderRadius: radius.lg,

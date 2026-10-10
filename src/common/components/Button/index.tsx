@@ -36,6 +36,7 @@ export const Button = ({
       disabled={isDisabled}
       style={state => [
         styles.button,
+        variant === 'ghost' && styles.noPadding,
         state.pressed && styles.pressed,
         typeof style === 'function' ? style(state) : style,
       ]}

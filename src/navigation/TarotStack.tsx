@@ -1,6 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createContext, useState, useMemo } from 'react';
 import { TarotStackParamList } from '@common/types.ts';
+import { Storage } from '@common/storage/storage';
+import { StorageKeys } from '@common/storage';
 import { Start } from '@features/tarot/screens/start';
 import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
 import { ReadingType } from '@features/tarot/screens/readingType';
@@ -24,7 +26,9 @@ export const TarotStack = () => {
   return (
     <TarotContext.Provider value={values}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='Start' component={Start} />
+        {!Storage.getBoolean(StorageKeys.IS_FRIST_READING_DONE) && (
+          <Stack.Screen name='Start' component={Start} />
+        )}
         <Stack.Screen name='ReadingType' component={ReadingType} />
         <Stack.Screen name='OneCardReading' component={OneCardReading} />
         <Stack.Screen name='ThreeCardReading' component={ThreeCardReading} />

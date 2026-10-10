@@ -1,11 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Splash } from '@features/splash';
-import { CompatibilityHistory } from '@features/compatibility/screens/compatibilityHistory';
-import { CompatibilityDetail } from '@features/compatibility/screens/compatibilityHistory/detail';
 import { RootStackParamList } from '@common/types.ts';
 import MainTabs from './mainTabs';
 import { TarotHistory } from '@features/tarot/screens/tarotHistory';
 import { TarotDetail } from '@features/tarot/screens/tarotHistory/detail';
+import { Onboarding } from '@features/onboarding';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,19 +18,8 @@ function MainStack() {
       }}
     >
       <Stack.Screen name='Splash' component={Splash} />
+      <Stack.Screen name='Onboarding' component={Onboarding} />
       <Stack.Screen name='MainTabs' component={MainTabs} />
-      <Stack.Group
-        screenOptions={{ gestureEnabled: true, animation: 'slide_from_right' }}
-      >
-        <Stack.Screen
-          name='CompatibilityHistory'
-          component={CompatibilityHistory}
-        />
-        <Stack.Screen
-          name='CompatibilityDetail'
-          component={CompatibilityDetail}
-        />
-      </Stack.Group>
 
       <Stack.Group
         screenOptions={{ gestureEnabled: true, animation: 'slide_from_right' }}

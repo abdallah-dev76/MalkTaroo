@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     paddingBottom: spacing.xxxl,
   },
   loader: {
-    width: wScale(150),
-    height: hScale(150),
+    width: wScale(130),
+    height: hScale(130),
   },
 });

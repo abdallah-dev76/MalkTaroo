@@ -3,6 +3,7 @@ import MainLayout from '@common/components/MainLayout';
 import { ImageBackground, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { appImages } from '@assets/images';
+import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { useContext, useEffect, useState } from 'react';
 import { styles } from './styles';
@@ -12,10 +13,11 @@ import {
   CompatibilityContext,
   CompatibilityContextType,
 } from '../../../../navigation/compatibilityStack';
-import { addResult, useAppDispatch } from '@store';
-import { getCompatibilityPercentage } from '@common/utils';
+import { useAppDispatch } from '@store';
 
 export const CalculatingResult = () => {
+  const { rt } = useUnistyles();
+  const themeName = rt.themeName;
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
@@ -34,16 +36,6 @@ export const CalculatingResult = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const [first, second] = zodiac;
-      if (first?.id && second?.id) {
-        dispatch(
-          addResult({
-            firstZodiacId: first.id,
-            secondZodiacId: second.id,
-            percentage: getCompatibilityPercentage(first.id, second.id),
-          }),
-        );
-      }
       navigation.navigate('Result');
     }, 5000);
     return () => clearTimeout(timeout);
@@ -56,7 +48,9 @@ export const CalculatingResult = () => {
       edges={['top', 'right', 'left']}
     >
       <ImageBackground
-        source={appImages.zodiac}
+        source={
+          themeName === 'light' ? appImages.zodiacLight : appImages.zodiac
+        }
         resizeMode='cover'
         style={styles.background}
       >

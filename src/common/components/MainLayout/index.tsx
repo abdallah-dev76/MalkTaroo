@@ -9,7 +9,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from './styles';
 import { IMainLayoutProps, MainLayoutEdge } from './types';
-import { isArabic, isDark } from '@common/utils';
+import { isDark } from '@common/utils';
 
 const DEFAULT_EDGES: MainLayoutEdge[] = ['top', 'right', 'bottom', 'left'];
 
@@ -50,16 +50,16 @@ export const MainLayout = ({
   const bodyPaddingStyle = useMemo(
     () => ({
       paddingBottom: bottomInset,
-      paddingLeft: isArabic ? rightInset : leftInset,
-      paddingRight: isArabic ? leftInset : rightInset,
+      paddingLeft: leftInset,
+      paddingRight: rightInset,
     }),
     [bottomInset, leftInset, rightInset],
   );
 
   const headerPaddingStyle = useMemo(
     () => ({
-      paddingLeft: isArabic ? rightInset : leftInset,
-      paddingRight: isArabic ? leftInset : rightInset,
+      paddingLeft: leftInset,
+      paddingRight: rightInset,
     }),
     [leftInset, rightInset],
   );

@@ -6,8 +6,15 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ImageBackground, View, Dimensions } from 'react-native';
 import { TarotStackParamList } from '@common/types.ts';
 import { styles } from './styles';
+import { useUnistyles } from 'react-native-unistyles';
+import { useEffect } from 'react';
+import { StorageKeys } from '@common/storage/enum';
+import { Storage } from '@common/storage/storage';
+
 export const Start = () => {
   const { t } = useTranslation();
+  const { rt } = useUnistyles();
+  const themeName = rt.themeName;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<TarotStackParamList>>();
@@ -16,6 +23,10 @@ export const Start = () => {
     navigation.navigate('ReadingType');
   };
 
+  useEffect(() => {
+    Storage.setBoolean(StorageKeys.IS_FRIST_READING_DONE, true);
+  }, []);
+
   return (
     <MainLayout
       statusBarTranslucent={true}
@@ -23,7 +34,7 @@ export const Start = () => {
       edges={['top', 'right', 'left']}
     >
       <ImageBackground
-        source={appImages.tarot}
+        source={themeName === 'light' ? appImages.tarotLight : appImages.tarot}
         resizeMode='cover'
         style={styles.background}
       >

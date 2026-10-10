@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { radius, spacing } from '@theme/index';
-import { isArabic } from '@common/utils/appSettings';
 
 export const styles = StyleSheet.create(theme => ({
   content: {
@@ -9,7 +8,7 @@ export const styles = StyleSheet.create(theme => ({
   },
 
   zodiacRow: {
-    flexDirection: isArabic ? 'row-reverse' : 'row',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },

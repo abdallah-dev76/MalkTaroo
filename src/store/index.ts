@@ -12,12 +12,12 @@ import {
 } from 'redux-persist';
 import { useDispatch, useSelector } from 'react-redux';
 import { mmkvStorage } from './mmkvStorage';
-import compatibilityReducer from './slices/compatibilitySlice';
 import tarotReducer from './slices/tarotSlice';
+import profileReducer from './slices/profileSlice';
 
 const rootReducer = combineReducers({
-  compatibility: compatibilityReducer,
   tarot: tarotReducer,
+  profile: profileReducer,
 });
 
 const migrations = {
@@ -40,7 +40,7 @@ const persistedReducer = persistReducer(
     key: 'root',
     version: 1,
     storage: mmkvStorage,
-    whitelist: ['compatibility', 'tarot'],
+    whitelist: ['tarot', 'profile'],
     migrate: createMigrate(migrations),
   },
   rootReducer,
@@ -64,5 +64,5 @@ export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();
 
-export * from './slices/compatibilitySlice';
 export * from './slices/tarotSlice';
+export * from './slices/profileSlice';

@@ -7,6 +7,8 @@ import { SecondZodiac } from '@features/compatibility/screens/secondZodiac';
 import { Result } from '@features/compatibility/screens/result';
 import { CalculatingResult } from '@features/compatibility/screens/calculatinResult';
 import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
+import { Storage } from '@common/storage/storage';
+import { StorageKeys } from '@common/storage';
 
 export type CompatibilityContextType = {
   zodiac: Partial<ZodiacCardProps>[];
@@ -26,7 +28,9 @@ export const CompatibilityStack = () => {
   return (
     <CompatibilityContext.Provider value={values}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='Start' component={Start} />
+        {!Storage.getBoolean(StorageKeys.IS_FIRST_COMPATIBILITY_DONE) && (
+          <Stack.Screen name='Start' component={Start} />
+        )}
         <Stack.Screen name='FirstZodiac' component={FirstZodiac} />
         <Stack.Screen name='SecondZodiac' component={SecondZodiac} />
         <Stack.Screen name='CalculatingResult' component={CalculatingResult} />

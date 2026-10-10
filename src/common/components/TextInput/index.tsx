@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { lightColors, palette } from '@theme/colors';
 import { useUnistyles } from 'react-native-unistyles';
 import { Icon } from '../Icon';
-import { isArabic, wScale } from '@common/utils';
+import { getLanguage, wScale } from '@common/utils';
 import { BaseTextInputProps } from './types';
 
 export const TextInput = ({
@@ -14,18 +14,27 @@ export const TextInput = ({
   label,
   errorMessage,
   isPassword = false,
+  value,
+  defaultValue,
+  iconName,
   ...props
 }: BaseTextInputProps) => {
   const { theme } = useUnistyles();
-  const [value, setValue] = useState('');
+  const [internalValue, setInternalValue] = useState(
+    defaultValue ?? value ?? '',
+  );
   const [showPassword, setShowPassword] = useState(true);
+
+  const controlledValue = value ?? internalValue;
 
   const onChangeHandler = useCallback(
     (val: string) => {
-      setValue(val);
+      if (value === undefined) {
+        setInternalValue(val);
+      }
       onValueChange(val);
     },
-    [onValueChange],
+    [onValueChange, value],
   );
 
   return (
@@ -33,21 +42,28 @@ export const TextInput = ({
       {label ? (
         <View style={styles.label}>
           {required && <Text color={palette.red}>*</Text>}
-          <Text variant='label'>{label}</Text>
+          <Text variant='label' color='textGold'>
+            {label}
+          </Text>
         </View>
       ) : undefined}
       <View style={styles.textInputAndErr}>
         <View style={styles.textInputContainer}>
+          {iconName && (
+            <View style={styles.iconContainer}>
+              <Icon name={iconName} color={theme.textGold} />
+            </View>
+          )}
           <TextInputBase
             placeholderTextColor={theme.inputPlaceholder}
             style={styles.textInput}
             selectionColor={lightColors.inputBorderFocused}
             cursorColor={lightColors.inputBorderFocused}
-            value={value}
+            value={controlledValue}
             onChangeText={onChangeHandler}
             numberOfLines={1}
             secureTextEntry={isPassword && showPassword}
-            textAlign={isArabic ? 'right' : 'left'}
+            textAlign={getLanguage() === 'ar' ? 'right' : 'left'}
             {...props}
           />
           {isPassword && (

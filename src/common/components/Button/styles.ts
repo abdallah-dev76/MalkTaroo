@@ -1,9 +1,9 @@
-import { fontScale, hScale, isArabic, wScale } from '@common/utils';
+import { fontScale, hScale, wScale } from '@common/utils';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create(theme => ({
   button: {
-    flexDirection: isArabic ? 'row-reverse' : 'row',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: wScale(8),
@@ -75,6 +75,9 @@ export const styles = StyleSheet.create(theme => ({
         false: {},
       },
     },
+  },
+  noPadding: {
+    paddingHorizontal: 0,
   },
 
   text: {

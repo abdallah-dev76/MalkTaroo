@@ -1,4 +1,3 @@
-import { isArabic } from '@common/utils/appSettings';
 import { spacing } from '@theme/spacing';
 import { StyleSheet } from 'react-native-unistyles';
 
@@ -7,7 +6,7 @@ const HEADER_HEIGHT = 56;
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: isArabic ? 'row-reverse' : 'row',
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: spacing.md,

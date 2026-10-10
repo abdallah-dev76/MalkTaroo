@@ -1,14 +1,19 @@
 import { appImages } from '@assets/images';
 import { Button, MainLayout, Text } from '@common/components';
+import { useUnistyles } from 'react-native-unistyles';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ImageBackground, View, Dimensions } from 'react-native';
 import { CompatibilityStackParamList } from '@common/types.ts';
 import { contentStyle, styles } from './styles';
+import { Storage, StorageKeys } from '@common/storage';
 
 export const Start = () => {
   const { t } = useTranslation();
+  const { rt } = useUnistyles();
+  const themeName = rt.themeName;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
@@ -17,14 +22,20 @@ export const Start = () => {
     navigation.navigate('FirstZodiac');
   };
 
+  useEffect(() => {
+    Storage.setBoolean(StorageKeys.IS_FIRST_COMPATIBILITY_DONE, true);
+  }, []);
+
   return (
     <MainLayout
-      statusBarTranslucent={true}
+      statusBarTranslucent
       style={styles.layout}
       edges={['top', 'right', 'left']}
     >
       <ImageBackground
-        source={appImages.couples}
+        source={
+          themeName === 'light' ? appImages.couplesLight : appImages.couples
+        }
         resizeMode='cover'
         style={styles.background}
       >

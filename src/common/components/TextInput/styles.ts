@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { fontScale, wScale, isArabic } from '@common/utils';
+import { fontScale, wScale } from '@common/utils';
 
 export const styles = StyleSheet.create(theme => ({
   container: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create(theme => ({
     paddingHorizontal: wScale(12),
     paddingVertical: wScale(14),
     borderRadius: wScale(12),
-    flexDirection: isArabic ? 'row-reverse' : 'row',
+    flexDirection: 'row',
     borderWidth: wScale(1),
     borderColor: theme.inputBorder,
   },
@@ -26,8 +26,11 @@ export const styles = StyleSheet.create(theme => ({
     flex: 1,
   },
   label: {
-    flexDirection: isArabic ? 'row-reverse' : 'row',
+    flexDirection: 'row',
     gap: wScale(4),
+  },
+  iconContainer: {
+    marginEnd: wScale(16),
   },
 }));
 

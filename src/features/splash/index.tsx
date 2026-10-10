@@ -2,24 +2,35 @@ import { appImages } from '@assets/images';
 import { MainLayout } from '@common/components';
 import { useEffect } from 'react';
 import { ImageBackground } from 'react-native';
+import { useUnistyles } from 'react-native-unistyles';
 import LottieView from 'lottie-react-native';
 import { appAnimations } from '@assets/animations';
 import { styles } from './styles';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '@common/types.ts';
+import { useAppSelector } from '@store';
+import { Storage } from '@common/storage/storage';
+import { StorageKeys } from '@common/storage/enum';
 
 export const Splash = () => {
+  const { rt } = useUnistyles();
+  const themeName = rt.themeName;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const isOnboarded = useAppSelector(state => state.profile.isOnboarded);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('MainTabs');
+      navigation.replace(
+        Storage.getBoolean(StorageKeys.IS_FIRST_LAUNCH_DONE)
+          ? 'MainTabs'
+          : 'Onboarding',
+      );
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [navigation]);
+  }, [isOnboarded, navigation]);
 
   return (
     <MainLayout
@@ -28,7 +39,9 @@ export const Splash = () => {
       style={styles.layout}
     >
       <ImageBackground
-        source={appImages.splash}
+        source={
+          themeName === 'light' ? appImages.splashLight : appImages.splash
+        }
         style={styles.background}
         resizeMode='cover'
       >

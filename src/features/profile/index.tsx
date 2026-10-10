@@ -7,8 +7,9 @@ import { RootStackParamList } from '@common/types.ts';
 
 import { useTranslation } from 'react-i18next';
 import { Header, Icon, MainLayout, Text } from '@common/components';
-import { Storage, StorageKeys } from '@common/storage';
 import { toggleLanguage, toggleTheme } from '@common/utils';
+import { getZodiacFromDate } from '@common/utils/zodiac';
+import { useAppSelector } from '@store';
 import { styles } from './styles';
 
 const LANGUAGES = [
@@ -35,10 +36,23 @@ export const Profile = () => {
   const toggleDailyMessage = () => {
     setIsDailyMessageEnabled(prev => !prev);
   };
-  const name = Storage.getString(StorageKeys.UserName) ?? 'Malak';
-  const storedBirthdate = Storage.getString(StorageKeys.UserBirthdate);
-  const birthdate = storedBirthdate ? new Date(storedBirthdate) : undefined;
-  const age = birthdate ? getAge(birthdate) : undefined;
+  const profile = useAppSelector(state => state.profile);
+  const fullName = [profile.firstName, profile.lastName]
+    .filter(Boolean)
+    .join(' ')
+    .trim();
+  const birthdate = profile.birthdate
+    ? new Date(`${profile.birthdate}T00:00:00`)
+    : undefined;
+  const age =
+    birthdate && !Number.isNaN(birthdate.getTime())
+      ? getAge(birthdate)
+      : undefined;
+  const zodiac =
+    birthdate && !Number.isNaN(birthdate.getTime())
+      ? getZodiacFromDate(birthdate)
+      : undefined;
+  const displayName = fullName || 'Malak';
 
   const isDarkTheme = rt.themeName === 'dark';
 
@@ -62,7 +76,7 @@ export const Profile = () => {
     >
       <View>
         <Text variant='display' textAlign='center' numberOfLines={1}>
-          {name}
+          {displayName}
         </Text>
       </View>
 
@@ -72,10 +86,10 @@ export const Profile = () => {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={20} color={theme.iconActive} />
+              <Icon name='cards' size={24} color={theme.iconActive} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
-              -
+              {zodiac ? t(zodiac) : '-'}
             </Text>
             <Text variant='small' color='textSecondary' textAlign='center'>
               {t('yourZodiac')}
@@ -84,7 +98,7 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={20} color={theme.iconActive} />
+              <Icon name='cards' size={24} color={theme.iconActive} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
               {birthdate
@@ -102,7 +116,7 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='profile' size={20} color={theme.iconActive} />
+              <Icon name='profile' size={24} color={theme.iconActive} />
             </View>
             <Text variant='label' textAlign='center'>
               {age ?? '-'}
@@ -122,9 +136,7 @@ export const Profile = () => {
             onPress={() => navigation.navigate('TarotHistory')}
           >
             <View style={styles.iconCircle}>
-              <Text variant='label' color='textGold'>
-                Aa
-              </Text>
+              <Icon name='cards' size={24} color={theme.iconActive} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('myReadings')}</Text>
@@ -133,29 +145,7 @@ export const Profile = () => {
               </Text>
             </View>
 
-            <Icon name='leftArrow' size={20} color={theme.iconActive} />
-          </Pressable>
-
-          <View style={styles.divider} />
-
-          {/* Compatibility */}
-          <Pressable
-            style={styles.settingRow}
-            onPress={() => navigation.navigate('CompatibilityHistory')}
-          >
-            <View style={styles.iconCircle}>
-              <Text variant='label' color='textGold'>
-                Aa
-              </Text>
-            </View>
-            <View style={styles.settingText}>
-              <Text variant='label'>{t('myCompatibility')}</Text>
-              <Text variant='caption' color='textSecondary'>
-                {t('peopleYouHaveChecked')}
-              </Text>
-            </View>
-
-            <Icon name='leftArrow' size={20} color={theme.iconActive} />
+            <Icon name='leftArrow' size={24} color={theme.iconActive} />
           </Pressable>
 
           <View style={styles.divider} />
@@ -163,9 +153,7 @@ export const Profile = () => {
           {/* Language */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Text variant='label' color='textGold'>
-                Aa
-              </Text>
+              <Icon name='lang' size={24} color={theme.iconActive} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('language')}</Text>
@@ -197,9 +185,10 @@ export const Profile = () => {
 
           <View style={styles.divider} />
 
+          {/* Theme */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={20} color={theme.iconActive} />
+              <Icon name='moon' size={24} color={theme.iconActive} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('darkMode')}</Text>
@@ -216,9 +205,12 @@ export const Profile = () => {
             />
           </View>
 
+          <View style={styles.divider} />
+
+          {/* Daily Message Notification */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={20} color={theme.iconActive} />
+              <Icon name='notification' size={24} color={theme.iconActive} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('dailyMessageNotification')}</Text>

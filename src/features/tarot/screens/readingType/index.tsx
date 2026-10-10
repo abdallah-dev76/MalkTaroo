@@ -36,13 +36,13 @@ export const ReadingType = () => {
         <ReadingTypeCard
           title={t('oneCardReading')}
           subTitle={t('oneCardReadingDescription')}
-          image={appImages.tarot}
+          image={appImages.tarotCard}
           onPress={() => navigation.navigate('OneCardReading')}
         />
         <ReadingTypeCard
           title={t('threeCardReading')}
           subTitle={t('threeCardReadingDescription')}
-          image={appImages.tarot}
+          image={appImages.threeTarotCards}
           onPress={() => navigation.navigate('ThreeCardReading')}
         />
       </View>

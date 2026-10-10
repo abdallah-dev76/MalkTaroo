@@ -17,6 +17,6 @@ export type TextVariant =
 export interface ITextProps extends TextProps {
   //When using & {} => TypeScript can preserve the literal union for autocomplete, while still allowing arbitrary strings.
   color?: Colors | (string & {});
-  textAlign?: 'left' | 'center' | 'right' | 'start' | 'end';
+  textAlign?: 'left' | 'center' | 'right';
   variant?: TextVariant;
 }

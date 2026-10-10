@@ -6,20 +6,16 @@ import RNRestart from 'react-native-restart';
 
 export type AppDirection = 'rtl' | 'ltr';
 
-export const isDark = Storage.getString('theme') === 'dark' || true;
-
-export const isArabic = Storage.getString('language') === 'ar' || true;
-
 export const toggleLanguage = () => {
-  const storedLang = Storage.getString(StorageKeys.Language);
+  const storedLang =
+    Storage.getString(StorageKeys.Language) || getLocales()[0]?.languageCode;
   const newLang = storedLang === 'ar' ? 'en' : 'ar';
 
   Storage.setString(StorageKeys.Language, newLang);
 
+  RNRestart.Restart();
   I18nManager.allowRTL(newLang === 'ar');
   I18nManager.forceRTL(newLang === 'ar');
-  RNRestart.Restart();
-  applyAppDirection();
 };
 
 export const getLanguage = () => {
@@ -28,18 +24,8 @@ export const getLanguage = () => {
   );
 };
 
-export const applyAppDirection = () => {
-  const languageDirection = getLanguage() === 'ar' ? 'rtl' : 'ltr';
-  const isRTL = languageDirection === 'rtl';
-
-  I18nManager.allowRTL(isRTL);
-
-  if (isArabic !== isRTL) {
-    I18nManager.forceRTL(isRTL);
-  }
-
-  return isRTL;
-};
+// Theme settings
+export const isDark = Storage.getString('theme') === 'dark' || true;
 
 export const toggleTheme = () => {
   const storedTheme = Storage.getString(StorageKeys.Theme);
