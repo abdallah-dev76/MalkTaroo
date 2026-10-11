@@ -37,12 +37,21 @@ export const ReadingType = () => {
           title={t('oneCardReading')}
           subTitle={t('oneCardReadingDescription')}
           image={appImages.tarotCard}
+          tags={[
+            t('readingTags.oneCard.quick'),
+            t('readingTags.oneCard.focused'),
+            t('readingTags.oneCard.precise'),
+          ]}
           onPress={() => navigation.navigate('OneCardReading')}
         />
         <ReadingTypeCard
           title={t('threeCardReading')}
           subTitle={t('threeCardReadingDescription')}
           image={appImages.threeTarotCards}
+          tags={[
+            t('readingTags.threeCard.comprehensive'),
+            t('readingTags.threeCard.deep'),
+          ]}
           onPress={() => navigation.navigate('ThreeCardReading')}
         />
       </View>

@@ -4,6 +4,7 @@ import { ActivityIndicator, Pressable, View } from 'react-native';
 import { styles } from './styles';
 import { ButtonProps } from './types';
 import Text from '../Text';
+import Icon from '../Icon';
 
 export const Button = ({
   children,
@@ -45,13 +46,25 @@ export const Button = ({
         <ActivityIndicator />
       ) : (
         <>
-          {leftIcon && <View style={styles.icon}>{leftIcon}</View>}
+          {leftIcon && (
+            <View style={styles.icon}>
+              <Icon name={leftIcon.name} size={24} color={leftIcon.color} />
+            </View>
+          )}
 
           <Text style={styles.text} variant='button'>
             {children}
           </Text>
 
-          {rightIcon && <View style={styles.icon}>{rightIcon}</View>}
+          {rightIcon && (
+            <View style={styles.icon}>
+              <Icon
+                name={rightIcon.name}
+                size={rightIcon.size}
+                color={rightIcon.color}
+              />
+            </View>
+          )}
         </>
       )}
     </Pressable>

@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { radius, spacing } from '@theme/index';
+import { hScale } from '@common/utils/normalize';
 
 export const styles = StyleSheet.create(theme => ({
   content: {
@@ -18,13 +19,15 @@ export const styles = StyleSheet.create(theme => ({
     gap: spacing.md,
   },
 
+  zodiacData: { gap: hScale(8), alignItems: 'center' },
+
   compatibilityWrapper: {
     alignItems: 'center',
   },
 
   descriptionBox: {
     borderWidth: 1,
-    borderColor: theme.border,
+    borderColor: theme.borderGold,
     padding: spacing.md,
     borderRadius: radius.md,
     backgroundColor: theme.backgroundElevated,
@@ -37,8 +40,8 @@ export const styles = StyleSheet.create(theme => ({
     left: 0,
     zIndex: -1,
     width: '100%',
-    height: 4,
-    marginTop: -40,
+    height: hScale(4),
+    marginTop: hScale(-42),
     backgroundColor: theme.borderGold,
     shadowColor: theme.borderGold,
     shadowOffset: { width: 0, height: 0 },

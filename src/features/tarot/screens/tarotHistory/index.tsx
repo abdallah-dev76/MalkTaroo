@@ -103,7 +103,6 @@ export const TarotHistory = () => {
           <Header.Icon
             name='rightArrow'
             color={theme.iconPrimary}
-            size={24}
             onPress={() => navigation.goBack()}
           />
           <Header.Title>{t('tarotHistory')}</Header.Title>

@@ -109,7 +109,6 @@ export const ThreeCardReading = () => {
           <Header.Icon
             name='rightArrow'
             color={theme.iconPrimary}
-            size={24}
             onPress={() => navigation.goBack()}
           />
         </Header>

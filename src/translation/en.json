@@ -18,6 +18,8 @@
   "capricorn": "Capricorn",
   "aquarius": "Aquarius",
   "pisces": "Pisces",
+  "swords": "Swords",
+  "hangedMan": "The Hanged Man",
   "dates": {
     "aries": "March 21 - April 19",
     "taurus": "April 20 - May 20",
@@ -44,7 +46,11 @@
   "randomText": "Gemini and Cancer have a unique compatibility in love, as Gemini tends to think, while Cancer tends to be emotional.",
   "strongConnection": "Strong Connection",
   "compatibilityResult": "Compatibility Result",
+  "shareCompatibilityResult": "Check out the compatibility result for {{firstZodiac}} and {{secondZodiac}}!",
   "love": "Love",
+  "finance": "Finance",
+  "career": "Career",
+  "energy": "Energy",
   "friendship": "Friendship",
   "work": "Work",
   "compatibilityLabels": {
@@ -67,6 +73,18 @@
   "oneCardReadingDescription": "A quick answer to your question",
   "threeCardReading": "Three-card reading",
   "threeCardReadingDescription": "Past, present, future",
+  "readingTags": {
+    "oneCard": {
+      "quick": "⚡ Quick",
+      "focused": "🎯 Focused",
+      "precise": "⭐ Precise"
+    },
+    "threeCard": {
+      "broader": "📊 Broader analysis",
+      "comprehensive": "☀️ Comprehensive",
+      "deep": "📚 Deeper"
+    }
+  },
   "focusOnYourQuestion": "Focus on your question",
   "focusOnYourQuestionDescription": "Take a deep breath, focus on your question, then tap to choose your card",
   "chooseYourCard": "Choose your card",
@@ -115,16 +133,22 @@
   "noTarotReadingHistory": "No tarot readings yet",
   "tarotCards": {
     "swords": {
-      "general": "It seems you are looking for something you will never find",
+      "general": "A pause is asking you to let go of control and see your situation from a new perspective",
       "past": "You spent a long time chasing something that was never within reach",
       "present": "You are still searching, but the answer may not be where you are looking",
       "future": "Letting go of this search will open a new path for you"
+    },
+    "hangedMan": {
+      "general": "A pause is asking you to let go of control and see your situation from a new perspective"
     }
   },
   "dailyMessageNotification": "Daily Message Notification",
   "dailyMessageDescription": "Receive a daily advice",
   "createYourProfile": "Create Your Profile",
   "createProfileDescription": "Tell us about yourself so we can personalize your tarot and astrology experience.",
+  "editProfile": "Edit Profile",
+  "editProfileDescription": "Update your name and birthdate details.",
+  "saveProfile": "Save",
   "enterYourFirstName": "Enter your first name",
   "enterYourLastName": "Enter your last name",
   "enterYourBirthdate": "Enter your birthdate",
@@ -155,5 +179,8 @@
   "tarotCardTitle3": "Tarot Card 3",
   "tarotCardDescription3": "Description for Tarot Card 3",
   "firstName": "First Name",
-  "lastName": "Last Name"
+  "lastName": "Last Name",
+  "dailyMessage": "Your Daily Message",
+  "knowYourLuckToday": "Know Today's Luck",
+  "luckOfTheDay": "Today's Luck"
 }

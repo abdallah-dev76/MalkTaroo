@@ -9,19 +9,24 @@ import {
 } from '../../../../navigation/compatibilityStack';
 
 export const FirstZodiac = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
-  const { setZodiac } = useContext(
+  const { zodiac, setZodiac } = useContext(
     CompatibilityContext,
   ) as CompatibilityContextType;
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
 
   return (
     <ChooseZodiac
       title='chooseZodiac'
       id={ZodiacId.FirstZodiac}
+      selectedZodiacId={zodiac[0]?.id}
       onCardPress={item => {
         if (setZodiac) {
-          setZodiac([{ id: item.id, name: item.name, image: item.image }]);
+          setZodiac(previous => [
+            { id: item.id, name: item.name, image: item.image },
+            ...previous.slice(1, 2),
+          ]);
         }
         navigation.navigate('SecondZodiac');
       }}

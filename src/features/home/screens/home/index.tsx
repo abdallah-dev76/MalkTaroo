@@ -1,71 +1,142 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { MainLayout, Text, Header, Button } from '@common/components';
-import { View, ImageBackground, FlatList } from 'react-native';
+import {
+  View,
+  ImageBackground,
+  FlatList,
+  ListRenderItem,
+  useWindowDimensions,
+} from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { appImages } from '@assets/images';
 import { styles } from './styles';
 import { TarotCard } from '../../components/tarotCard';
 import { ZodiacCard } from '../../components/zodiacCard';
+import { zodiacList } from '@common/data/zodiac';
+import { tarotCards } from '@common/data/tarot';
+import { useAppSelector } from '@store';
+import { getZodiacFromDate } from '@common/utils';
+import { LuckCard } from '@features/home/components/luckCard';
+import { getDailyLuckScore, luckCategories } from './data';
 
-const tarotCards = [
-  {
-    id: '1',
-    titleKey: 'tarotCardTitle1',
-    descriptionKey: 'tarotCardDescription1',
-    image: appImages.tarotCard,
-  },
-  {
-    id: '2',
-    titleKey: 'tarotCardTitle2',
-    descriptionKey: 'tarotCardDescription2',
-    image: appImages.tarotCard,
-  },
-  {
-    id: '3',
-    titleKey: 'tarotCardTitle3',
-    descriptionKey: 'tarotCardDescription3',
-    image: appImages.tarotCard,
-  },
-];
+const getTarotCardKey = (item: (typeof tarotCards)[number]) => item.id;
+const getZodiacCardKey = (item: (typeof zodiacList)[number]) => item.id;
 
-const zodiacCards = [
-  { id: 'aries', image: appImages.aries },
-  { id: 'taurus', image: appImages.taurus },
-  { id: 'gemini', image: appImages.gemini },
-  { id: 'cancer', image: appImages.cancer },
-  { id: 'leo', image: appImages.leo },
-  { id: 'virgo', image: appImages.virgo },
-  { id: 'libra', image: appImages.libra },
-  { id: 'scorpio', image: appImages.scorpio },
-  { id: 'sagittarius', image: appImages.sagittarius },
-  { id: 'capricorn', image: appImages.capricorn },
-  { id: 'aquarius', image: appImages.aquarius },
-  { id: 'pisces', image: appImages.pisces },
-];
+const parseBirthdate = (value?: string) => {
+  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return undefined;
+  }
+
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+    ? date
+    : undefined;
+};
 
 export const Home = () => {
   const { theme, rt } = useUnistyles();
+  const { t, i18n } = useTranslation();
+  const { width } = useWindowDimensions();
+  const firstName = useAppSelector(state => state.profile.firstName);
+  const profileBirthdate = useAppSelector(state => state.profile.birthdate);
+  const [now, setNow] = useState(() => new Date());
   const themeName = rt.themeName;
-  const { t } = useTranslation();
+  const useCompactLuckLayout = width < 390;
+
+  useEffect(() => {
+    const nextRefresh = new Date(now);
+    if (now.getHours() < 12) {
+      nextRefresh.setHours(12, 0, 0, 0);
+    } else {
+      nextRefresh.setDate(nextRefresh.getDate() + 1);
+      nextRefresh.setHours(0, 0, 0, 0);
+    }
+
+    const timeoutId = setTimeout(
+      () => setNow(new Date()),
+      nextRefresh.getTime() - now.getTime(),
+    );
+
+    return () => clearTimeout(timeoutId);
+  }, [now]);
+  const birthdate = parseBirthdate(profileBirthdate);
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const dateFormatter = useMemo(
+    () =>
+      new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        numberingSystem: 'latn',
+      }),
+    [locale],
+  );
+
+  const zodiac =
+    birthdate && !Number.isNaN(birthdate.getTime())
+      ? getZodiacFromDate(birthdate)
+      : undefined;
+
+  const greetingKey = now.getHours() < 12 ? 'goodMorning' : 'goodEvening';
+  const formattedDate = dateFormatter
+    .formatToParts(now)
+    .filter(part => part.type !== 'literal')
+    .map(part => part.value)
+    .join(' ');
+
+  const renderTarotCard: ListRenderItem<(typeof tarotCards)[number]> =
+    useCallback(
+      ({ item }) => (
+        <TarotCard
+          image={item.image}
+          title={t(item.name, { lng: 'en' })}
+          description={t(item.meaningKey)}
+          cardLabel={t(item.name, { lng: 'ar' })}
+          learnMoreLabel={t('learnMore')}
+        />
+      ),
+      [t],
+    );
+  const renderZodiacCard: ListRenderItem<(typeof zodiacList)[number]> =
+    useCallback(
+      ({ item }) => (
+        <ZodiacCard
+          image={item.image}
+          title={t(item.id)}
+          dateRange={t(`dates.${item.id}`)}
+        />
+      ),
+      [t],
+    );
 
   return (
     <MainLayout
       scrollable
       edges={['top', 'right', 'left']}
       header={
-        <Header>
-          <Header.Hello>{t('goodMorning')} Malak!</Header.Hello>
+        <Header style={styles.ph24}>
+          <Header.Hello zodiac={zodiac}>
+            {t(greetingKey)}
+            {firstName ? ` ${firstName}` : ''}!
+          </Header.Hello>
           <Header.Icon
             name='notification'
             onPress={() => {}}
             color={theme.iconPrimary}
-            size={24}
           />
         </Header>
       }
+      style={styles.container}
       contentContainerStyle={styles.content}
     >
-      <View>
+      {/* Daily Message */}
+      <View style={styles.ph24}>
         <ImageBackground
           source={
             themeName === 'light'
@@ -83,8 +154,13 @@ export const Home = () => {
           />
           <View style={styles.dailyContent}>
             <View style={styles.dailyText}>
-              <Text variant='title'>{t('zodiacMessage')}</Text>
-              <Text variant='label' color='textSecondary' numberOfLines={2}>
+              <View>
+                <Text>{t('dailyMessage')}</Text>
+                <Text variant='caption' color='textSecondary'>
+                  {formattedDate}
+                </Text>
+              </View>
+              <Text variant='label' numberOfLines={2}>
                 {t('randomText')}
               </Text>
             </View>
@@ -92,44 +168,87 @@ export const Home = () => {
         </ImageBackground>
       </View>
 
+      {/* Luck of the day */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Text variant='heading3'>{t('learnTarot')}</Text>
-          <Button variant='ghost'>{t('showMore')}</Button>
+          <Text>{t('luckOfTheDay')}</Text>
+          <Button
+            variant='ghost'
+            size='small'
+            rightIcon={{
+              name: 'leftArrow',
+              size: 16,
+              color: theme.textGold,
+            }}
+          >
+            {t('knowYourLuckToday')}
+          </Button>
+        </View>
+        <View
+          style={[
+            styles.luckCardsContainer,
+            useCompactLuckLayout && styles.luckCardsContainerCompact,
+          ]}
+        >
+          {luckCategories.map(category => (
+            <LuckCard
+              key={category.id}
+              title={t(category.titleKey)}
+              score={getDailyLuckScore(category.id, now)}
+              color={category.color}
+              icon={category.icon}
+              compact={useCompactLuckLayout}
+            />
+          ))}
+        </View>
+      </View>
+
+      {/* Learn Tarot */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text>{t('learnTarot')}</Text>
+          <Button
+            variant='ghost'
+            size='small'
+            rightIcon={{
+              name: 'leftArrow',
+              size: 16,
+              color: theme.textGold,
+            }}
+          >
+            {t('showMore')}
+          </Button>
         </View>
         <FlatList
           data={tarotCards}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <TarotCard
-              image={item.image}
-              title={t(item.titleKey)}
-              description={t(item.descriptionKey)}
-              cardLabel={t('tarotCardLabel')}
-              learnMoreLabel={t('learnMore')}
-            />
-          )}
+          keyExtractor={getTarotCardKey}
+          renderItem={renderTarotCard}
           horizontal
           contentContainerStyle={styles.listContent}
           showsHorizontalScrollIndicator={false}
         />
       </View>
 
+      {/* Learn Zodiac */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Text variant='heading3'>{t('learnZodiac')}</Text>
-          <Button variant='ghost'>{t('showMore')}</Button>
+          <Text>{t('learnZodiac')}</Text>
+          <Button
+            variant='ghost'
+            size='small'
+            rightIcon={{
+              name: 'leftArrow',
+              size: 16,
+              color: theme.textGold,
+            }}
+          >
+            {t('showMore')}
+          </Button>
         </View>
         <FlatList
-          data={zodiacCards}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <ZodiacCard
-              image={item.image}
-              title={t(item.id)}
-              dateRange={t(`dates.${item.id}`)}
-            />
-          )}
+          data={zodiacList}
+          keyExtractor={getZodiacCardKey}
+          renderItem={renderZodiacCard}
           horizontal
           contentContainerStyle={styles.listContent}
           showsHorizontalScrollIndicator={false}

@@ -18,8 +18,9 @@ export const styles = StyleSheet.create({
       size: {
         small: { width: wScale(40) },
         medium: { width: wScale(60) },
+        xMedium: { width: wScale(80) },
         large: { width: wScale(100) },
-        xLarge: { width: wScale(130) },
+        xLarge: { width: wScale(120) },
       },
     },
   }),

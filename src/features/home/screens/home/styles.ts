@@ -3,8 +3,15 @@ import { spacing } from '@theme/spacing';
 import { wScale } from '@common/utils';
 
 export const styles = StyleSheet.create(theme => ({
+  ph24: {
+    paddingHorizontal: spacing.lg,
+  },
+  container: {
+    paddingHorizontal: 0,
+  },
   content: {
     gap: spacing.lg,
+    paddingBottom: spacing.lg,
   },
   section: {
     gap: spacing.md,
@@ -13,16 +20,17 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: spacing.lg,
   },
   listContent: {
     gap: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
   dailyMessage: {
     gap: spacing.md,
-    backgroundColor: 'red',
-    borderRadius: wScale(16),
+    borderRadius: wScale(12),
     borderWidth: wScale(1),
-    borderColor: theme.border,
+    borderColor: theme.borderGold,
     overflow: 'hidden',
   },
   dailyOverlay: {
@@ -34,10 +42,10 @@ export const styles = StyleSheet.create(theme => ({
     bottom: 0,
     width: '100%',
     height: '100%',
-    opacity: 0.2,
+    opacity: 0.4,
   },
   lightOverlay: {
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
   },
   darkOverlay: {
     backgroundColor: 'black',
@@ -46,10 +54,16 @@ export const styles = StyleSheet.create(theme => ({
     padding: spacing.lg,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-    flex: 1,
   },
   dailyText: {
-    gap: wScale(6),
-    flex: 1,
+    gap: wScale(16),
+  },
+  luckCardsContainer: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+  luckCardsContainerCompact: {
+    flexWrap: 'wrap',
   },
 }));

@@ -18,6 +18,8 @@
   "capricorn": "الجدي",
   "aquarius": "الدلو",
   "pisces": "الحوت",
+  "swords": "السيوف",
+  "hangedMan": "الرجل المشنوق",
 
   "dates": {
     "aries": "21 مارس - 19 أبريل",
@@ -45,7 +47,11 @@
   "randomText": "القمر في منزلك الثاني يطالبك أن تحافظ اليوم على توازن نفقاتك وسلوكك ومن المهم أن تعتني بخطواتك وحساباتك ولا تهمل ذلك.",
   "strongConnection": "توافق قوي",
   "compatibilityResult": "نتيجة التوافق",
+  "shareCompatibilityResult": "اكتشف نتيجة التوافق بين {{firstZodiac}} و{{secondZodiac}}!",
   "love": "الحب",
+  "finance": "المال",
+  "career": "المهنة",
+  "energy": "الطاقة",
   "friendship": "الصداقة",
   "work": "العمل",
   "compatibilityLabels": {
@@ -68,6 +74,18 @@
   "oneCardReadingDescription": "إجابة سريعة على سؤالك",
   "threeCardReading": "قراءة ثلاث بطاقات",
   "threeCardReadingDescription": "الماضي، الحاضر، المستقبل",
+  "readingTags": {
+    "oneCard": {
+      "quick": "سريع",
+      "focused": "مركّز",
+      "precise": "دقيق"
+    },
+    "threeCard": {
+      "broader": "تحليل أوسع",
+      "comprehensive": "شامل",
+      "deep": "أعمق"
+    }
+  },
   "focusOnYourQuestion": "ركز في سؤالك",
   "focusOnYourQuestionDescription": "خذ نفسًا عميقًا وركز في سؤالك، ثم اضغط لاختيار البطاقة",
   "chooseYourCard": "اختر بطاقتك",
@@ -116,16 +134,22 @@
   "noTarotReadingHistory": "لا توجد قراءات تاروت بعد",
   "tarotCards": {
     "swords": {
-      "general": "يبدو انك تبحث عن شيء لن تجده ابدا",
+      "general": "تدعوك هذه البطاقة إلى التمهل والتخلي عن السيطرة، والنظر إلى وضعك من زاوية جديدة",
       "past": "قضيت وقتًا طويلًا تطارد شيئًا لم يكن في متناولك",
       "present": "ما زلت تبحث، لكن الإجابة قد لا تكون حيث تبحث",
       "future": "التخلي عن هذا البحث سيفتح لك طريقًا جديدًا"
+    },
+    "hangedMan": {
+      "general": "تدعوك هذه البطاقة إلى التمهل والتخلي عن السيطرة، والنظر إلى وضعك من زاوية جديدة"
     }
   },
   "dailyMessageNotification": "إشعار الرسالة اليومية",
   "dailyMessageDescription": "تلقى نصيحة يومية",
   "createYourProfile": "إنشاء ملفك الشخصي",
   "createProfileDescription": "أخبرنا عن نفسك حتى نتمكن من تخصيص تجربة التاروت وعلم التنجيم الخاصة بك.",
+  "editProfile": "تعديل الملف الشخصي",
+  "editProfileDescription": "حدّث اسمك وتاريخ ميلادك.",
+  "saveProfile": "حفظ",
   "enterYourFirstName": "ادخل اسمك الأول",
   "enterYourLastName": "ادخل اسمك الأخير",
   "enterYourBirthdate": "ادخل تاريخ ميلادك",
@@ -156,5 +180,14 @@
   "tarotCardTitle3": "بطاقة التاروت ٣",
   "tarotCardDescription3": "وصف بطاقة التاروت ٣",
   "firstName": "الاسم الأول",
-  "lastName": "اسم العائلة"
+  "lastName": "اسم العائلة",
+  "dailyMessage": "رسالتك اليوم",
+  "knowYourLuckToday": "اعرف حظك اليوم",
+  "luckOfTheDay": "حظ اليوم",
+  "homeContent": {
+    "goodMorningWithName": "صباح الخير، {{name}}!",
+    "goodEveningWithName": "مساء الخير، {{name}}!",
+    "dailyAdvice": "خذ لحظة اليوم للتأمل فيما يهمك، وتعامل مع خطوتك التالية بعناية.",
+    "scoreUnavailable": "النتيجة غير متاحة"
+  }
 }

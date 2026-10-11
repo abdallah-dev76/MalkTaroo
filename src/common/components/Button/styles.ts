@@ -96,7 +96,7 @@ export const styles = StyleSheet.create(theme => ({
         },
 
         ghost: {
-          color: theme.buttonGhostText,
+          color: theme.textGold,
         },
 
         destructive: {

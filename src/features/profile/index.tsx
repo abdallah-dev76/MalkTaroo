@@ -6,11 +6,13 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@common/types.ts';
 
 import { useTranslation } from 'react-i18next';
-import { Header, Icon, MainLayout, Text } from '@common/components';
+import { Button, Header, Icon, MainLayout, Text } from '@common/components';
 import { toggleLanguage, toggleTheme } from '@common/utils';
 import { getZodiacFromDate } from '@common/utils/zodiac';
 import { useAppSelector } from '@store';
 import { styles } from './styles';
+import Avatar from '@common/components/Avatar';
+import { appImages } from '@assets/images';
 
 const LANGUAGES = [
   { code: 'en', labelKey: 'english' },
@@ -74,19 +76,29 @@ export const Profile = () => {
         </Header>
       }
     >
-      <View>
-        <Text variant='display' textAlign='center' numberOfLines={1}>
+      <View style={styles.profileData}>
+        <Avatar
+          source={appImages[zodiac as keyof typeof appImages]}
+          isBorder
+          size='large'
+        />
+        <Text variant='heading1' textAlign='center' numberOfLines={1}>
           {displayName}
         </Text>
+        <Button
+          variant='outline'
+          size='small'
+          onPress={() => navigation.navigate('Onboarding', { isEditing: true })}
+        >
+          {t('editProfile')}
+        </Button>
       </View>
 
       <View style={styles.body}>
-        <Text variant='heading3'>{t('yourDetails')}</Text>
-
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={24} color={theme.iconActive} />
+              <Icon name='astrology' size={24} color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
               {zodiac ? t(zodiac) : '-'}
@@ -98,7 +110,7 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={24} color={theme.iconActive} />
+              <Icon name='calender' size={24} color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
               {birthdate
@@ -116,7 +128,7 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='profile' size={24} color={theme.iconActive} />
+              <Icon name='profile' size={24} color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center'>
               {age ?? '-'}
@@ -136,7 +148,7 @@ export const Profile = () => {
             onPress={() => navigation.navigate('TarotHistory')}
           >
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={24} color={theme.iconActive} />
+              <Icon name='cards' size={24} color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('myReadings')}</Text>
@@ -145,7 +157,7 @@ export const Profile = () => {
               </Text>
             </View>
 
-            <Icon name='leftArrow' size={24} color={theme.iconActive} />
+            <Icon name='leftArrow' size={24} color={theme.textGold} />
           </Pressable>
 
           <View style={styles.divider} />
@@ -153,7 +165,7 @@ export const Profile = () => {
           {/* Language */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='lang' size={24} color={theme.iconActive} />
+              <Icon name='lang' size={24} color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('language')}</Text>
@@ -188,7 +200,7 @@ export const Profile = () => {
           {/* Theme */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='moon' size={24} color={theme.iconActive} />
+              <Icon name='moon' size={24} color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('darkMode')}</Text>
@@ -210,7 +222,7 @@ export const Profile = () => {
           {/* Daily Message Notification */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='notification' size={24} color={theme.iconActive} />
+              <Icon name='notification' size={24} color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('dailyMessageNotification')}</Text>

@@ -8,17 +8,32 @@ export const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.backgroundSecondary,
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: theme.inputBorder,
+    borderColor: theme.borderGold,
     alignItems: 'center',
-    gap: spacing.lg,
+    gap: spacing.md,
     borderRadius: radius.md,
   },
 
   content: {
+    gap: spacing.sm,
+    flex: 1,
+  },
+  tags: {
+    flexDirection: 'row' as const,
+    flexWrap: 'wrap' as const,
     gap: spacing.xs,
   },
+  tag: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderWidth: 1,
+    borderColor: theme.borderGold,
+    backgroundColor: theme.backgroundSecondary,
+    borderRadius: radius.full,
+    marginBottom: spacing.xs,
+  },
   image: {
-    width: wScale(75),
-    height: hScale(75),
+    width: wScale(120),
+    height: hScale(120),
   },
 }));

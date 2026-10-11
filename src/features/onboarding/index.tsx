@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import {
@@ -64,6 +65,8 @@ const getAge = (birthdate: Date) => {
 export const Onboarding = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Onboarding'>>();
+  const isEditing = params?.isEditing ?? false;
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const profile = useAppSelector(state => state.profile);
@@ -166,7 +169,11 @@ export const Onboarding = () => {
       }),
     );
 
-    navigation.replace('MainTabs');
+    if (isEditing) {
+      navigation.goBack();
+    } else {
+      navigation.replace('MainTabs');
+    }
   };
 
   useEffect(() => {
@@ -204,9 +211,11 @@ export const Onboarding = () => {
           ]}
         />
 
-        <Text variant='heading2'>{t('createYourProfile')}</Text>
+        <Text variant='heading2'>
+          {t(isEditing ? 'editProfile' : 'createYourProfile')}
+        </Text>
         <Text variant='body' color='textSecondary'>
-          {t('createProfileDescription')}
+          {t(isEditing ? 'editProfileDescription' : 'createProfileDescription')}
         </Text>
 
         <TextInput
@@ -278,7 +287,7 @@ export const Onboarding = () => {
           disabled={!isValid}
           style={styles.submitButton}
         >
-          {t('startNow')}
+          {t(isEditing ? 'saveProfile' : 'startNow')}
         </Button>
       </ScrollView>
     </MainLayout>

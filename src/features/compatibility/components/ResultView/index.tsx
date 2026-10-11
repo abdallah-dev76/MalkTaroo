@@ -25,10 +25,11 @@ export const shareResultView = async (
   try {
     const url = await captureRef(viewRef.current, {
       format: 'png',
-      quality: 1,
     });
     await Share.share({ url, message });
-  } catch {}
+  } catch {
+    console.log('Failed to share the result view');
+  }
 };
 
 export const ResultView = ({
@@ -70,13 +71,23 @@ export const ResultView = ({
               size='xLarge'
               isBorder
             />
-            <Text variant='heading3'>{id ? t(id) : ''}</Text>
+            <View style={styles.zodiacData}>
+              <Text variant='title'>{id ? t(id) : ''}</Text>
+              <Text variant='caption' color='textSecondary'>
+                {id ? t(`dates.${id}`) : ''}
+              </Text>
+            </View>
           </View>
         ))}
         <View style={styles.divider} />
         <View style={styles.heartWrapper}>
           <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
-            <Icon name='heart' color={theme.borderGold} size={28} isFocused />
+            <Icon
+              name='heartSolid'
+              color={theme.borderGold}
+              size={28}
+              isFocused
+            />
           </Animated.View>
         </View>
       </View>

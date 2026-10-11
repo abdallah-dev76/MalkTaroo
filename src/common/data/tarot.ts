@@ -4,6 +4,7 @@ import { appImages } from '@assets/images';
 export type TarotCard = {
   id: string;
   image: ImageSourcePropType;
+  name: string;
   meaningKey: string;
 };
 
@@ -15,7 +16,14 @@ export const tarotCards: TarotCard[] = [
   {
     id: 'swords',
     image: appImages.swords,
+    name: 'swords',
     meaningKey: 'tarotCards.swords.general',
+  },
+  {
+    id: 'hangedMan',
+    image: appImages.hangedMan,
+    name: 'hangedMan',
+    meaningKey: 'tarotCards.hangedMan.general',
   },
 ];
 

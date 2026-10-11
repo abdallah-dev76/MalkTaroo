@@ -1,4 +1,3 @@
-import { spacing } from '@theme/spacing';
 import { hScale, wScale } from '@common/utils';
 import { StyleSheet } from 'react-native-unistyles';
 
@@ -10,10 +9,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: spacing.xxxl,
+    paddingBottom: hScale(90),
   },
   loader: {
-    width: wScale(130),
-    height: hScale(130),
+    width: wScale(100),
+    height: hScale(100),
   },
 });

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { IconName } from '@assets/icons';
 import { PressableProps } from 'react-native';
 
 export type ButtonVariants =
@@ -18,6 +18,14 @@ export interface ButtonProps extends PressableProps {
   fullWidth?: boolean;
   children: React.ReactNode;
   loading?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIcon?: {
+    name: IconName;
+    size?: number;
+    color?: string;
+  };
+  rightIcon?: {
+    name: IconName;
+    size?: number;
+    color?: string;
+  };
 }

@@ -21,16 +21,20 @@ export const Result = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
 
-  const { zodiac } = useContext(
+  const imageRef = useRef<View>(null);
+  const { zodiac, setZodiac } = useContext(
     CompatibilityContext,
   ) as CompatibilityContextType;
+
   const percentage = getCompatibilityPercentage(zodiac[0]?.id, zodiac[1]?.id);
 
-  const imageRef = useRef<View>(null);
   const handleShare = () =>
     shareResultView(
       imageRef,
-      `Check out the compatibility result for ${zodiac[0]?.name} and ${zodiac[1]?.name}!`,
+      t('shareCompatibilityResult', {
+        firstZodiac: t(zodiac[0]?.id ?? zodiac[0]?.name ?? ''),
+        secondZodiac: t(zodiac[1]?.id ?? zodiac[1]?.name ?? ''),
+      }),
     );
 
   return (
@@ -44,7 +48,6 @@ export const Result = () => {
           <Header.Icon
             name='share'
             color={theme.iconPrimary}
-            size={24}
             onPress={handleShare}
           />
         </Header>
@@ -56,7 +59,13 @@ export const Result = () => {
         secondZodiacId={zodiac[1]?.id}
         percentage={percentage}
       />
-      <Button onPress={() => navigation.navigate('FirstZodiac')}>
+      <Button
+        onPress={() => {
+          setZodiac([]);
+          navigation.popTo('FirstZodiac');
+        }}
+        style={styles.button}
+      >
         {t('tryAnother')}
       </Button>
     </MainLayout>

@@ -3,6 +3,9 @@ import { spacing } from '@theme/index';
 
 export const styles = StyleSheet.create({
   layout: {
-    marginTop: spacing.lg,
+    marginVertical: spacing.lg,
+  },
+  button: {
+    marginBottom: spacing.lg,
   },
 });

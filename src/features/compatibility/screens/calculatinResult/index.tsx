@@ -55,7 +55,7 @@ export const CalculatingResult = () => {
         style={styles.background}
       >
         <View style={styles.content}>
-          <Text variant='heading2'>
+          <Text variant='heading1'>
             {t('calculatingResult')}
             {dots}
           </Text>

@@ -1,6 +1,6 @@
 export type RootStackParamList = {
   Splash: undefined;
-  Onboarding: undefined;
+  Onboarding: { isEditing?: boolean } | undefined;
   MainTabs: undefined;
   CompatibilityHistory: undefined;
   CompatibilityDetail: { id: string };

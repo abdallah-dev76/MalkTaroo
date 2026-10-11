@@ -20,13 +20,13 @@ export const TarotCard = ({
   <View style={styles.card}>
     <View style={styles.details}>
       <View>
-        <Text variant='title' color='textGold'>
+        <Text variant='label' color='textGold'>
           {title}
         </Text>
-        <Text variant='title' color='textGold'>
+        <Text variant='label' color='textGold'>
           {cardLabel}
         </Text>
-        <Text variant='label' color='textSecondary' style={styles.description}>
+        <Text variant='caption' color='textSecondary' style={styles.description}>
           {description}
         </Text>
       </View>
@@ -35,7 +35,7 @@ export const TarotCard = ({
         {learnMoreLabel}
       </Button>
     </View>
-    <Image source={image} style={styles.image} />
+    <Image source={image} style={styles.image} resizeMode='contain' />
   </View>
 );
 

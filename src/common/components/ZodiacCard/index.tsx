@@ -4,18 +4,25 @@ import Text from '../Text';
 import { ZodiacCardProps } from './types';
 import { styles } from './styles';
 
-export const ZodiacCard = ({ name, image, date }: ZodiacCardProps) => {
+export const ZodiacCard = ({
+  item: { name, image, date },
+  IsSelected,
+}: {
+  item: ZodiacCardProps;
+  IsSelected?: boolean;
+}) => {
   return (
-    <View style={styles.container}>
-      <Avatar source={image} isBorder />
-
-      <View>
-        <Text variant='caption' textAlign='center'>
+    <View style={[styles.container, IsSelected && styles.selected]}>
+      <View style={styles.textContainer}>
+        <Text variant='label' textAlign='center'>
           {name}
         </Text>
-        <Text variant='small' color='textSecondary' textAlign='center'>
+        <Text variant='caption' color='textSecondary' textAlign='center'>
           {date}
         </Text>
+      </View>
+      <View>
+        <Avatar source={image} isBorder size='medium' />
       </View>
     </View>
   );

@@ -7,24 +7,25 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ImageBackground, View, Dimensions } from 'react-native';
 import { CompatibilityStackParamList } from '@common/types.ts';
-import { contentStyle, styles } from './styles';
+import { styles } from './styles';
 import { Storage, StorageKeys } from '@common/storage';
 
 export const Start = () => {
   const { t } = useTranslation();
   const { rt } = useUnistyles();
+
   const themeName = rt.themeName;
 
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
 
-  const handleStartNow = () => {
-    navigation.navigate('FirstZodiac');
-  };
-
   useEffect(() => {
     Storage.setBoolean(StorageKeys.IS_FIRST_COMPATIBILITY_DONE, true);
   }, []);
+
+  const handleStartNow = () => {
+    navigation.navigate('FirstZodiac');
+  };
 
   return (
     <MainLayout
@@ -39,7 +40,7 @@ export const Start = () => {
         resizeMode='cover'
         style={styles.background}
       >
-        <View style={contentStyle(Dimensions.get('window').height / 2)}>
+        <View style={styles.content(Dimensions.get('window').height / 2)}>
           <Text variant='heading1' color='textGold'>
             {t('compatibility')}
           </Text>

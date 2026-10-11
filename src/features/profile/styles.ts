@@ -9,6 +9,7 @@ export const styles = StyleSheet.create(theme => ({
   content: {
     paddingBottom: spacing.lg,
   },
+  profileData: { alignItems: 'center', gap: spacing.sm, marginTop: spacing.lg },
   heroTitle: {
     gap: spacing.xxs,
   },
@@ -19,7 +20,7 @@ export const styles = StyleSheet.create(theme => ({
   },
   body: {
     paddingHorizontal: spacing.lg,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.md,
     gap: spacing.md,
   },
   statsRow: {
@@ -36,7 +37,7 @@ export const styles = StyleSheet.create(theme => ({
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: theme.border,
-    backgroundColor: theme.backgroundElevated,
+    backgroundColor: theme.backgroundSecondary,
   },
   iconCircle: {
     alignItems: 'center',
@@ -47,7 +48,7 @@ export const styles = StyleSheet.create(theme => ({
     borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: theme.border,
-    backgroundColor: theme.backgroundElevated,
+    backgroundColor: theme.backgroundSecondary,
     overflow: 'hidden',
   },
   settingRow: {

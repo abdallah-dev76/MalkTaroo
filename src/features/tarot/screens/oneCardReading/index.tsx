@@ -154,7 +154,6 @@ export const OneCardReading = () => {
           <Header.Icon
             name='rightArrow'
             color={theme.iconPrimary}
-            size={24}
             onPress={() => navigation.goBack()}
           />
         </Header>

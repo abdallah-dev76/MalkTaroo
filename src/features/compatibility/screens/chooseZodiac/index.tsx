@@ -1,8 +1,10 @@
 import { MainLayout, ZodiacCard } from '@common/components';
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { CompatibilityStackParamList } from '@common/types.ts';
 import { zodiacList } from '@common/data/zodiac';
 import { Header } from '@common/components/Header';
-import { FlatList, TouchableOpacity } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
@@ -17,12 +19,15 @@ export const ChooseZodiac = ({
   title,
   onCardPress,
   id,
+  selectedZodiacId,
 }: {
   title: string;
   onCardPress: (item: ZodiacCardProps) => void;
   id: string;
+  selectedZodiacId?: string;
 }) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
   const { t } = useTranslation();
   const { theme } = useUnistyles();
 
@@ -35,36 +40,32 @@ export const ChooseZodiac = ({
             <Header.Icon
               name='rightArrow'
               color={theme.iconPrimary}
-              size={24}
               onPress={() => navigation.goBack()}
             />
           )}
           <Header.Title>{t(title)}</Header.Title>
         </Header>
       }
+      style={styles.container}
     >
       <FlatList
-        keyExtractor={item => item.id}
         data={zodiacList}
-        contentContainerStyle={styles.columnWrapper}
+        numColumns={2}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.content}
+        columnWrapperStyle={styles.row}
         showsVerticalScrollIndicator={false}
-        style={{}}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            activeOpacity={0.7}
+        renderItem={({ item }) => (
+          <Pressable
+            key={item.id}
             onPress={() => onCardPress(item)}
-            style={[
-              styles.item,
-              index !== zodiacList.length - 1 && styles.itemBorder,
-            ]}
+            style={styles.item}
+            accessibilityRole='button'
+            accessibilityState={{ selected: item.id === selectedZodiacId }}
+            accessibilityLabel={`${item.name}, ${item.date}`}
           >
-            <ZodiacCard
-              image={item.image}
-              name={item.name}
-              date={item.date}
-              id={item.id}
-            />
-          </TouchableOpacity>
+            <ZodiacCard item={item} IsSelected={item.id === selectedZodiacId} />
+          </Pressable>
         )}
       />
     </MainLayout>

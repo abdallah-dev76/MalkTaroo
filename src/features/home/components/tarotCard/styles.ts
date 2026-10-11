@@ -6,14 +6,17 @@ export const styles = StyleSheet.create(theme => ({
   card: {
     flexDirection: 'row',
     borderWidth: wScale(1),
-    borderColor: theme.border,
+    borderColor: theme.borderGold,
     borderRadius: wScale(12),
-    padding: spacing.md,
     gap: spacing.md,
+    overflow: 'hidden',
   },
   details: {
     justifyContent: 'space-between',
     width: wScale(120),
+    paddingStart: spacing.md,
+    paddingVertical: spacing.md,
+    gap: spacing.sm,
   },
   description: {
     marginTop: spacing.sm,

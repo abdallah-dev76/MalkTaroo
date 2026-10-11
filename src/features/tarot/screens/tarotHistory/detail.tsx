@@ -49,7 +49,6 @@ export const TarotDetail = () => {
           <Header.Icon
             name='rightArrow'
             color={theme.iconPrimary}
-            size={24}
             onPress={() => navigation.goBack()}
           />
           <Header.Title>{t('tarot')}</Header.Title>
@@ -57,7 +56,6 @@ export const TarotDetail = () => {
             <Header.Icon
               name='share'
               color={theme.iconPrimary}
-              size={24}
               onPress={() => shareResultView(imageRef, shareText)}
             />
           )}
