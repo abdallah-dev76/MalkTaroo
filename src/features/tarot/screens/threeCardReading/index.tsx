@@ -12,7 +12,7 @@ import {
   TAROT_PERIODS,
 } from '@common/data/tarot';
 import { addTarotReading, useAppDispatch } from '@store';
-import { styles } from './styles';
+import { getCardAnimationStyle, getOpacityStyle, styles } from './styles';
 
 export const ThreeCardReading = () => {
   const { t } = useTranslation();
@@ -133,7 +133,7 @@ export const ThreeCardReading = () => {
                   source={isRevealed ? card.image : appImages.tarotCard}
                   style={[
                     styles.tarotCard,
-                    { transform: [{ scaleX: flipProgress }] },
+                    getCardAnimationStyle(flipProgress),
                   ]}
                   resizeMode='contain'
                 />
@@ -142,7 +142,7 @@ export const ThreeCardReading = () => {
                 </Text>
                 {isRevealed && (
                   <Animated.View
-                    style={[styles.cardReading, { opacity: resultOpacity }]}
+                    style={[styles.cardReading, getOpacityStyle(resultOpacity)]}
                   >
                     <Text
                       variant='caption'
@@ -164,7 +164,7 @@ export const ThreeCardReading = () => {
         >
           {isRevealed ? (
             <Animated.View
-              style={[styles.resultContent, { opacity: resultOpacity }]}
+              style={[styles.resultContent, getOpacityStyle(resultOpacity)]}
             >
               <Button
                 variant='outline'
@@ -178,7 +178,7 @@ export const ThreeCardReading = () => {
               </Button>
             </Animated.View>
           ) : (
-            <Animated.View style={{ opacity: buttonOpacity }}>
+            <Animated.View style={getOpacityStyle(buttonOpacity)}>
               <Button
                 variant='premium'
                 fullWidth

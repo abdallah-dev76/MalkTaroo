@@ -48,7 +48,7 @@ export const Button = ({
         <>
           {leftIcon && (
             <View style={styles.icon}>
-              <Icon name={leftIcon.name} size={24} color={leftIcon.color} />
+              <Icon name={leftIcon.name} color={leftIcon.color} />
             </View>
           )}
 

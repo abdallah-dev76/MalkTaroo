@@ -12,7 +12,6 @@ export const Dropdown = ({
   onSelect,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const textAlign = 'left';
   const selectedIndex = options.findIndex(option => option.value === value);
   const selectedOption = options[selectedIndex];
 
@@ -38,7 +37,6 @@ export const Dropdown = ({
         <Text
           numberOfLines={1}
           color={selectedOption ? 'textPrimary' : 'inputPlaceholder'}
-          textAlign={textAlign}
           style={styles.triggerText}
         >
           {selectedOption?.label ?? placeholder}
@@ -54,12 +52,7 @@ export const Dropdown = ({
       >
         <Pressable style={styles.backdrop} onPress={() => setIsOpen(false)}>
           <Pressable style={styles.sheet}>
-            <Text
-              variant='label'
-              color='textGold'
-              textAlign={textAlign}
-              style={styles.sheetTitle}
-            >
+            <Text variant='label' color='textGold' style={styles.sheetTitle}>
               {label ?? placeholder}
             </Text>
             <FlatList
@@ -81,10 +74,7 @@ export const Dropdown = ({
                     onPress={() => handleSelect(item.value)}
                     style={[styles.option, isSelected && styles.optionSelected]}
                   >
-                    <Text
-                      color={isSelected ? 'textGold' : 'textPrimary'}
-                      textAlign={textAlign}
-                    >
+                    <Text color={isSelected ? 'textGold' : 'textPrimary'}>
                       {item.label}
                     </Text>
                   </Pressable>

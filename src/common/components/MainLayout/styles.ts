@@ -16,10 +16,27 @@ const resolveColor = (
 };
 
 export const styles = StyleSheet.create(theme => ({
-  container: (backgroundColor?: Colors | (string & {})) => ({
+  flex: {
+    flex: 1,
+  },
+  content: {
+    flexGrow: 1,
+  },
+  container: (backgroundColor?: ColorInput, topInset = 0) => ({
     flex: 1,
     paddingHorizontal: spacing.lg,
+    paddingTop: topInset,
     backgroundColor: resolveColor(theme, backgroundColor, theme.background),
+  }),
+
+  bodyInsets: (bottom: number, left: number, right: number) => ({
+    paddingBottom: bottom,
+    paddingLeft: left,
+    paddingRight: right,
+  }),
+  headerInsets: (left: number, right: number) => ({
+    paddingLeft: left,
+    paddingRight: right,
   }),
 
   statusBarSpacer: (

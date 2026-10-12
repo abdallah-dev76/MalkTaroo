@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { PlatformPressable } from '@react-navigation/elements';
 import { useLinkBuilder } from '@react-navigation/native';
 import { Icon, Text } from '@common/components';
-import { StyleSheet, useUnistyles } from 'react-native-unistyles';
-import { Profile } from '@features/profile';
+import { useUnistyles } from 'react-native-unistyles';
+import { Profile } from '@features/profile/screens/profile';
 import { IconName } from '@assets/icons';
-import { spacing } from '@theme/spacing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CompatibilityStack } from './compatibilityStack';
 import { TarotStack } from './TarotStack';
+import { styles } from './mainTabs.styles';
 
 const iconsName: IconName[] = ['home', 'cards', 'heart', 'profile'];
 
@@ -68,7 +68,6 @@ function MyTabBar({
           >
             <Icon
               name={iconsName[index] as IconName}
-              size={24}
               color={isFocused ? theme.textGold : theme.textSecondary}
               isFocused={isFocused}
             />
@@ -101,25 +100,5 @@ function MainTabs() {
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create(theme => ({
-  tabBarContainer: (bottomInset: number) => ({
-    flexDirection: 'row',
-    backgroundColor: theme.tabBarBackground,
-    padding: spacing.md,
-    paddingBottom: bottomInset + spacing.md,
-    borderTopWidth: 1,
-    borderColor: theme.tabBarBorder,
-  }),
-  tabButton: {
-    flex: 1,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    gap: spacing.xxs,
-  },
-  tabLabel: (isFocused: boolean) => ({
-    color: isFocused ? theme.textGold : theme.textSecondary,
-  }),
-}));
 
 export default MainTabs;

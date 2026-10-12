@@ -1,49 +1,8 @@
+import { hScale, wScale } from '@common/utils';
 import { radius, spacing } from '@theme/spacing';
 import { StyleSheet } from 'react-native-unistyles';
-import { hScale, wScale } from '@common/utils';
 
 export const styles = StyleSheet.create(theme => ({
-  list: {
-    flexGrow: 1,
-    gap: spacing.sm,
-    paddingBottom: spacing.xl,
-  },
-  empty: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    padding: spacing.md,
-    borderRadius: radius.md,
-    borderWidth: 1,
-    borderColor: theme.border,
-    backgroundColor: theme.backgroundElevated,
-  },
-  thumbnails: {
-    flexDirection: 'row',
-    gap: spacing.xxs,
-  },
-  thumbnail: {
-    width: 48,
-    height: 72,
-    borderRadius: radius.sm,
-    borderWidth: 1,
-    borderColor: theme.borderGold,
-  },
-  smallThumbnail: {
-    width: 32,
-    height: 48,
-    borderRadius: radius.sm,
-    borderWidth: 1,
-    borderColor: theme.borderGold,
-  },
-  itemText: {
-    flex: 1,
-    gap: spacing.xxs,
-  },
   detail: {
     marginTop: spacing.lg,
     paddingBottom: spacing.xl,
@@ -55,8 +14,8 @@ export const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.background,
   },
   detailCard: {
-    width: 180,
-    height: 280,
+    width: wScale(180),
+    height: hScale(280),
     borderRadius: radius.md,
     borderWidth: 1,
     borderColor: theme.borderGold,

@@ -1,6 +1,13 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { radius, spacing } from '@theme/index';
-import { hScale } from '@common/utils/normalize';
+import { hScale, wScale } from '@common/utils/normalize';
+import type { Animated } from 'react-native';
+
+export const HEART_ICON_SIZE = wScale(28);
+
+export const getPulseStyle = (scale: Animated.Value) => ({
+  transform: [{ scale }],
+});
 
 export const styles = StyleSheet.create(theme => ({
   content: {
@@ -19,7 +26,7 @@ export const styles = StyleSheet.create(theme => ({
     gap: spacing.md,
   },
 
-  zodiacData: { gap: hScale(8), alignItems: 'center' },
+  zodiacData: { gap: spacing.sm, alignItems: 'center' },
 
   compatibilityWrapper: {
     alignItems: 'center',

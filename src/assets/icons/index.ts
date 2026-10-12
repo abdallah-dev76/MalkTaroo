@@ -16,6 +16,7 @@ import flower from './flower.svg';
 import bag from './bag.svg';
 import calender from './calender.svg';
 import astrology from './astrology.svg';
+import garbage from './garbage.svg';
 
 export const icons = {
   closeEye,
@@ -36,6 +37,7 @@ export const icons = {
   bag,
   calender,
   astrology,
+  garbage,
 } as const;
 
 export type IconName = keyof typeof icons;

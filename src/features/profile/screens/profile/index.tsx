@@ -1,18 +1,19 @@
-import { Pressable, Switch, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@common/types.ts';
-
+import ToggleSwitch from 'toggle-switch-react-native';
 import { useTranslation } from 'react-i18next';
 import { Button, Header, Icon, MainLayout, Text } from '@common/components';
-import { toggleLanguage, toggleTheme } from '@common/utils';
+import { toggleLanguage, toggleTheme, getLanguage } from '@common/utils';
 import { getZodiacFromDate } from '@common/utils/zodiac';
 import { useAppSelector } from '@store';
 import { styles } from './styles';
 import Avatar from '@common/components/Avatar';
 import { appImages } from '@assets/images';
+import { palette } from '@theme/colors';
 
 const LANGUAGES = [
   { code: 'en', labelKey: 'english' },
@@ -25,43 +26,49 @@ const getAge = (birthdate: Date) => {
     today.getMonth() > birthdate.getMonth() ||
     (today.getMonth() === birthdate.getMonth() &&
       today.getDate() >= birthdate.getDate());
+
   return today.getFullYear() - birthdate.getFullYear() - (hadBirthday ? 0 : 1);
 };
 
 export const Profile = () => {
   const { theme, rt } = useUnistyles();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [isDailyMessageEnabled, setIsDailyMessageEnabled] = useState(false);
-  const toggleDailyMessage = () => {
-    setIsDailyMessageEnabled(prev => !prev);
-  };
+
   const profile = useAppSelector(state => state.profile);
   const fullName = [profile.firstName, profile.lastName]
     .filter(Boolean)
     .join(' ')
     .trim();
+
   const birthdate = profile.birthdate
     ? new Date(`${profile.birthdate}T00:00:00`)
     : undefined;
+
   const age =
     birthdate && !Number.isNaN(birthdate.getTime())
       ? getAge(birthdate)
       : undefined;
+
   const zodiac =
     birthdate && !Number.isNaN(birthdate.getTime())
       ? getZodiacFromDate(birthdate)
       : undefined;
-  const displayName = fullName || 'Malak';
 
   const isDarkTheme = rt.themeName === 'dark';
 
   const handleLanguagePress = (code: string) => {
-    if (code !== i18n.language) {
+    if (code !== getLanguage()) {
       toggleLanguage();
     }
+  };
+
+  const toggleDailyMessage = () => {
+    setIsDailyMessageEnabled(prev => !prev);
   };
 
   return (
@@ -83,7 +90,7 @@ export const Profile = () => {
           size='large'
         />
         <Text variant='heading1' textAlign='center' numberOfLines={1}>
-          {displayName}
+          {fullName}
         </Text>
         <Button
           variant='outline'
@@ -98,7 +105,7 @@ export const Profile = () => {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='astrology' size={24} color={theme.textGold} />
+              <Icon name='astrology' color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
               {zodiac ? t(zodiac) : '-'}
@@ -110,11 +117,11 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='calender' size={24} color={theme.textGold} />
+              <Icon name='calender' color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center' numberOfLines={1}>
               {birthdate
-                ? birthdate.toLocaleDateString(i18n.language, {
+                ? birthdate.toLocaleDateString(getLanguage(), {
                     day: 'numeric',
                     month: 'short',
                     year: 'numeric',
@@ -128,7 +135,7 @@ export const Profile = () => {
 
           <View style={styles.statCard}>
             <View style={styles.iconCircle}>
-              <Icon name='profile' size={24} color={theme.textGold} />
+              <Icon name='profile' color={theme.textGold} />
             </View>
             <Text variant='label' textAlign='center'>
               {age ?? '-'}
@@ -139,7 +146,7 @@ export const Profile = () => {
           </View>
         </View>
 
-        <Text variant='heading3'>{t('settings')}</Text>
+        <Text>{t('settings')}</Text>
 
         <View style={styles.section}>
           {/* Readings */}
@@ -148,7 +155,7 @@ export const Profile = () => {
             onPress={() => navigation.navigate('TarotHistory')}
           >
             <View style={styles.iconCircle}>
-              <Icon name='cards' size={24} color={theme.textGold} />
+              <Icon name='cards' color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('myReadings')}</Text>
@@ -157,7 +164,7 @@ export const Profile = () => {
               </Text>
             </View>
 
-            <Icon name='leftArrow' size={24} color={theme.textGold} />
+            <Icon name='leftArrow' color={theme.textGold} />
           </Pressable>
 
           <View style={styles.divider} />
@@ -165,7 +172,7 @@ export const Profile = () => {
           {/* Language */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='lang' size={24} color={theme.textGold} />
+              <Icon name='lang' color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('language')}</Text>
@@ -175,7 +182,7 @@ export const Profile = () => {
             </View>
             <View style={styles.segment}>
               {LANGUAGES.map(lang => {
-                const active = i18n.language === lang.code;
+                const active = getLanguage() === lang.code;
                 return (
                   <Pressable
                     key={lang.code}
@@ -200,7 +207,7 @@ export const Profile = () => {
           {/* Theme */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='moon' size={24} color={theme.textGold} />
+              <Icon name='moon' color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('darkMode')}</Text>
@@ -208,12 +215,12 @@ export const Profile = () => {
                 {t('darkModeDescription')}
               </Text>
             </View>
-            <Switch
-              value={isDarkTheme}
-              onValueChange={toggleTheme}
-              trackColor={{ false: theme.border, true: theme.primary }}
-              thumbColor={theme.textPrimary}
-              ios_backgroundColor={theme.border}
+            <ToggleSwitch
+              isOn={isDarkTheme}
+              onColor={theme.primary}
+              offColor={palette.gray500}
+              size='medium'
+              onToggle={toggleTheme}
             />
           </View>
 
@@ -222,7 +229,7 @@ export const Profile = () => {
           {/* Daily Message Notification */}
           <View style={styles.settingRow}>
             <View style={styles.iconCircle}>
-              <Icon name='notification' size={24} color={theme.textGold} />
+              <Icon name='notification' color={theme.textGold} />
             </View>
             <View style={styles.settingText}>
               <Text variant='label'>{t('dailyMessageNotification')}</Text>
@@ -230,12 +237,12 @@ export const Profile = () => {
                 {t('dailyMessageDescription')}
               </Text>
             </View>
-            <Switch
-              value={isDailyMessageEnabled}
-              onValueChange={toggleDailyMessage}
-              trackColor={{ false: theme.border, true: theme.primary }}
-              thumbColor={theme.textPrimary}
-              ios_backgroundColor={theme.border}
+            <ToggleSwitch
+              isOn={isDailyMessageEnabled}
+              onColor={theme.primary}
+              offColor={palette.gray500}
+              size='medium'
+              onToggle={toggleDailyMessage}
             />
           </View>
         </View>

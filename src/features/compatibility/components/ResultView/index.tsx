@@ -6,7 +6,7 @@ import { useUnistyles } from 'react-native-unistyles';
 import { CompatibilityCircle, Icon, Text } from '@common/components';
 import Avatar from '@common/components/Avatar';
 import { appImages } from '@assets/images';
-import { styles } from './styles';
+import { getPulseStyle, HEART_ICON_SIZE, styles } from './styles';
 
 type Props = {
   firstZodiacId?: string;
@@ -81,11 +81,11 @@ export const ResultView = ({
         ))}
         <View style={styles.divider} />
         <View style={styles.heartWrapper}>
-          <Animated.View style={{ transform: [{ scale: pulseAnim }] }}>
+          <Animated.View style={getPulseStyle(pulseAnim)}>
             <Icon
               name='heartSolid'
               color={theme.borderGold}
-              size={28}
+              size={HEART_ICON_SIZE}
               isFocused
             />
           </Animated.View>

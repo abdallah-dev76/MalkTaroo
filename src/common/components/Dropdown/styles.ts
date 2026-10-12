@@ -1,23 +1,24 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { wScale } from '@common/utils';
+import { hScale, wScale } from '@common/utils';
+import { spacing } from '@theme/spacing';
 
-export const ITEM_HEIGHT = 48;
+export const ITEM_HEIGHT = hScale(48);
 
 export const styles = StyleSheet.create(theme => ({
   container: {
-    gap: wScale(12),
+    gap: hScale(12),
   },
   trigger: {
     backgroundColor: theme.inputBackground,
     paddingHorizontal: wScale(10),
-    paddingVertical: wScale(14),
+    paddingVertical: hScale(14),
     borderRadius: wScale(12),
     borderWidth: wScale(1),
     borderColor: theme.inputBorder,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: wScale(4),
+    gap: spacing.xs,
   },
   triggerText: {
     flex: 1,
@@ -25,7 +26,7 @@ export const styles = StyleSheet.create(theme => ({
   backdrop: {
     flex: 1,
     justifyContent: 'center',
-    padding: wScale(24),
+    padding: spacing.lg,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   sheet: {
@@ -37,14 +38,14 @@ export const styles = StyleSheet.create(theme => ({
     overflow: 'hidden',
   },
   sheetTitle: {
-    padding: wScale(16),
+    padding: spacing.md,
     borderBottomWidth: wScale(1),
     borderBottomColor: theme.inputBorder,
   },
   option: {
     height: ITEM_HEIGHT,
     justifyContent: 'center',
-    paddingHorizontal: wScale(16),
+    paddingHorizontal: spacing.md,
   },
   optionSelected: {
     backgroundColor: theme.inputBackground,

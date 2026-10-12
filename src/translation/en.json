@@ -75,14 +75,14 @@
   "threeCardReadingDescription": "Past, present, future",
   "readingTags": {
     "oneCard": {
-      "quick": "⚡ Quick",
-      "focused": "🎯 Focused",
-      "precise": "⭐ Precise"
+      "quick": "Quick",
+      "focused": "Focused",
+      "precise": "Precise"
     },
     "threeCard": {
-      "broader": "📊 Broader analysis",
-      "comprehensive": "☀️ Comprehensive",
-      "deep": "📚 Deeper"
+      "broader": "Broader analysis",
+      "comprehensive": "Comprehensive",
+      "deep": "Deeper"
     }
   },
   "focusOnYourQuestion": "Focus on your question",
@@ -110,6 +110,11 @@
   "age": "Age",
   "yourZodiac": "Your Zodiac",
   "birthdate": "Birthdate",
+  "firstNameRequired": "Please enter your first name.",
+  "lastNameRequired": "Please enter your last name.",
+  "birthdateRequired": "Please select your day, month, and year of birth.",
+  "birthdateInvalid": "Please select a valid birthdate.",
+  "birthdateFuture": "Birthdate cannot be in the future.",
   "notSet": "Not set",
   "settings": "Settings",
   "language": "Language",

@@ -1,7 +1,8 @@
 import { spacing } from '@theme/spacing';
+import { wScale } from '@common/utils/normalize';
 import { StyleSheet } from 'react-native-unistyles';
 
-const ICON_CONTAINER_WIDTH = 40;
+const ICON_CONTAINER_WIDTH = wScale(40);
 
 export const styles = StyleSheet.create({
   container: {
@@ -22,5 +23,11 @@ export const styles = StyleSheet.create({
     top: '50%',
     left: 0,
     right: 0,
+  },
+  hello: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: spacing.sm,
   },
 });

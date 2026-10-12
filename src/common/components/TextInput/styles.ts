@@ -1,20 +1,21 @@
 import { StyleSheet } from 'react-native-unistyles';
-import { fontScale, wScale } from '@common/utils';
+import { fontScale, hScale, wScale } from '@common/utils';
+import { spacing } from '@theme/spacing';
 
 export const styles = StyleSheet.create(theme => ({
   container: {
-    gap: wScale(12),
+    gap: hScale(12),
   },
-  textInputAndErr: { gap: wScale(8) },
+  textInputAndErr: { gap: spacing.sm },
   searchIconContainer: {
     alignSelf: 'center',
     marginEnd: wScale(12),
-    marginStart: wScale(2),
+    marginStart: spacing.xxs,
   },
   textInputContainer: {
     backgroundColor: theme.inputBackground,
     paddingHorizontal: wScale(12),
-    paddingVertical: wScale(14),
+    paddingVertical: hScale(14),
     borderRadius: wScale(12),
     flexDirection: 'row',
     borderWidth: wScale(1),
@@ -27,10 +28,10 @@ export const styles = StyleSheet.create(theme => ({
   },
   label: {
     flexDirection: 'row',
-    gap: wScale(4),
+    gap: spacing.xs,
   },
   iconContainer: {
-    marginEnd: wScale(16),
+    marginEnd: spacing.md,
   },
 }));
 

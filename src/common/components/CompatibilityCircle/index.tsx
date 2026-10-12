@@ -5,7 +5,12 @@ import Text from '../Text';
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { getCompatibilityLabelKey } from '@common/utils';
-import { styles } from './styles';
+import {
+  DEFAULT_CIRCLE_SIZE,
+  DEFAULT_STROKE_WIDTH,
+  getLabelAnimationStyle,
+  styles,
+} from './styles';
 const ANIMATION_DURATION = 1200;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -19,8 +24,8 @@ type Props = {
 
 export const CompatibilityCircle = ({
   percentage,
-  size = 180,
-  strokeWidth = 12,
+  size = DEFAULT_CIRCLE_SIZE,
+  strokeWidth = DEFAULT_STROKE_WIDTH,
   label,
 }: Props) => {
   const { theme } = useUnistyles();
@@ -91,7 +96,9 @@ export const CompatibilityCircle = ({
           strokeDashoffset={strokeDashoffset}
         />
       </Svg>
-      <Animated.View style={[styles.label, { opacity: labelOpacity }]}>
+      <Animated.View
+        style={[styles.label, getLabelAnimationStyle(labelOpacity)]}
+      >
         <Text variant='heading1'>{displayPercentage}%</Text>
         <Text variant='caption'>{resolvedLabel}</Text>
       </Animated.View>

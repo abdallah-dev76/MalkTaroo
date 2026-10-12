@@ -13,10 +13,6 @@ import { isDark } from '@common/utils';
 
 const DEFAULT_EDGES: MainLayoutEdge[] = ['top', 'right', 'bottom', 'left'];
 
-// stable references so memoized children don't re-render from new objects each render
-const FLEX_ONE = { flex: 1 } as const;
-const FLEX_GROW_ONE = { flexGrow: 1 } as const;
-
 export const MainLayout = ({
   children,
   style,
@@ -41,35 +37,28 @@ export const MainLayout = ({
   const rightInset = edges.includes('right') ? insets.right : 0;
 
   const containerStyle = useMemo(
-    () => [styles.container(backgroundColor), { paddingTop: topInset }, style],
+    () => [styles.container(backgroundColor, topInset), style],
     [backgroundColor, topInset, style],
   );
 
   // bottom/left/right insets live on the scrollable content so they scroll away with it,
   // rather than being reserved permanently on the fixed outer container
   const bodyPaddingStyle = useMemo(
-    () => ({
-      paddingBottom: bottomInset,
-      paddingLeft: leftInset,
-      paddingRight: rightInset,
-    }),
+    () => styles.bodyInsets(bottomInset, leftInset, rightInset),
     [bottomInset, leftInset, rightInset],
   );
 
   const headerPaddingStyle = useMemo(
-    () => ({
-      paddingLeft: leftInset,
-      paddingRight: rightInset,
-    }),
+    () => styles.headerInsets(leftInset, rightInset),
     [leftInset, rightInset],
   );
 
   const body = scrollable ? (
     <ScrollView
-      style={FLEX_ONE}
+      style={styles.flex}
       contentContainerStyle={[
         bodyPaddingStyle,
-        FLEX_GROW_ONE,
+        styles.content,
         contentContainerStyle,
       ]}
       keyboardShouldPersistTaps='handled'
@@ -78,7 +67,7 @@ export const MainLayout = ({
       {children}
     </ScrollView>
   ) : (
-    <View style={[FLEX_ONE, bodyPaddingStyle]}>{children}</View>
+    <View style={[styles.flex, bodyPaddingStyle]}>{children}</View>
   );
 
   return (
@@ -106,7 +95,7 @@ export const MainLayout = ({
 
       {keyboardAvoiding ? (
         <KeyboardAvoidingView
-          style={FLEX_ONE}
+          style={styles.flex}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
           {body}

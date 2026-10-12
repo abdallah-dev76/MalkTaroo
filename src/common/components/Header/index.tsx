@@ -34,7 +34,7 @@ Header.Icon = ({
 }) => {
   return (
     <Pressable style={styles.iconContainer} onPress={onPress}>
-      <Icon name={name} color={color} size={size ?? 24} />
+      <Icon name={name} color={color} size={size} />
     </Pressable>
   );
 };
@@ -52,14 +52,7 @@ Header.Hello = ({
   children,
 }: PropsWithChildren<{ zodiac?: string }>) => {
   return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        gap: 8,
-      }}
-    >
+    <View style={styles.hello}>
       <Avatar
         source={
           zodiac ? appImages[zodiac as keyof typeof appImages] : undefined

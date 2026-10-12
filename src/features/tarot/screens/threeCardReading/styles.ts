@@ -1,6 +1,13 @@
 import { wScale, hScale } from '@common/utils';
 import { radius, spacing } from '@theme/index';
+import type { Animated } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+
+export const getOpacityStyle = (opacity: Animated.Value) => ({ opacity });
+
+export const getCardAnimationStyle = (scaleX: Animated.Value) => ({
+  transform: [{ scaleX }],
+});
 
 export const styles = StyleSheet.create(theme => ({
   content: {
@@ -46,7 +53,7 @@ export const styles = StyleSheet.create(theme => ({
 
   buttonWrapper: {
     width: '100%',
-    minHeight: 52,
+    minHeight: hScale(52),
     justifyContent: 'center',
   },
 

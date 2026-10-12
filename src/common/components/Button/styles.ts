@@ -1,4 +1,5 @@
 import { fontScale, hScale, wScale } from '@common/utils';
+import { spacing } from '@theme/spacing';
 import { StyleSheet } from 'react-native-unistyles';
 
 export const styles = StyleSheet.create(theme => ({
@@ -6,7 +7,7 @@ export const styles = StyleSheet.create(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: wScale(8),
+    gap: spacing.sm,
 
     variants: {
       variant: {
@@ -42,7 +43,7 @@ export const styles = StyleSheet.create(theme => ({
       size: {
         small: {
           height: hScale(36),
-          paddingHorizontal: wScale(16),
+          paddingHorizontal: spacing.md,
           borderRadius: wScale(10),
         },
 
@@ -54,7 +55,7 @@ export const styles = StyleSheet.create(theme => ({
 
         large: {
           height: hScale(52),
-          paddingHorizontal: wScale(24),
+          paddingHorizontal: spacing.lg,
           borderRadius: wScale(14),
         },
       },

@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
@@ -17,7 +18,6 @@ import { setProfile } from '@store/slices/profileSlice';
 import { getZodiacFromDate } from '@common/utils/zodiac';
 import { styles } from './styles';
 import { appImages } from '@assets/images';
-import { spacing } from '@theme/spacing';
 import { Storage, StorageKeys } from '@common/storage';
 
 const backgroundImageSize = Image.resolveAssetSource(appImages.createProfile);
@@ -46,6 +46,34 @@ const parseBirthdatePart = (birthdate: string, index: number) => {
   return Number.isInteger(part) && part > 0 ? part : undefined;
 };
 
+type Birthdate = {
+  year?: number;
+  month?: number;
+  day?: number;
+};
+
+type Inputs = {
+  firstName: string;
+  lastName: string;
+  birthdate: Birthdate;
+};
+
+const getBirthdateObject = ({ year, month, day }: Birthdate) => {
+  if (
+    !year ||
+    !month ||
+    !day ||
+    month < 1 ||
+    month > 12 ||
+    day < 1 ||
+    day > getDaysInMonth(year, month)
+  ) {
+    return undefined;
+  }
+
+  return new Date(year, month - 1, day);
+};
+
 const getAge = (birthdate: Date) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -71,28 +99,27 @@ export const Onboarding = () => {
   const dispatch = useAppDispatch();
   const profile = useAppSelector(state => state.profile);
 
-  const [firstName, setFirstName] = useState(profile.firstName || '');
-  const [lastName, setLastName] = useState(profile.lastName || '');
-  const [birthYear, setBirthYear] = useState(() =>
-    parseBirthdatePart(profile.birthdate || '', 0),
-  );
-  const [birthMonth, setBirthMonth] = useState(() =>
-    parseBirthdatePart(profile.birthdate || '', 1),
-  );
-  const [birthDay, setBirthDay] = useState(() =>
-    parseBirthdatePart(profile.birthdate || '', 2),
-  );
+  const {
+    handleSubmit,
+    watch,
+    control,
+    formState: { isValid },
+  } = useForm<Inputs>({
+    mode: 'onChange',
+    defaultValues: {
+      firstName: profile.firstName || '',
+      lastName: profile.lastName || '',
+      birthdate: {
+        year: parseBirthdatePart(profile.birthdate || '', 0),
+        month: parseBirthdatePart(profile.birthdate || '', 1),
+        day: parseBirthdatePart(profile.birthdate || '', 2),
+      },
+    },
+  });
+  const birthdate = watch('birthdate');
+  const { year: birthYear, month: birthMonth } = birthdate;
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const currentYear = new Date().getFullYear();
-
-  const birthdate =
-    birthYear && birthMonth && birthDay
-      ? [
-          birthYear,
-          String(birthMonth).padStart(2, '0'),
-          String(birthDay).padStart(2, '0'),
-        ].join('-')
-      : '';
 
   const dayOptions = Array.from(
     { length: getDaysInMonth(birthYear, birthMonth) },
@@ -121,51 +148,25 @@ export const Onboarding = () => {
   const croppedLeft = (renderedWidth - viewportSize.width) / 2;
   const formTop = Math.max(0, renderedHeight * formStartRatio - croppedTop);
 
-  const birthdateObject = useMemo(() => {
-    if (!birthdate) {
-      return undefined;
-    }
-
-    const parsed = new Date(`${birthdate}T00:00:00`);
-    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
-  }, [birthdate]);
-
+  const birthdateObject = getBirthdateObject(birthdate);
   const age = birthdateObject ? getAge(birthdateObject) : null;
   const zodiac =
     birthdateObject && age !== null ? getZodiacFromDate(birthdateObject) : null;
 
-  const isValid =
-    firstName.trim().length > 0 &&
-    lastName.trim().length > 0 &&
-    birthdate.length > 0 &&
-    age !== null;
+  useEffect(() => {
+    Storage.setBoolean(StorageKeys.IS_FIRST_LAUNCH_DONE, true);
+  }, []);
 
-  const clearInvalidDay = (year?: number, month?: number) => {
-    if (birthDay && birthDay > getDaysInMonth(year, month)) {
-      setBirthDay(undefined);
-    }
-  };
-
-  const handleMonthSelect = (month: number) => {
-    setBirthMonth(month);
-    clearInvalidDay(birthYear, month);
-  };
-
-  const handleYearSelect = (year: number) => {
-    setBirthYear(year);
-    clearInvalidDay(year, birthMonth);
-  };
-
-  const handleContinue = () => {
-    if (!isValid) {
-      return;
-    }
-
+  const onSubmit: SubmitHandler<Inputs> = data => {
     dispatch(
       setProfile({
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        birthdate,
+        firstName: data.firstName.trim(),
+        lastName: data.lastName.trim(),
+        birthdate: [
+          data.birthdate.year,
+          String(data.birthdate.month).padStart(2, '0'),
+          String(data.birthdate.day).padStart(2, '0'),
+        ].join('-'),
       }),
     );
 
@@ -176,39 +177,28 @@ export const Onboarding = () => {
     }
   };
 
-  useEffect(() => {
-    Storage.setBoolean(StorageKeys.IS_FIRST_LAUNCH_DONE, true);
-  }, []);
-
   return (
     <MainLayout
       keyboardAvoiding
       style={styles.layout}
       contentContainerStyle={styles.content}
       statusBarTranslucent
-      edges={['top', 'right', 'left']}
     >
       <ScrollView
         onLayout={({ nativeEvent }) => {
           const { width, height } = nativeEvent.layout;
           setViewportSize({ width, height });
         }}
-        contentContainerStyle={[
-          styles.formCard,
-          { paddingTop: formTop + spacing.md },
-        ]}
+        contentContainerStyle={styles.formCard(formTop)}
       >
         <Image
           source={appImages.createProfile}
-          style={[
-            styles.backgroundImage,
-            {
-              top: -croppedTop,
-              left: -croppedLeft,
-              width: renderedWidth,
-              height: renderedHeight,
-            },
-          ]}
+          style={styles.backgroundImage(
+            croppedTop,
+            croppedLeft,
+            renderedWidth,
+            renderedHeight,
+          )}
         />
 
         <Text variant='heading2'>
@@ -218,53 +208,117 @@ export const Onboarding = () => {
           {t(isEditing ? 'editProfileDescription' : 'createProfileDescription')}
         </Text>
 
-        <TextInput
-          label={t('firstName')}
-          placeholder={t('enterYourFirstName')}
-          value={firstName}
-          onValueChange={setFirstName}
-          iconName='profile'
+        <Controller
+          control={control}
+          rules={{
+            validate: value =>
+              value.trim().length > 0 || t('firstNameRequired'),
+          }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <TextInput
+              placeholder={t('enterYourFirstName')}
+              onBlur={onBlur}
+              onValueChange={onChange}
+              value={value}
+              errorMessage={error?.message}
+              required
+            />
+          )}
+          name='firstName'
         />
 
-        <TextInput
-          label={t('lastName')}
-          placeholder={t('enterYourLastName')}
-          value={lastName}
-          onValueChange={setLastName}
-          iconName='profile'
+        <Controller
+          control={control}
+          rules={{
+            validate: value => value.trim().length > 0 || t('lastNameRequired'),
+          }}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <TextInput
+              placeholder={t('enterYourLastName')}
+              onBlur={onBlur}
+              onValueChange={onChange}
+              value={value}
+              errorMessage={error?.message}
+              required
+            />
+          )}
+          name='lastName'
         />
 
-        <View style={styles.birthdateSection}>
-          <Text variant='label' color='textGold'>
-            {t('birthdate')}
-          </Text>
-          <View style={styles.dateRow}>
-            <View style={styles.dateDay}>
-              <Dropdown
-                placeholder={t('day')}
-                options={dayOptions}
-                value={birthDay}
-                onSelect={setBirthDay}
-              />
-            </View>
-            <View style={styles.dateMonth}>
-              <Dropdown
-                placeholder={t('month')}
-                options={monthOptions}
-                value={birthMonth}
-                onSelect={handleMonthSelect}
-              />
-            </View>
-            <View style={styles.dateYear}>
-              <Dropdown
-                placeholder={t('year')}
-                options={yearOptions}
-                value={birthYear}
-                onSelect={handleYearSelect}
-              />
-            </View>
-          </View>
-        </View>
+        <Controller
+          control={control}
+          name='birthdate'
+          rules={{
+            validate: value => {
+              if (!value.year || !value.month || !value.day) {
+                return t('birthdateRequired');
+              }
+              const date = getBirthdateObject(value);
+              if (!date) {
+                return t('birthdateInvalid');
+              }
+              return getAge(date) !== null || t('birthdateFuture');
+            },
+          }}
+          render={({ field: { onChange, value }, fieldState: { error } }) => {
+            const selectPart = (part: keyof Birthdate, selected: number) => {
+              const nextBirthdate = { ...value, [part]: selected };
+              if (
+                nextBirthdate.day &&
+                nextBirthdate.day >
+                  getDaysInMonth(nextBirthdate.year, nextBirthdate.month)
+              ) {
+                nextBirthdate.day = undefined;
+              }
+              onChange(nextBirthdate);
+            };
+
+            return (
+              <View style={styles.birthdateSection}>
+                <Text variant='label' color='textGold'>
+                  {t('birthdate')}
+                </Text>
+                <View style={styles.dateRow}>
+                  <View style={styles.dateDay}>
+                    <Dropdown
+                      placeholder={t('day')}
+                      options={dayOptions}
+                      value={value.day}
+                      onSelect={day => selectPart('day', day)}
+                    />
+                  </View>
+                  <View style={styles.dateMonth}>
+                    <Dropdown
+                      placeholder={t('month')}
+                      options={monthOptions}
+                      value={value.month}
+                      onSelect={month => selectPart('month', month)}
+                    />
+                  </View>
+                  <View style={styles.dateYear}>
+                    <Dropdown
+                      placeholder={t('year')}
+                      options={yearOptions}
+                      value={value.year}
+                      onSelect={year => selectPart('year', year)}
+                    />
+                  </View>
+                </View>
+                {error?.message ? (
+                  <Text variant='caption' color='error'>
+                    {error.message}
+                  </Text>
+                ) : null}
+              </View>
+            );
+          }}
+        />
 
         {(zodiac || age !== null) && (
           <View style={styles.previewCard}>
@@ -283,12 +337,21 @@ export const Onboarding = () => {
 
         <Button
           variant='primary'
-          onPress={handleContinue}
-          disabled={!isValid}
+          onPress={handleSubmit(onSubmit)}
           style={styles.submitButton}
+          disabled={!isValid}
         >
           {t(isEditing ? 'saveProfile' : 'startNow')}
         </Button>
+        {isEditing && (
+          <Button
+            variant='outline'
+            onPress={() => navigation.goBack()}
+            style={styles.submitButton}
+          >
+            {t('goBack')}
+          </Button>
+        )}
       </ScrollView>
     </MainLayout>
   );

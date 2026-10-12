@@ -7,7 +7,12 @@ import { Animated, View } from 'react-native';
 import { appImages } from '@assets/images';
 import { drawTarotCard, getTarotCard } from '@common/data/tarot';
 import { addTarotReading, useAppDispatch } from '@store';
-import { styles } from './styles';
+import {
+  CARD_LIFT_OFFSET,
+  getCardAnimationStyle,
+  getOpacityStyle,
+  styles,
+} from './styles';
 
 export const OneCardReading = () => {
   const { t } = useTranslation();
@@ -136,7 +141,7 @@ export const OneCardReading = () => {
   });
   const cardTranslateY = cardLift.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, -80],
+    outputRange: [0, CARD_LIFT_OFFSET],
   });
   const cardScale = cardSize.interpolate({
     inputRange: [0, 1],
@@ -160,7 +165,9 @@ export const OneCardReading = () => {
       }
     >
       <View style={styles.content}>
-        <Animated.View style={[styles.heading, { opacity: headingOpacity }]}>
+        <Animated.View
+          style={[styles.heading, getOpacityStyle(headingOpacity)]}
+        >
           <Text variant='heading1' color={theme.textGold} textAlign='center'>
             {t('focusOnYourQuestion')}
           </Text>
@@ -173,13 +180,7 @@ export const OneCardReading = () => {
           source={cardImage}
           style={[
             styles.tarotCard,
-            {
-              transform: [
-                { translateY: cardTranslateY },
-                { scale: cardScale },
-                { scaleX: cardScaleX },
-              ],
-            },
+            getCardAnimationStyle(cardTranslateY, cardScale, cardScaleX),
           ]}
           resizeMode='contain'
         />
@@ -190,7 +191,7 @@ export const OneCardReading = () => {
         >
           {isRevealed ? (
             <Animated.View
-              style={[styles.resultContent, { opacity: resultOpacity }]}
+              style={[styles.resultContent, getOpacityStyle(resultOpacity)]}
             >
               <View style={styles.resultBox}>
                 <Text
@@ -213,7 +214,7 @@ export const OneCardReading = () => {
               </Button>
             </Animated.View>
           ) : (
-            <Animated.View style={{ opacity: buttonOpacity }}>
+            <Animated.View style={getOpacityStyle(buttonOpacity)}>
               <Button
                 variant='premium'
                 fullWidth

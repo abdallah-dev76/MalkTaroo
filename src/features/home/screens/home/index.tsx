@@ -10,7 +10,7 @@ import {
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
 import { appImages } from '@assets/images';
-import { styles } from './styles';
+import { SECTION_ICON_SIZE, styles } from './styles';
 import { TarotCard } from '../../components/tarotCard';
 import { ZodiacCard } from '../../components/zodiacCard';
 import { zodiacList } from '@common/data/zodiac';
@@ -160,9 +160,7 @@ export const Home = () => {
                   {formattedDate}
                 </Text>
               </View>
-              <Text variant='label' numberOfLines={2}>
-                {t('randomText')}
-              </Text>
+              <Text variant='label'>{t('randomText')}</Text>
             </View>
           </View>
         </ImageBackground>
@@ -177,7 +175,7 @@ export const Home = () => {
             size='small'
             rightIcon={{
               name: 'leftArrow',
-              size: 16,
+              size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
           >
@@ -212,7 +210,7 @@ export const Home = () => {
             size='small'
             rightIcon={{
               name: 'leftArrow',
-              size: 16,
+              size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
           >
@@ -238,7 +236,7 @@ export const Home = () => {
             size='small'
             rightIcon={{
               name: 'leftArrow',
-              size: 16,
+              size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
           >

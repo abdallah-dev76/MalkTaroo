@@ -2,6 +2,8 @@ import { StyleSheet } from 'react-native-unistyles';
 import { spacing } from '@theme/spacing';
 import { wScale } from '@common/utils';
 
+export const SECTION_ICON_SIZE = wScale(16);
+
 export const styles = StyleSheet.create(theme => ({
   ph24: {
     paddingHorizontal: spacing.lg,
@@ -56,7 +58,7 @@ export const styles = StyleSheet.create(theme => ({
     justifyContent: 'space-between',
   },
   dailyText: {
-    gap: wScale(16),
+    gap: spacing.md,
   },
   luckCardsContainer: {
     flexDirection: 'row',

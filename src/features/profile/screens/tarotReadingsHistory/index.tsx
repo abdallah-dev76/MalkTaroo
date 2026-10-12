@@ -1,4 +1,4 @@
-import { Header, MainLayout, Text } from '@common/components';
+import { Header, Icon, MainLayout, Text } from '@common/components';
 import { RootStackParamList } from '@common/types.ts';
 import { getTarotCard, TAROT_PERIODS } from '@common/data/tarot';
 import { useNavigation } from '@react-navigation/native';
@@ -14,13 +14,14 @@ import { useTranslation } from 'react-i18next';
 import { Alert, FlatList, Image, Pressable, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
+import { getLanguage } from '@common/utils';
 
 export const readingTypeKey = (type: TarotReading['type']) =>
   type === 'one' ? 'oneCardReading' : 'threeCardReading';
 
 export const TarotHistory = () => {
   const { theme } = useUnistyles();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -53,6 +54,7 @@ export const TarotHistory = () => {
       item.type === 'one'
         ? t(cards[0]?.meaningKey ?? getTarotCard().meaningKey)
         : TAROT_PERIODS.map(period => t(period)).join(' · ');
+
     return (
       <Pressable
         style={styles.item}
@@ -78,7 +80,7 @@ export const TarotHistory = () => {
             {caption}
           </Text>
           <Text variant='small' color='textTertiary'>
-            {new Date(item.createdAt).toLocaleDateString(i18n.language, {
+            {new Date(item.createdAt).toLocaleDateString(getLanguage(), {
               day: 'numeric',
               month: 'short',
               year: 'numeric',
@@ -87,9 +89,7 @@ export const TarotHistory = () => {
         </View>
 
         <Pressable hitSlop={8} onPress={() => confirmDelete(item.id)}>
-          <Text variant='small' color='error'>
-            {t('delete')}
-          </Text>
+          <Icon name='garbage' color={theme.error} />
         </Pressable>
       </Pressable>
     );
@@ -97,7 +97,6 @@ export const TarotHistory = () => {
 
   return (
     <MainLayout
-      edges={['top', 'right', 'left']}
       header={
         <Header>
           <Header.Icon

@@ -7,16 +7,26 @@ export const styles = StyleSheet.create(theme => ({
   },
   content: {
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.xl,
+    paddingVertical: spacing.lg,
   },
-  formCard: {
+  formCard: (formTop: number) => ({
     flexGrow: 1,
     gap: spacing.md,
     padding: spacing.lg,
-  },
-  backgroundImage: {
+    paddingTop: formTop + spacing.md,
+  }),
+  backgroundImage: (
+    croppedTop: number,
+    croppedLeft: number,
+    width: number,
+    height: number,
+  ) => ({
     position: 'absolute',
-  },
+    top: -croppedTop,
+    left: -croppedLeft,
+    width,
+    height,
+  }),
   birthdateSection: {
     gap: spacing.sm,
   },

@@ -1,5 +1,19 @@
 import { radius, spacing } from '@theme/index';
+import { hScale } from '@common/utils/normalize';
+import type { Animated } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
+
+export const CARD_LIFT_OFFSET = hScale(-80);
+
+export const getOpacityStyle = (opacity: Animated.Value) => ({ opacity });
+
+export const getCardAnimationStyle = (
+  translateY: Animated.AnimatedInterpolation<number>,
+  scale: Animated.AnimatedInterpolation<number>,
+  scaleX: Animated.AnimatedInterpolation<number>,
+) => ({
+  transform: [{ translateY }, { scale }, { scaleX }],
+});
 
 export const styles = StyleSheet.create(theme => ({
   content: {
@@ -21,7 +35,7 @@ export const styles = StyleSheet.create(theme => ({
 
   buttonWrapper: {
     width: '100%',
-    minHeight: 52,
+    minHeight: hScale(52),
     justifyContent: 'center',
   },
 
@@ -38,6 +52,6 @@ export const styles = StyleSheet.create(theme => ({
     borderRadius: radius.md,
     backgroundColor: theme.backgroundElevated,
     width: '100%',
-    marginBottom: 16,
+    marginBottom: spacing.md,
   },
 }));

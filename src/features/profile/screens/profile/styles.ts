@@ -1,6 +1,5 @@
 import { StyleSheet } from 'react-native-unistyles';
 import { radius, spacing } from '@theme/spacing';
-import { hScale, wScale } from '@common/utils';
 
 export const styles = StyleSheet.create(theme => ({
   layout: {

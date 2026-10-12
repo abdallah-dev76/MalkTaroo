@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { IconName } from '@assets/icons';
 import { Colors } from '@theme/theme';
 import { useUnistyles } from 'react-native-unistyles';
-import { styles } from './styles';
+import { LUCK_ICON_SIZE, styles } from './styles';
 
 type LuckCardProps = {
   title: string;
@@ -27,12 +27,12 @@ export const LuckCard = ({
 
   return (
     <View style={[styles.card, compact && styles.cardCompact]}>
-      <Icon name={icon} size={28} color={theme[color]} isFocused />
+      <Icon name={icon} size={LUCK_ICON_SIZE} color={theme[color]} isFocused />
       <View>
         <Text
           variant='caption'
           color='textGold'
-          style={[styles.neonText, { shadowColor: theme[color] }]}
+          style={styles.neonText(color)}
           numberOfLines={compact ? 2 : 1}
           textAlign='center'
         >
@@ -41,7 +41,7 @@ export const LuckCard = ({
         <Text
           variant='caption'
           color='textGold'
-          style={[styles.neonText, { shadowColor: theme[color] }]}
+          style={styles.neonText(color)}
           numberOfLines={1}
           textAlign='center'
         >
@@ -52,18 +52,9 @@ export const LuckCard = ({
         accessibilityRole='progressbar'
         accessibilityLabel={title}
         accessibilityValue={{ min: 1, max: 10, now: safeScore }}
-        style={[styles.progressTrack, { borderColor: theme[color] }]}
+        style={styles.progressTrack(color)}
       >
-        <View
-          style={[
-            styles.progressFill,
-            {
-              backgroundColor: theme[color],
-              shadowColor: theme[color],
-              width: `${(safeScore / 10) * 100}%`,
-            },
-          ]}
-        />
+        <View style={styles.progressFill(color, safeScore)} />
       </View>
     </View>
   );

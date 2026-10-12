@@ -13,14 +13,16 @@ import {
 } from '@common/data/tarot';
 import { shareResultView } from '@features/compatibility/components/ResultView';
 import { useAppSelector } from '@store';
-import { readingTypeKey } from './index';
+import { readingTypeKey } from '../tarotReadingsHistory/index';
 import { styles } from './styles';
+import { getLanguage } from '@common/utils';
 
 export const TarotDetail = () => {
   const { theme } = useUnistyles();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const { id } =
     useRoute<RouteProp<RootStackParamList, 'TarotDetail'>>().params;
   const reading = useAppSelector(state =>
@@ -42,7 +44,6 @@ export const TarotDetail = () => {
   return (
     <MainLayout
       scrollable
-      edges={['top', 'right', 'left']}
       contentContainerStyle={styles.detail}
       header={
         <Header>
@@ -75,7 +76,7 @@ export const TarotDetail = () => {
             {t(readingTypeKey(reading.type))}
           </Text>
           <Text variant='caption' color='textSecondary' textAlign='center'>
-            {new Date(reading.createdAt).toLocaleDateString(i18n.language, {
+            {new Date(reading.createdAt).toLocaleDateString(getLanguage(), {
               day: 'numeric',
               month: 'long',
               year: 'numeric',
