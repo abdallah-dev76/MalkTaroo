@@ -11,11 +11,15 @@ import {
   getTarotCard,
   TAROT_PERIODS,
 } from '@common/data/tarot';
-import { shareResultView } from '@features/compatibility/components/ResultView';
+import { shareResultView } from '@common/utils/shareView';
 import { useAppSelector } from '@store';
-import { readingTypeKey } from '../tarotReadingsHistory/index';
+import {
+  getReadingShareText,
+  readingTypeKey,
+} from '@features/tarot/utils/readingPresentation';
 import { styles } from './styles';
 import { getLanguage } from '@common/utils';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 
 export const TarotDetail = () => {
   const { theme } = useUnistyles();
@@ -31,14 +35,11 @@ export const TarotDetail = () => {
   const cards = (reading?.cardIds ?? []).map(getTarotCard);
   const card = cards[0] ?? getTarotCard();
   const isThree = reading?.type === 'three';
-  const shareText = isThree
-    ? TAROT_PERIODS.map(
-        (period, index) =>
-          `${t(period)}: ${t(
-            getPeriodMeaningKey(cards[index] ?? card, period),
-          )}`,
-      ).join('\n')
-    : t(card.meaningKey);
+  const shareText = getReadingShareText(
+    reading?.type ?? 'one',
+    reading?.cardIds ?? [],
+    t,
+  );
   const imageRef = useRef<View>(null);
 
   return (
@@ -48,7 +49,7 @@ export const TarotDetail = () => {
       header={
         <Header>
           <Header.Icon
-            name='rightArrow'
+            name={getArrowDirection('rightArrow')}
             color={theme.iconPrimary}
             onPress={() => navigation.goBack()}
           />

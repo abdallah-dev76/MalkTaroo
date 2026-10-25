@@ -2,16 +2,10 @@ import { CompatibilityStackParamList } from '@common/types.ts';
 import { ChooseZodiac, ZodiacId } from '../chooseZodiac';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useContext } from 'react';
-import {
-  CompatibilityContext,
-  CompatibilityContextType,
-} from '../../../../navigation/compatibilityStack';
+import { useCompatibility } from '../../context/CompatibilityContext';
 
 export const FirstZodiac = () => {
-  const { zodiac, setZodiac } = useContext(
-    CompatibilityContext,
-  ) as CompatibilityContextType;
+  const { selection, selectFirst } = useCompatibility();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
@@ -20,14 +14,9 @@ export const FirstZodiac = () => {
     <ChooseZodiac
       title='chooseZodiac'
       id={ZodiacId.FirstZodiac}
-      selectedZodiacId={zodiac[0]?.id}
+      selectedZodiacId={selection.first}
       onCardPress={item => {
-        if (setZodiac) {
-          setZodiac(previous => [
-            { id: item.id, name: item.name, image: item.image },
-            ...previous.slice(1, 2),
-          ]);
-        }
+        selectFirst(item.id);
         navigation.navigate('SecondZodiac');
       }}
     />

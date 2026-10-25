@@ -4,15 +4,10 @@ import en from './en.json';
 import ar from './ar.json';
 import { Storage, StorageKeys } from '@common/storage';
 import { getLocales } from 'react-native-localize';
-import { I18nManager } from 'react-native';
 
 const storedLanguage = Storage.getString(StorageKeys.Language);
 const deviceLanguage = getLocales()[0]?.languageCode;
 const initialLanguage = storedLanguage || deviceLanguage || 'ar';
-
-const isRTL = initialLanguage === 'ar';
-I18nManager.allowRTL(isRTL);
-I18nManager.forceRTL(isRTL);
 
 const resources = {
   en: {
@@ -23,15 +18,18 @@ const resources = {
   },
 };
 
-i18n.use(initReactI18next).init({
-  resources,
-  lng: initialLanguage,
-  fallbackLng: 'ar',
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-Storage.setString(StorageKeys.Language, initialLanguage);
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: initialLanguage,
+    fallbackLng: 'ar',
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+  .catch(error => {
+    console.error('i18n initialization failed:', error);
+  });
 
 export default i18n;

@@ -1,104 +1,38 @@
 import { Button, Text, MainLayout, Header } from '@common/components';
-import { useRef, useState } from 'react';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { useUnistyles } from 'react-native-unistyles';
 import { Animated, View } from 'react-native';
 import { appImages } from '@assets/images';
 import {
-  drawTarotCards,
   getPeriodMeaningKey,
   getTarotCard,
   TAROT_PERIODS,
 } from '@common/data/tarot';
-import { addTarotReading, useAppDispatch } from '@store';
+import { useThreeCardReading } from '../../hooks/useThreeCardReading';
+import { useReadingShare } from '../../hooks/useReadingShare';
 import { getCardAnimationStyle, getOpacityStyle, styles } from './styles';
 
 export const ThreeCardReading = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { theme } = useUnistyles();
-  const dispatch = useAppDispatch();
-  const [cardIds, setCardIds] = useState<string[]>([]);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const flipProgress = useRef(new Animated.Value(1)).current;
-  const buttonOpacity = useRef(new Animated.Value(1)).current;
-  const resultOpacity = useRef(new Animated.Value(0)).current;
-
-  const handleRevealCards = () => {
-    if (isAnimating || isRevealed) {
-      return;
-    }
-
-    const ids = drawTarotCards(TAROT_PERIODS.length).map(card => card.id);
-    setCardIds(ids);
-    dispatch(addTarotReading({ type: 'three', cardIds: ids }));
-    setIsAnimating(true);
-
-    Animated.parallel([
-      Animated.timing(flipProgress, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }),
-      Animated.timing(buttonOpacity, {
-        toValue: 0,
-        duration: 180,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      setIsRevealed(true);
-
-      Animated.timing(flipProgress, {
-        toValue: 1,
-        duration: 250,
-        useNativeDriver: true,
-      }).start(() => {
-        Animated.timing(resultOpacity, {
-          toValue: 1,
-          duration: 220,
-          useNativeDriver: true,
-        }).start(() => setIsAnimating(false));
-      });
-    });
-  };
-
-  const handleTryAnotherReading = () => {
-    if (isAnimating || !isRevealed) {
-      return;
-    }
-
-    setIsAnimating(true);
-
-    Animated.parallel([
-      Animated.timing(flipProgress, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }),
-      Animated.timing(resultOpacity, {
-        toValue: 0,
-        duration: 180,
-        useNativeDriver: true,
-      }),
-    ]).start(() => {
-      setIsRevealed(false);
-
-      Animated.parallel([
-        Animated.timing(flipProgress, {
-          toValue: 1,
-          duration: 250,
-          useNativeDriver: true,
-        }),
-        Animated.timing(buttonOpacity, {
-          toValue: 1,
-          duration: 180,
-          useNativeDriver: true,
-        }),
-      ]).start(() => setIsAnimating(false));
-    });
-  };
+  const {
+    cardIds,
+    isRevealed,
+    isAnimating,
+    flipProgress,
+    buttonOpacity,
+    resultOpacity,
+    handleRevealCards,
+    handleTryAnotherReading,
+  } = useThreeCardReading();
+  const { captureTarget, share, isSharing } = useReadingShare<View>(
+    'three',
+    cardIds,
+    isRevealed && !isAnimating,
+  );
 
   return (
     <MainLayout
@@ -107,7 +41,7 @@ export const ThreeCardReading = () => {
       header={
         <Header>
           <Header.Icon
-            name='rightArrow'
+            name={getArrowDirection('rightArrow')}
             color={theme.iconPrimary}
             onPress={() => navigation.goBack()}
           />
@@ -124,7 +58,7 @@ export const ThreeCardReading = () => {
           </Text>
         </View>
 
-        <View style={styles.cards}>
+        <View ref={captureTarget} collapsable={false} style={styles.cards}>
           {TAROT_PERIODS.map((period, index) => {
             const card = getTarotCard(cardIds[index]);
             return (
@@ -170,10 +104,17 @@ export const ThreeCardReading = () => {
                 variant='outline'
                 fullWidth
                 onPress={handleTryAnotherReading}
+                disabled={isSharing}
               >
                 {t('tryAnotherReading')}
               </Button>
-              <Button variant='premium' fullWidth onPress={() => {}}>
+              <Button
+                variant='premium'
+                fullWidth
+                onPress={share}
+                loading={isSharing}
+                disabled={isAnimating}
+              >
                 {t('share')}
               </Button>
             </Animated.View>

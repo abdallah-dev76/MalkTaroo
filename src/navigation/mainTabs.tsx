@@ -11,12 +11,18 @@ import { Icon, Text } from '@common/components';
 import { useUnistyles } from 'react-native-unistyles';
 import { Profile } from '@features/profile/screens/profile';
 import { IconName } from '@assets/icons';
+import type { MainTabParamList } from '@common/types.ts';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CompatibilityStack } from './compatibilityStack';
 import { TarotStack } from './TarotStack';
 import { styles } from './mainTabs.styles';
 
-const iconsName: IconName[] = ['home', 'cards', 'heart', 'profile'];
+const TAB_METADATA = {
+  Home: { icon: 'home', label: 'home' },
+  Tarot: { icon: 'cards', label: 'tarot' },
+  Compatibility: { icon: 'heart', label: 'compatibility' },
+  Profile: { icon: 'profile', label: 'profile' },
+} satisfies Record<keyof MainTabParamList, { icon: IconName; label: string }>;
 
 function MyTabBar({
   state,
@@ -30,9 +36,9 @@ function MyTabBar({
 
   return (
     <View style={styles.tabBarContainer(bottomInset)}>
-      {state.routes.map((route: any, index: any) => {
+      {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const label = route.name;
+        const tab = TAB_METADATA[route.name as keyof MainTabParamList];
 
         const isFocused = state.index === index;
 
@@ -67,7 +73,7 @@ function MyTabBar({
             style={styles.tabButton}
           >
             <Icon
-              name={iconsName[index] as IconName}
+              name={tab.icon}
               color={isFocused ? theme.textGold : theme.textSecondary}
               isFocused={isFocused}
             />
@@ -77,7 +83,7 @@ function MyTabBar({
               textAlign='center'
               numberOfLines={1}
             >
-              {t(label.toString().toLowerCase())}
+              {t(tab.label)}
             </Text>
           </PlatformPressable>
         );
@@ -86,7 +92,7 @@ function MyTabBar({
   );
 }
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainTabParamList>();
 
 const tabBar = (props: BottomTabBarProps) => <MyTabBar {...props} />;
 

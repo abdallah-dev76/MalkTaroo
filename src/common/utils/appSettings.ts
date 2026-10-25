@@ -3,19 +3,18 @@ import { UnistylesRuntime } from 'react-native-unistyles';
 import { getLocales } from 'react-native-localize';
 import { I18nManager } from 'react-native';
 import RNRestart from 'react-native-restart';
+import i18n from '@translation/translation';
 
-export type AppDirection = 'rtl' | 'ltr';
+export const toggleLanguage = async () => {
+  const currentLanguage = i18n.resolvedLanguage ?? i18n.language;
+  const newLanguage = currentLanguage === 'en' ? 'ar' : 'en';
+  await i18n.changeLanguage(newLanguage);
 
-export const toggleLanguage = () => {
-  const storedLang =
-    Storage.getString(StorageKeys.Language) || getLocales()[0]?.languageCode;
-  const newLang = storedLang === 'ar' ? 'en' : 'ar';
-
-  Storage.setString(StorageKeys.Language, newLang);
-
-  RNRestart.Restart();
-  I18nManager.allowRTL(newLang === 'ar');
-  I18nManager.forceRTL(newLang === 'ar');
+  Storage.setString('language', newLanguage);
+  const isRTL = newLanguage === 'ar';
+  I18nManager.allowRTL(isRTL);
+  I18nManager.forceRTL(isRTL);
+  RNRestart?.restart();
 };
 
 export const getLanguage = () => {
@@ -28,8 +27,9 @@ export const getLanguage = () => {
 export const isDark = Storage.getString('theme') === 'dark' || true;
 
 export const toggleTheme = () => {
-  const storedTheme = Storage.getString(StorageKeys.Theme);
-  const newTheme = storedTheme === 'light' ? 'dark' : 'light';
+  const newTheme = UnistylesRuntime.themeName === 'light' ? 'dark' : 'light';
   UnistylesRuntime.setTheme(newTheme);
   Storage.setString(StorageKeys.Theme, newTheme);
 };
+
+export const isArabic = getLanguage() === 'ar';

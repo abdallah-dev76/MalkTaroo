@@ -11,6 +11,8 @@ export type ButtonVariants =
 
 export type ButtonSizes = 'small' | 'medium' | 'large';
 
+export type ButtonIcon = { name: IconName; size?: number; color?: string };
+
 export interface ButtonProps extends PressableProps {
   variant?: ButtonVariants;
   size?: ButtonSizes;
@@ -18,14 +20,6 @@ export interface ButtonProps extends PressableProps {
   fullWidth?: boolean;
   children: React.ReactNode;
   loading?: boolean;
-  leftIcon?: {
-    name: IconName;
-    size?: number;
-    color?: string;
-  };
-  rightIcon?: {
-    name: IconName;
-    size?: number;
-    color?: string;
-  };
+  leftIcon?: ButtonIcon;
+  rightIcon?: ButtonIcon;
 }

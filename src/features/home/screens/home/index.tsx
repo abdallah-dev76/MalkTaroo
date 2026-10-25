@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { MainLayout, Text, Header, Button } from '@common/components';
 import {
   View,
@@ -19,51 +19,30 @@ import { useAppSelector } from '@store';
 import { getZodiacFromDate } from '@common/utils';
 import { LuckCard } from '@features/home/components/luckCard';
 import { getDailyLuckScore, luckCategories } from './data';
+import { parseBirthdate } from '@common/utils/date';
+import { useDailyClock } from '../../hooks/useDailyClock';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '@common/types.ts';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 
 const getTarotCardKey = (item: (typeof tarotCards)[number]) => item.id;
 const getZodiacCardKey = (item: (typeof zodiacList)[number]) => item.id;
-
-const parseBirthdate = (value?: string) => {
-  if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    return undefined;
-  }
-
-  const [year, month, day] = value.split('-').map(Number);
-  const date = new Date(year, month - 1, day);
-
-  return date.getFullYear() === year &&
-    date.getMonth() === month - 1 &&
-    date.getDate() === day
-    ? date
-    : undefined;
-};
+const tarotPreview = tarotCards.slice(0, 4);
+const zodiacPreview = zodiacList.slice(0, 4);
 
 export const Home = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const { theme, rt } = useUnistyles();
   const { t, i18n } = useTranslation();
   const { width } = useWindowDimensions();
   const firstName = useAppSelector(state => state.profile.firstName);
   const profileBirthdate = useAppSelector(state => state.profile.birthdate);
-  const [now, setNow] = useState(() => new Date());
+  const now = useDailyClock();
   const themeName = rt.themeName;
   const useCompactLuckLayout = width < 390;
 
-  useEffect(() => {
-    const nextRefresh = new Date(now);
-    if (now.getHours() < 12) {
-      nextRefresh.setHours(12, 0, 0, 0);
-    } else {
-      nextRefresh.setDate(nextRefresh.getDate() + 1);
-      nextRefresh.setHours(0, 0, 0, 0);
-    }
-
-    const timeoutId = setTimeout(
-      () => setNow(new Date()),
-      nextRefresh.getTime() - now.getTime(),
-    );
-
-    return () => clearTimeout(timeoutId);
-  }, [now]);
   const birthdate = parseBirthdate(profileBirthdate);
   const locale = i18n.resolvedLanguage ?? i18n.language;
   const dateFormatter = useMemo(
@@ -94,10 +73,11 @@ export const Home = () => {
     useCallback(
       ({ item }) => (
         <TarotCard
+          id={item.id}
           image={item.image}
-          title={t(item.name, { lng: 'en' })}
-          description={t(item.meaningKey)}
-          cardLabel={t(item.name, { lng: 'ar' })}
+          title={item.nameEn}
+          cardLabel={item.nameAr}
+          description={t(item.shortDescription)}
           learnMoreLabel={t('learnMore')}
         />
       ),
@@ -110,6 +90,7 @@ export const Home = () => {
           image={item.image}
           title={t(item.id)}
           dateRange={t(`dates.${item.id}`)}
+          id={item.id}
         />
       ),
       [t],
@@ -174,7 +155,7 @@ export const Home = () => {
             variant='ghost'
             size='small'
             rightIcon={{
-              name: 'leftArrow',
+              name: getArrowDirection('leftArrow'),
               size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
@@ -208,8 +189,11 @@ export const Home = () => {
           <Button
             variant='ghost'
             size='small'
+            onPress={() =>
+              navigation.navigate('LearningList', { type: 'tarot' })
+            }
             rightIcon={{
-              name: 'leftArrow',
+              name: getArrowDirection('leftArrow'),
               size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
@@ -218,7 +202,7 @@ export const Home = () => {
           </Button>
         </View>
         <FlatList
-          data={tarotCards}
+          data={tarotPreview}
           keyExtractor={getTarotCardKey}
           renderItem={renderTarotCard}
           horizontal
@@ -234,8 +218,11 @@ export const Home = () => {
           <Button
             variant='ghost'
             size='small'
+            onPress={() =>
+              navigation.navigate('LearningList', { type: 'zodiac' })
+            }
             rightIcon={{
-              name: 'leftArrow',
+              name: getArrowDirection('leftArrow'),
               size: SECTION_ICON_SIZE,
               color: theme.textGold,
             }}
@@ -244,7 +231,7 @@ export const Home = () => {
           </Button>
         </View>
         <FlatList
-          data={zodiacList}
+          data={zodiacPreview}
           keyExtractor={getZodiacCardKey}
           renderItem={renderZodiacCard}
           horizontal

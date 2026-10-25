@@ -5,15 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { appImages } from '@assets/images';
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styles } from './styles';
 import { CompatibilityStackParamList } from '@common/types.ts';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import {
-  CompatibilityContext,
-  CompatibilityContextType,
-} from '../../../../navigation/compatibilityStack';
-import { useAppDispatch } from '@store';
+import { useCompatibility } from '../../context/CompatibilityContext';
 
 export const CalculatingResult = () => {
   const { rt } = useUnistyles();
@@ -21,10 +17,7 @@ export const CalculatingResult = () => {
   const { t } = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<CompatibilityStackParamList>>();
-  const dispatch = useAppDispatch();
-  const { zodiac } = useContext(
-    CompatibilityContext,
-  ) as CompatibilityContextType;
+  const { selection } = useCompatibility();
   const [dots, setDots] = useState('.');
 
   useEffect(() => {
@@ -39,7 +32,7 @@ export const CalculatingResult = () => {
       navigation.navigate('Result');
     }, 5000);
     return () => clearTimeout(timeout);
-  }, [navigation, zodiac, dispatch]);
+  }, [navigation, selection]);
 
   return (
     <MainLayout

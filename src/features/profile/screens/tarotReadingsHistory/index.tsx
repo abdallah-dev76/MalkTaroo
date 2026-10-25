@@ -15,9 +15,8 @@ import { Alert, FlatList, Image, Pressable, View } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
 import { getLanguage } from '@common/utils';
-
-export const readingTypeKey = (type: TarotReading['type']) =>
-  type === 'one' ? 'oneCardReading' : 'threeCardReading';
+import { readingTypeKey } from '@features/tarot/utils/readingPresentation';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 
 export const TarotHistory = () => {
   const { theme } = useUnistyles();
@@ -100,7 +99,7 @@ export const TarotHistory = () => {
       header={
         <Header>
           <Header.Icon
-            name='rightArrow'
+            name={getArrowDirection('rightArrow')}
             color={theme.iconPrimary}
             onPress={() => navigation.goBack()}
           />

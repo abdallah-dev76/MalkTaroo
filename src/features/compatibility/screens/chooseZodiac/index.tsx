@@ -1,14 +1,15 @@
 import { MainLayout, ZodiacCard } from '@common/components';
 import { useNavigation } from '@react-navigation/native';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { CompatibilityStackParamList } from '@common/types.ts';
-import { zodiacList } from '@common/data/zodiac';
+import { ZodiacProps, zodiacList } from '@common/data/zodiac';
 import { Header } from '@common/components/Header';
 import { FlatList, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useUnistyles } from 'react-native-unistyles';
 import { styles } from './styles';
-import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
+import { isArabic } from '@common/utils/appSettings';
 
 export enum ZodiacId {
   FirstZodiac = 'firstZodiac',
@@ -22,7 +23,7 @@ export const ChooseZodiac = ({
   selectedZodiacId,
 }: {
   title: string;
-  onCardPress: (item: ZodiacCardProps) => void;
+  onCardPress: (item: ZodiacProps) => void;
   id: string;
   selectedZodiacId?: string;
 }) => {
@@ -38,7 +39,7 @@ export const ChooseZodiac = ({
         <Header>
           {id !== ZodiacId.FirstZodiac && (
             <Header.Icon
-              name='rightArrow'
+              name={getArrowDirection('rightArrow')}
               color={theme.iconPrimary}
               onPress={() => navigation.goBack()}
             />
@@ -55,14 +56,16 @@ export const ChooseZodiac = ({
         contentContainerStyle={styles.content}
         columnWrapperStyle={styles.row}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
+        renderItem={({ item }: { item: ZodiacProps }) => (
           <Pressable
             key={item.id}
             onPress={() => onCardPress(item)}
             style={styles.item}
             accessibilityRole='button'
             accessibilityState={{ selected: item.id === selectedZodiacId }}
-            accessibilityLabel={`${item.name}, ${item.date}`}
+            accessibilityLabel={`${isArabic ? item.nameAr : item.nameEn}, ${
+              item.dateRange
+            }`}
           >
             <ZodiacCard item={item} IsSelected={item.id === selectedZodiacId} />
           </Pressable>

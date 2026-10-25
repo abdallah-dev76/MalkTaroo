@@ -1,24 +1,25 @@
 import { View } from 'react-native';
+import { isArabic } from '@common/utils/appSettings';
 import Avatar from '../Avatar';
 import Text from '../Text';
-import { ZodiacCardProps } from './types';
 import { styles } from './styles';
+import type { ZodiacProps } from '@common/data/zodiac';
 
 export const ZodiacCard = ({
-  item: { name, image, date },
+  item: { nameAr, nameEn, image, dateRange },
   IsSelected,
 }: {
-  item: ZodiacCardProps;
+  item: Partial<ZodiacProps>;
   IsSelected?: boolean;
 }) => {
   return (
     <View style={[styles.container, IsSelected && styles.selected]}>
       <View style={styles.textContainer}>
         <Text variant='label' textAlign='center'>
-          {name}
+          {isArabic ? nameAr : nameEn}
         </Text>
         <Text variant='caption' color='textSecondary' textAlign='center'>
-          {date}
+          {dateRange}
         </Text>
       </View>
       <View>

@@ -1,32 +1,19 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createContext, useState, useMemo } from 'react';
 import { CompatibilityStackParamList } from '@common/types.ts';
 import { Start } from '@features/compatibility/screens/start';
 import { FirstZodiac } from '@features/compatibility/screens/firstZodiac';
 import { SecondZodiac } from '@features/compatibility/screens/secondZodiac';
 import { Result } from '@features/compatibility/screens/result';
 import { CalculatingResult } from '@features/compatibility/screens/calculatinResult';
-import { ZodiacCardProps } from '@common/components/ZodiacCard/types';
+import { CompatibilityProvider } from '@features/compatibility/context/CompatibilityContext';
 import { Storage } from '@common/storage/storage';
 import { StorageKeys } from '@common/storage';
 
-export type CompatibilityContextType = {
-  zodiac: Partial<ZodiacCardProps>[];
-  setZodiac: React.Dispatch<React.SetStateAction<Partial<ZodiacCardProps>[]>>;
-};
-
 const Stack = createNativeStackNavigator<CompatibilityStackParamList>();
 
-export const CompatibilityContext =
-  createContext<CompatibilityContextType | null>(null);
-
 export const CompatibilityStack = () => {
-  const [zodiac, setZodiac] = useState<Partial<ZodiacCardProps>[]>([]);
-
-  const values = useMemo(() => ({ zodiac, setZodiac }), [zodiac]);
-
   return (
-    <CompatibilityContext.Provider value={values}>
+    <CompatibilityProvider>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {!Storage.getBoolean(StorageKeys.IS_FIRST_COMPATIBILITY_DONE) && (
           <Stack.Screen name='Start' component={Start} />
@@ -36,6 +23,6 @@ export const CompatibilityStack = () => {
         <Stack.Screen name='CalculatingResult' component={CalculatingResult} />
         <Stack.Screen name='Result' component={Result} />
       </Stack.Navigator>
-    </CompatibilityContext.Provider>
+    </CompatibilityProvider>
   );
 };

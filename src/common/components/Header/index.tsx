@@ -1,12 +1,5 @@
 import { PropsWithChildren } from 'react';
-import {
-  View,
-  Pressable,
-  TextStyle,
-  StyleProp,
-  Image,
-  ImageSourcePropType,
-} from 'react-native';
+import { View, Pressable, TextStyle, StyleProp } from 'react-native';
 import Text from '../Text';
 import Icon from '../Icon';
 import { IconName } from '@assets/icons';

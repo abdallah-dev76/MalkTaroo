@@ -1,4 +1,4 @@
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { SubmitHandler, Controller } from 'react-hook-form';
 import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, View } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Button,
   Dropdown,
+  Header,
   MainLayout,
   Text,
   TextInput,
@@ -15,81 +16,14 @@ import {
 import { RootStackParamList } from '@common/types.ts';
 import { useAppDispatch, useAppSelector } from '@store';
 import { setProfile } from '@store/slices/profileSlice';
-import { getZodiacFromDate } from '@common/utils/zodiac';
+import { updateBirthdatePart } from '@common/utils/date';
 import { styles } from './styles';
 import { appImages } from '@assets/images';
 import { Storage, StorageKeys } from '@common/storage';
+import { OnboardingInputs, useOnboardingForm } from './hooks/useOnboardingForm';
+import { getOnboardingImageGeometry } from './utils/imageGeometry';
 
 const backgroundImageSize = Image.resolveAssetSource(appImages.createProfile);
-const formStartRatio = 0.3;
-const MIN_BIRTH_YEAR = 1900;
-const MONTH_KEYS = [
-  'january',
-  'february',
-  'march',
-  'april',
-  'may',
-  'june',
-  'july',
-  'august',
-  'september',
-  'october',
-  'november',
-  'december',
-] as const;
-
-const getDaysInMonth = (year?: number, month?: number) =>
-  month ? new Date(year ?? 2000, month, 0).getDate() : 31;
-
-const parseBirthdatePart = (birthdate: string, index: number) => {
-  const part = Number(birthdate.split('-')[index]);
-  return Number.isInteger(part) && part > 0 ? part : undefined;
-};
-
-type Birthdate = {
-  year?: number;
-  month?: number;
-  day?: number;
-};
-
-type Inputs = {
-  firstName: string;
-  lastName: string;
-  birthdate: Birthdate;
-};
-
-const getBirthdateObject = ({ year, month, day }: Birthdate) => {
-  if (
-    !year ||
-    !month ||
-    !day ||
-    month < 1 ||
-    month > 12 ||
-    day < 1 ||
-    day > getDaysInMonth(year, month)
-  ) {
-    return undefined;
-  }
-
-  return new Date(year, month - 1, day);
-};
-
-const getAge = (birthdate: Date) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  if (Number.isNaN(birthdate.getTime()) || birthdate > today) {
-    return null;
-  }
-
-  const hadBirthday =
-    today.getMonth() > birthdate.getMonth() ||
-    (today.getMonth() === birthdate.getMonth() &&
-      today.getDate() >= birthdate.getDate());
-
-  return today.getFullYear() - birthdate.getFullYear() - (hadBirthday ? 0 : 1);
-};
-
 export const Onboarding = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -101,63 +35,26 @@ export const Onboarding = () => {
 
   const {
     handleSubmit,
-    watch,
     control,
     formState: { isValid },
-  } = useForm<Inputs>({
-    mode: 'onChange',
-    defaultValues: {
-      firstName: profile.firstName || '',
-      lastName: profile.lastName || '',
-      birthdate: {
-        year: parseBirthdatePart(profile.birthdate || '', 0),
-        month: parseBirthdatePart(profile.birthdate || '', 1),
-        day: parseBirthdatePart(profile.birthdate || '', 2),
-      },
-    },
-  });
-  const birthdate = watch('birthdate');
-  const { year: birthYear, month: birthMonth } = birthdate;
+    age,
+    zodiac,
+    dayOptions,
+    monthOptions,
+    yearOptions,
+    firstNameRules,
+    lastNameRules,
+    birthdateRules,
+  } = useOnboardingForm(profile);
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
-  const currentYear = new Date().getFullYear();
-
-  const dayOptions = Array.from(
-    { length: getDaysInMonth(birthYear, birthMonth) },
-    (_, index) => ({ label: String(index + 1), value: index + 1 }),
-  );
-  const monthOptions = MONTH_KEYS.map((key, index) => ({
-    label: t(key),
-    value: index + 1,
-  }));
-  const yearOptions = Array.from(
-    { length: currentYear - MIN_BIRTH_YEAR + 1 },
-    (_, index) => ({
-      label: String(currentYear - index),
-      value: currentYear - index,
-    }),
-  );
-
-  // Sized like `cover` against the visible viewport, then scrolls with the content.
-  const imageScale = Math.max(
-    viewportSize.width / backgroundImageSize.width,
-    viewportSize.height / backgroundImageSize.height,
-  );
-  const renderedWidth = backgroundImageSize.width * imageScale;
-  const renderedHeight = backgroundImageSize.height * imageScale;
-  const croppedTop = (renderedHeight - viewportSize.height) / 2;
-  const croppedLeft = (renderedWidth - viewportSize.width) / 2;
-  const formTop = Math.max(0, renderedHeight * formStartRatio - croppedTop);
-
-  const birthdateObject = getBirthdateObject(birthdate);
-  const age = birthdateObject ? getAge(birthdateObject) : null;
-  const zodiac =
-    birthdateObject && age !== null ? getZodiacFromDate(birthdateObject) : null;
+  const { renderedWidth, renderedHeight, croppedTop, croppedLeft, formTop } =
+    getOnboardingImageGeometry(backgroundImageSize, viewportSize);
 
   useEffect(() => {
     Storage.setBoolean(StorageKeys.IS_FIRST_LAUNCH_DONE, true);
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = data => {
+  const onSubmit: SubmitHandler<OnboardingInputs> = data => {
     dispatch(
       setProfile({
         firstName: data.firstName.trim(),
@@ -210,10 +107,7 @@ export const Onboarding = () => {
 
         <Controller
           control={control}
-          rules={{
-            validate: value =>
-              value.trim().length > 0 || t('firstNameRequired'),
-          }}
+          rules={firstNameRules}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -232,9 +126,7 @@ export const Onboarding = () => {
 
         <Controller
           control={control}
-          rules={{
-            validate: value => value.trim().length > 0 || t('lastNameRequired'),
-          }}
+          rules={lastNameRules}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
@@ -254,31 +146,8 @@ export const Onboarding = () => {
         <Controller
           control={control}
           name='birthdate'
-          rules={{
-            validate: value => {
-              if (!value.year || !value.month || !value.day) {
-                return t('birthdateRequired');
-              }
-              const date = getBirthdateObject(value);
-              if (!date) {
-                return t('birthdateInvalid');
-              }
-              return getAge(date) !== null || t('birthdateFuture');
-            },
-          }}
+          rules={birthdateRules}
           render={({ field: { onChange, value }, fieldState: { error } }) => {
-            const selectPart = (part: keyof Birthdate, selected: number) => {
-              const nextBirthdate = { ...value, [part]: selected };
-              if (
-                nextBirthdate.day &&
-                nextBirthdate.day >
-                  getDaysInMonth(nextBirthdate.year, nextBirthdate.month)
-              ) {
-                nextBirthdate.day = undefined;
-              }
-              onChange(nextBirthdate);
-            };
-
             return (
               <View style={styles.birthdateSection}>
                 <Text variant='label' color='textGold'>
@@ -290,7 +159,9 @@ export const Onboarding = () => {
                       placeholder={t('day')}
                       options={dayOptions}
                       value={value.day}
-                      onSelect={day => selectPart('day', day)}
+                      onSelect={day =>
+                        onChange(updateBirthdatePart(value, 'day', day))
+                      }
                     />
                   </View>
                   <View style={styles.dateMonth}>
@@ -298,7 +169,9 @@ export const Onboarding = () => {
                       placeholder={t('month')}
                       options={monthOptions}
                       value={value.month}
-                      onSelect={month => selectPart('month', month)}
+                      onSelect={month =>
+                        onChange(updateBirthdatePart(value, 'month', month))
+                      }
                     />
                   </View>
                   <View style={styles.dateYear}>
@@ -306,7 +179,9 @@ export const Onboarding = () => {
                       placeholder={t('year')}
                       options={yearOptions}
                       value={value.year}
-                      onSelect={year => selectPart('year', year)}
+                      onSelect={year =>
+                        onChange(updateBirthdatePart(value, 'year', year))
+                      }
                     />
                   </View>
                 </View>

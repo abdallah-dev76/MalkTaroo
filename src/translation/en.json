@@ -100,6 +100,8 @@
   "present": "Present",
   "future": "Future",
   "share": "Share with your friends",
+  "shareFailed": "Unable to share",
+  "shareFailedDescription": "Please try sharing your reading again.",
   "zodiacMessage": "Your zodiac message today",
   "goodMorning": "Good Morning",
   "goodEvening": "Good Evening",
@@ -136,6 +138,63 @@
   "viewYourSavedTarotReadings": "View your saved tarot readings",
   "tarotHistory": "Tarot History",
   "noTarotReadingHistory": "No tarot readings yet",
+  "tarotLearning": {
+    "share": "Share card",
+    "shareError": "Unable to share this card. Please try again.",
+    "addFavorite": "Add to favorites",
+    "removeFavorite": "Remove from favorites",
+    "general": "General meaning",
+    "number": "No. {{number}}",
+    "element": "Element",
+    "astrology": "Ruling planet / sign",
+    "suit": "Suit",
+    "money": "Money",
+    "spiritual": "Spiritual insight",
+    "keywords": "Keywords",
+    "yesNo": "Yes / No",
+    "timing": "Possible timing",
+    "warning": "Warning",
+    "symbols": "Symbols in the card",
+    "arcana": { "major": "Major Arcana", "minor": "Minor Arcana" },
+    "elements": {
+      "fire": "Fire",
+      "water": "Water",
+      "air": "Air",
+      "earth": "Earth"
+    },
+    "suits": {
+      "wands": "Wands",
+      "cups": "Cups",
+      "swords": "Swords",
+      "pentacles": "Pentacles"
+    },
+    "answers": { "yes": "Yes", "no": "No", "maybe": "Maybe", "wait": "Wait" },
+    "notFound": "This tarot card could not be found.",
+    "about": "About the card",
+    "upright": "Upright meaning",
+    "reversed": "Reversed meaning",
+    "love": "Love and relationships",
+    "career": "Work and ambition",
+    "advice": "Spiritual Advice",
+    "cards": {
+      "swords": {
+        "about": "The King of Swords represents clear thought, truth and fair judgment. His sword symbolizes the ability to separate facts from assumptions and use knowledge responsibly.",
+        "upright": "Clarity, integrity and disciplined thinking. Consider the evidence, communicate directly and make decisions that balance reason with fairness.",
+        "reversed": "Rigid thinking, harsh words or misuse of authority. Reflect on whether the need to be right is preventing you from listening to others.",
+        "love": "Encourages honest communication and clear boundaries. Make room for warmth and empathy alongside logic when discussing your needs.",
+        "career": "Invites careful planning, professional integrity and objective judgment. Seek informed advice and explain your decisions clearly.",
+        "advice": "Pause, check the facts and speak with honesty and kindness. Use this symbolism as a reflection prompt, not a prediction or a substitute for professional advice."
+      },
+      "hangedMan": {
+        "about": "The Hanged Man represents a deliberate pause and a change of perspective. His suspended position symbolizes letting go of familiar approaches to see something differently.",
+        "upright": "Patience, acceptance and a fresh viewpoint. A pause can help you recognize possibilities that urgency has hidden.",
+        "reversed": "Resistance to change, unnecessary delay or feeling stuck. Consider whether you need more time to reflect or a small practical step forward.",
+        "love": "Invites patience and seeing a situation from your partner's perspective. Reflect on what you can release without giving up your needs or boundaries.",
+        "career": "Suggests reviewing priorities and approaching a stalled project differently. Take time to learn before making a considered next move.",
+        "advice": "Give yourself space to look at the situation differently, then choose a thoughtful step. Use this symbolism for reflection rather than as a prediction."
+      }
+    }
+  },
   "tarotCards": {
     "swords": {
       "general": "A pause is asking you to let go of control and see your situation from a new perspective",
@@ -187,5 +246,175 @@
   "lastName": "Last Name",
   "dailyMessage": "Your Daily Message",
   "knowYourLuckToday": "Know Today's Luck",
-  "luckOfTheDay": "Today's Luck"
+  "luckOfTheDay": "Today's Luck",
+  "goBack": "Go Back",
+  "zodiacLearning": {
+    "about": "About {{sign}}",
+    "traits": "Key traits",
+    "strengths": "Strengths",
+    "challenges": "Challenges",
+    "inLove": "{{sign}} in love",
+    "compatibleWith": "{{sign}} is traditionally considered compatible with:",
+    "openSign": "Learn about {{sign}}",
+    "notFound": "This zodiac sign could not be found.",
+    "ruledBy": "Ruled by {{planet}}",
+    "elements": {
+      "fire": "Fire sign",
+      "earth": "Earth sign",
+      "air": "Air sign",
+      "water": "Water sign"
+    },
+    "planets": {
+      "mars": "Mars",
+      "venus": "Venus",
+      "mercury": "Mercury",
+      "moon": "the Moon",
+      "sun": "the Sun",
+      "pluto": "Pluto",
+      "jupiter": "Jupiter",
+      "saturn": "Saturn",
+      "uranus": "Uranus",
+      "neptune": "Neptune"
+    },
+    "qualities": {
+      "brave": "Courage",
+      "direct": "Directness",
+      "leading": "Natural leadership",
+      "enthusiastic": "Enthusiasm",
+      "energetic": "Energy and drive",
+      "independent": "Independence",
+      "enterprising": "Starting new projects",
+      "impulsive": "Impulsiveness",
+      "impatient": "Impatience",
+      "confrontational": "Confrontation",
+      "hasty": "Rushed decisions",
+      "patient": "Patience",
+      "practical": "Practicality",
+      "loyal": "Loyalty",
+      "determined": "Determination",
+      "reliable": "Reliability",
+      "stubborn": "Stubbornness",
+      "possessive": "Possessiveness",
+      "resistsChange": "Resistance to change",
+      "materialistic": "Material attachment",
+      "curious": "Curiosity",
+      "social": "Sociability",
+      "adaptable": "Adaptability",
+      "expressive": "Communication",
+      "witty": "Quick thinking",
+      "creative": "Creativity",
+      "inconsistent": "Inconsistency",
+      "restless": "Restlessness",
+      "indecisive": "Indecision",
+      "distracted": "Distraction",
+      "caring": "Care for others",
+      "intuitive": "Intuition",
+      "imaginative": "Imagination",
+      "protective": "Protectiveness",
+      "moody": "Mood changes",
+      "sensitive": "Heightened sensitivity",
+      "clingy": "Overattachment",
+      "withdrawn": "Withdrawing",
+      "confident": "Confidence",
+      "generous": "Generosity",
+      "proud": "Excessive pride",
+      "attentionSeeking": "Seeking attention",
+      "domineering": "Dominating others",
+      "analytical": "Analytical thinking",
+      "organized": "Organization",
+      "helpful": "Helpfulness",
+      "critical": "Being overly critical",
+      "overthinking": "Overthinking",
+      "perfectionist": "Perfectionism",
+      "reserved": "Holding feelings back",
+      "diplomatic": "Diplomacy",
+      "fair": "Fairness",
+      "romantic": "Romance",
+      "cooperative": "Cooperation",
+      "conflictAvoidant": "Avoiding conflict",
+      "peoplePleasing": "Pleasing everyone",
+      "dependent": "Dependence on others",
+      "passionate": "Passion",
+      "resourceful": "Resourcefulness",
+      "jealous": "Jealousy",
+      "secretive": "Secrecy",
+      "controlling": "Need for control",
+      "resentful": "Holding grudges",
+      "adventurous": "Adventure",
+      "optimistic": "Optimism",
+      "honest": "Honesty",
+      "blunt": "Blunt words",
+      "overpromising": "Overpromising",
+      "commitmentShy": "Avoiding commitment",
+      "ambitious": "Ambition",
+      "disciplined": "Discipline",
+      "responsible": "Responsibility",
+      "rigid": "Inflexibility",
+      "pessimistic": "Pessimism",
+      "workFocused": "Overworking",
+      "innovative": "Innovation",
+      "humanitarian": "Humanitarian spirit",
+      "original": "Originality",
+      "detached": "Emotional distance",
+      "unpredictable": "Unpredictability",
+      "rebellious": "Rebellion",
+      "compassionate": "Compassion",
+      "gentle": "Gentleness",
+      "escapist": "Escaping reality",
+      "idealistic": "Unrealistic expectations",
+      "weakBoundaries": "Difficulty setting boundaries"
+    },
+    "signs": {
+      "aries": {
+        "description": "The first sign of the zodiac, Aries is associated with strong energy and a pioneering spirit. It represents new beginnings, courage and initiative. Aries is often described as independent and ambitious, ready to face a challenge.",
+        "love": "Aries is traditionally passionate, honest and devoted in love. They seek a strong, independent partner who shares their adventures and encourages their growth."
+      },
+      "taurus": {
+        "description": "Taurus is associated with stability, patience and an appreciation of beauty. This earth sign values comfort and steady progress, approaching its goals with practical determination.",
+        "love": "Taurus values trust, affection and lasting commitment. They often express love through thoughtful actions and seek a reliable partner who appreciates a peaceful life together."
+      },
+      "gemini": {
+        "description": "Gemini is associated with curiosity, communication and a lively mind. This air sign enjoys exchanging ideas, meeting people and exploring different perspectives.",
+        "love": "Gemini seeks conversation, friendship and variety in a relationship. They appreciate a curious partner who shares new experiences while respecting their independence."
+      },
+      "cancer": {
+        "description": "Cancer is associated with sensitivity, intuition and close emotional bonds. This water sign values home and belonging, often caring deeply for the people around it.",
+        "love": "Cancer seeks emotional safety, tenderness and loyalty. They build closeness through care and appreciate a partner who communicates kindly and consistently."
+      },
+      "leo": {
+        "description": "Leo is associated with warmth, confidence and creative expression. This fire sign enjoys inspiring others and brings generosity and enthusiasm to its pursuits.",
+        "love": "Leo is warm, expressive and generous in love. They appreciate mutual admiration, loyalty and a partner who celebrates their individuality."
+      },
+      "virgo": {
+        "description": "Virgo is associated with thoughtful analysis, organization and practical service. This earth sign notices details and seeks to make everyday life more useful and harmonious.",
+        "love": "Virgo often shows affection through support and thoughtful details. They value honesty and reliability, thriving with a partner who appreciates their care without expecting perfection."
+      },
+      "libra": {
+        "description": "Libra is associated with balance, fairness and cooperation. This air sign values beauty and connection, seeking to understand different viewpoints and create harmony.",
+        "love": "Libra values companionship, romance and mutual respect. They seek a considerate partner who shares decisions openly and helps maintain a balanced relationship."
+      },
+      "scorpio": {
+        "description": "Scorpio is associated with emotional depth, determination and transformation. This water sign seeks meaning beneath the surface and approaches important bonds with intensity.",
+        "love": "Scorpio values deep trust and emotional honesty. They tend to seek a devoted partner who respects their privacy while building a secure, open connection."
+      },
+      "sagittarius": {
+        "description": "Sagittarius is associated with exploration, optimism and a search for meaning. This fire sign enjoys learning, travel and the freedom to discover new possibilities.",
+        "love": "Sagittarius seeks honesty, laughter and shared adventure. They appreciate a partner who encourages growth and balances closeness with personal freedom."
+      },
+      "capricorn": {
+        "description": "Capricorn is associated with responsibility, ambition and patient effort. This earth sign values structure and works steadily toward long-term goals.",
+        "love": "Capricorn builds love through consistency, loyalty and shared plans. They appreciate a dependable partner who makes room for both ambition and emotional warmth."
+      },
+      "aquarius": {
+        "description": "Aquarius is associated with originality, independence and collective progress. This air sign enjoys unconventional ideas and finding new ways to support its community.",
+        "love": "Aquarius values friendship, intellectual connection and individuality. They seek an open-minded partner who respects their freedom and shares their hopes for the future."
+      },
+      "pisces": {
+        "description": "Pisces is associated with compassion, imagination and intuition. This water sign is often drawn to creativity and the emotional experiences that connect people.",
+        "love": "Pisces seeks tenderness, understanding and a meaningful emotional bond. They appreciate a caring partner who supports their dreams while encouraging healthy boundaries."
+      }
+    }
+  },
+  "element": "Element",
+  "rulingPlanet": "Ruling Planet"
 }

@@ -14,21 +14,13 @@ import { styles } from './styles';
 import Avatar from '@common/components/Avatar';
 import { appImages } from '@assets/images';
 import { palette } from '@theme/colors';
+import { calculateAge } from '@common/utils/date';
+import { getArrowDirection } from '@common/utils/getArrowDirection';
 
 const LANGUAGES = [
   { code: 'en', labelKey: 'english' },
   { code: 'ar', labelKey: 'arabic' },
 ] as const;
-
-const getAge = (birthdate: Date) => {
-  const today = new Date();
-  const hadBirthday =
-    today.getMonth() > birthdate.getMonth() ||
-    (today.getMonth() === birthdate.getMonth() &&
-      today.getDate() >= birthdate.getDate());
-
-  return today.getFullYear() - birthdate.getFullYear() - (hadBirthday ? 0 : 1);
-};
 
 export const Profile = () => {
   const { theme, rt } = useUnistyles();
@@ -51,7 +43,7 @@ export const Profile = () => {
 
   const age =
     birthdate && !Number.isNaN(birthdate.getTime())
-      ? getAge(birthdate)
+      ? calculateAge(birthdate)
       : undefined;
 
   const zodiac =
@@ -164,7 +156,10 @@ export const Profile = () => {
               </Text>
             </View>
 
-            <Icon name='leftArrow' color={theme.textGold} />
+            <Icon
+              name={getArrowDirection('leftArrow')}
+              color={theme.textGold}
+            />
           </Pressable>
 
           <View style={styles.divider} />

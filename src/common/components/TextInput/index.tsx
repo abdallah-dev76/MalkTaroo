@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { lightColors, palette } from '@theme/colors';
 import { useUnistyles } from 'react-native-unistyles';
 import { Icon } from '../Icon';
-import { getLanguage, wScale } from '@common/utils';
+import { isArabic, wScale } from '@common/utils';
 import { BaseTextInputProps } from './types';
 
 export const TextInput = ({
@@ -63,7 +63,7 @@ export const TextInput = ({
             onChangeText={onChangeHandler}
             numberOfLines={1}
             secureTextEntry={isPassword && showPassword}
-            textAlign={getLanguage() === 'ar' ? 'right' : 'left'}
+            textAlign={isArabic ? 'right' : 'left'}
             {...props}
           />
           {isPassword && (

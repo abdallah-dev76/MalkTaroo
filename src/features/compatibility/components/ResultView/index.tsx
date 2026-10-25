@@ -1,6 +1,5 @@
-import { Ref, RefObject, useEffect, useRef } from 'react';
-import { Animated, Share, View } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
+import { Ref, useEffect, useRef } from 'react';
+import { Animated, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useUnistyles } from 'react-native-unistyles';
 import { CompatibilityCircle, Icon, Text } from '@common/components';
@@ -13,23 +12,6 @@ type Props = {
   secondZodiacId?: string;
   percentage: number;
   ref?: Ref<View>;
-};
-
-export const shareResultView = async (
-  viewRef: RefObject<View | null>,
-  message: string,
-) => {
-  if (!viewRef.current) {
-    return;
-  }
-  try {
-    const url = await captureRef(viewRef.current, {
-      format: 'png',
-    });
-    await Share.share({ url, message });
-  } catch {
-    console.log('Failed to share the result view');
-  }
 };
 
 export const ResultView = ({

@@ -14,26 +14,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { mmkvStorage } from './mmkvStorage';
 import tarotReducer from './slices/tarotSlice';
 import profileReducer from './slices/profileSlice';
+import { migrations } from './migrations';
 
 const rootReducer = combineReducers({
   tarot: tarotReducer,
   profile: profileReducer,
 });
-
-const migrations = {
-  1: (state: any) => ({
-    ...state,
-    tarot: {
-      ...state?.tarot,
-      history: (state?.tarot?.history ?? []).map(
-        ({ cardId, ...reading }: any) => ({
-          ...reading,
-          cardIds: reading.cardIds ?? (cardId ? [cardId] : []),
-        }),
-      ),
-    },
-  }),
-};
 
 const persistedReducer = persistReducer(
   {
