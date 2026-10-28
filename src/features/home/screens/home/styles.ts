@@ -29,36 +29,39 @@ export const styles = StyleSheet.create(theme => ({
     paddingHorizontal: spacing.lg,
   },
   dailyMessage: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: spacing.md,
+    padding: spacing.md,
+    backgroundColor: theme.backgroundSecondary,
+
     borderRadius: wScale(12),
     borderWidth: wScale(1),
     borderColor: theme.borderGold,
-    overflow: 'hidden',
-  },
-  dailyOverlay: {
     flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.4,
-  },
-  lightOverlay: {
-    backgroundColor: 'grey',
-  },
-  darkOverlay: {
-    backgroundColor: 'black',
-  },
-  dailyContent: {
-    padding: spacing.lg,
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
   },
   dailyText: {
     gap: spacing.md,
+    width: '55%',
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  imageContainer: {
+    width: '40%',
+    aspectRatio: 1,
+  },
+  magicBallImage: {
+    width: '100%',
+    height: '100%',
+  },
+  magicBallGlow: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    tintColor: theme.textGold,
+    transform: [{ scale: 1.12 }],
   },
   luckCardsContainer: {
     flexDirection: 'row',

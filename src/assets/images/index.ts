@@ -1,4 +1,5 @@
 import man from './man.jpeg';
+import magicBall from './magicBall.png';
 import woman from './woman.jpeg';
 import leo from './leo.jpeg';
 import aquarius from './aquarius.jpeg';
@@ -23,7 +24,6 @@ import tarotLight from './tarotLight.png';
 import zodiacLight from './zodiacLight.png';
 import couplesLight from './couplesLight.png';
 import splashLight from './splashLight.png';
-import dailyMessageLight from './dailyMessageLight.png';
 import createProfile from './createProfile.png';
 
 import swords from './swords.jpg';
@@ -56,7 +56,7 @@ export const appImages = {
   zodiacLight,
   couplesLight,
   splashLight,
-  dailyMessageLight,
   createProfile,
   hangedMan,
+  magicBall,
 } as const;

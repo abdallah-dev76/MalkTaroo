@@ -18,6 +18,7 @@ export type RootStackParamList = {
   TarotDetail: { id: string };
   ZodiacDetails: { id: string };
   TarotCardDetails: { id: string };
+  DailyLuckDetails: undefined;
 };
 
 export type CompatibilityStackParamList = {

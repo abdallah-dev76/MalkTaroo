@@ -8,6 +8,7 @@ import { Onboarding } from '@features/onboarding';
 import { LearningList } from '@features/home/screens/learningList';
 import { ZodiacDetails } from '@features/home/screens/zodiacDetails';
 import { TarotCardDetails } from '@features/home/screens/tarotCardDetails';
+import { DailyLuckDetails } from '@features/home/screens/dailyLuckDetails';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -32,6 +33,7 @@ function MainStack() {
       >
         <Stack.Screen name='ZodiacDetails' component={ZodiacDetails} />
         <Stack.Screen name='TarotCardDetails' component={TarotCardDetails} />
+        <Stack.Screen name='DailyLuckDetails' component={DailyLuckDetails} />
         <Stack.Screen name='LearningList' component={LearningList} />
         <Stack.Screen name='TarotHistory' component={TarotHistory} />
         <Stack.Screen name='TarotDetail' component={TarotDetail} />

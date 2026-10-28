@@ -1,11 +1,13 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { MainLayout, Text, Header, Button } from '@common/components';
 import {
   View,
-  ImageBackground,
   FlatList,
   ListRenderItem,
   useWindowDimensions,
+  AccessibilityInfo,
+  Animated,
+  Easing,
 } from 'react-native';
 import { useUnistyles } from 'react-native-unistyles';
 import { useTranslation } from 'react-i18next';
@@ -34,13 +36,12 @@ const zodiacPreview = zodiacList.slice(0, 4);
 export const Home = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const { theme, rt } = useUnistyles();
+  const { theme } = useUnistyles();
   const { t, i18n } = useTranslation();
   const { width } = useWindowDimensions();
   const firstName = useAppSelector(state => state.profile.firstName);
   const profileBirthdate = useAppSelector(state => state.profile.birthdate);
   const now = useDailyClock();
-  const themeName = rt.themeName;
   const useCompactLuckLayout = width < 390;
 
   const birthdate = parseBirthdate(profileBirthdate);
@@ -96,6 +97,54 @@ export const Home = () => {
       [t],
     );
 
+  const dailyMessageImage = useRef(new Animated.Value(0.5)).current;
+  useEffect(() => {
+    let disposed = false;
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(dailyMessageImage, {
+          toValue: 1,
+          duration: 3000,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+          isInteraction: false,
+        }),
+        Animated.timing(dailyMessageImage, {
+          toValue: 0,
+          duration: 3000,
+          easing: Easing.inOut(Easing.sin),
+          useNativeDriver: true,
+          isInteraction: false,
+        }),
+      ]),
+      { resetBeforeIteration: false },
+    );
+    const updateMotion = (reduceMotion: boolean) => {
+      if (disposed) {
+        return;
+      }
+      animation.stop();
+      animation.reset();
+      dailyMessageImage.setValue(0.5);
+      if (!reduceMotion) {
+        animation.start();
+      }
+    };
+    const subscription = AccessibilityInfo.addEventListener(
+      'reduceMotionChanged',
+      updateMotion,
+    );
+    AccessibilityInfo.isReduceMotionEnabled()
+      .then(updateMotion)
+      .catch(() => updateMotion(true));
+
+    return () => {
+      disposed = true;
+      subscription.remove();
+      animation.stop();
+    };
+  }, [dailyMessageImage]);
+
   return (
     <MainLayout
       scrollable
@@ -118,33 +167,67 @@ export const Home = () => {
     >
       {/* Daily Message */}
       <View style={styles.ph24}>
-        <ImageBackground
-          source={
-            themeName === 'light'
-              ? appImages.dailyMessageLight
-              : appImages.dailyMessage
-          }
-          resizeMode='cover'
-          style={styles.dailyMessage}
-        >
-          <View
-            style={[
-              styles.dailyOverlay,
-              themeName === 'light' ? styles.lightOverlay : styles.darkOverlay,
-            ]}
-          />
-          <View style={styles.dailyContent}>
-            <View style={styles.dailyText}>
-              <View>
-                <Text>{t('dailyMessage')}</Text>
-                <Text variant='caption' color='textSecondary'>
-                  {formattedDate}
-                </Text>
-              </View>
-              <Text variant='label'>{t('randomText')}</Text>
+        <View style={styles.dailyMessage}>
+          <View style={styles.dailyText}>
+            <View>
+              <Text color='textGold' style={styles.bold}>
+                {t('dailyMessage')}
+              </Text>
+              <Text variant='caption' color='textSecondary'>
+                {formattedDate}
+              </Text>
             </View>
+            <Text variant='label'>{t('randomText')}</Text>
           </View>
-        </ImageBackground>
+          <Animated.View
+            style={[
+              styles.imageContainer,
+              {
+                transform: [
+                  {
+                    translateY: dailyMessageImage.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [12, -12],
+                    }),
+                  },
+                  {
+                    scale: dailyMessageImage.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0.97, 1.07],
+                    }),
+                  },
+                  {
+                    rotate: dailyMessageImage.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: ['-2deg', '2deg'],
+                    }),
+                  },
+                ],
+              },
+            ]}
+          >
+            <Animated.Image
+              source={appImages.magicBall}
+              resizeMode='contain'
+              blurRadius={12}
+              accessible={false}
+              style={[
+                styles.magicBallGlow,
+                {
+                  opacity: dailyMessageImage.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.15, 0.55],
+                  }),
+                },
+              ]}
+            />
+            <Animated.Image
+              source={appImages.magicBall}
+              resizeMode='contain'
+              style={styles.magicBallImage}
+            />
+          </Animated.View>
+        </View>
       </View>
 
       {/* Luck of the day */}
@@ -154,6 +237,7 @@ export const Home = () => {
           <Button
             variant='ghost'
             size='small'
+            onPress={() => navigation.navigate('DailyLuckDetails')}
             rightIcon={{
               name: getArrowDirection('leftArrow'),
               size: SECTION_ICON_SIZE,

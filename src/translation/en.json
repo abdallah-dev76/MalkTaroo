@@ -51,6 +51,44 @@
   "finance": "Finance",
   "career": "Career",
   "energy": "Energy",
+  "dailyLuck": {
+    "title": "Detailed Forecast",
+    "score": "{{score}} / 10",
+    "note": "Daily reflections for entertainment, not financial or professional advice.",
+    "categories": {
+      "love": "In Love",
+      "career": "At Work",
+      "finance": "Your Finances",
+      "energy": "Spiritual Wellbeing"
+    },
+    "levels": {
+      "high": "Promising",
+      "balanced": "Balanced",
+      "low": "Take it slowly"
+    },
+    "messages": {
+      "love": {
+        "high": "Make room for an honest conversation or a small romantic gesture. Warmth and initiative can help you feel closer to someone you care about.",
+        "balanced": "A thoughtful message or a little time together can make a difference. Listen carefully and let the connection grow without pressure.",
+        "low": "Give yourself and others some breathing room. Avoid jumping to conclusions, and choose a calmer moment for sensitive conversations."
+      },
+      "career": {
+        "high": "Put your skills forward and take one clear step on an important task. Prepare your ideas well before sharing them with others.",
+        "balanced": "Steady progress matters more than doing everything at once. Organize your priorities and finish one task before starting another.",
+        "low": "Leave extra time to review your work. Clarify expectations and avoid making commitments before you understand what they involve."
+      },
+      "finance": {
+        "high": "Review opportunities to improve your budget or build a useful skill. Compare your options carefully rather than treating optimism as a guarantee.",
+        "balanced": "Keep spending intentional today. Check your budget, distinguish needs from wants, and leave room for unexpected costs.",
+        "low": "Pause before unplanned purchases. Check the details of any financial decision and avoid taking risks just to get a quick result."
+      },
+      "energy": {
+        "high": "Direct your energy toward something meaningful. A quiet moment of reflection can help you turn motivation into a clear next step.",
+        "balanced": "Balance activity with rest. A short walk, some slow breathing, or a moment away from distractions can help you reconnect with yourself.",
+        "low": "Be gentle with yourself and lower the pressure to achieve. Make space for rest and choose one small, manageable thing to focus on."
+      }
+    }
+  },
   "friendship": "Friendship",
   "work": "Work",
   "compatibilityLabels": {

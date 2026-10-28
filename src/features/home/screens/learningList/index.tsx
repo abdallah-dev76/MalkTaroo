@@ -23,7 +23,7 @@ export const LearningList = ({ route, navigation }: Props) => {
       header={
         <Header>
           <Header.Icon
-            name={getArrowDirection('leftArrow')}
+            name={getArrowDirection('rightArrow')}
             color={theme.iconPrimary}
             onPress={() => navigation.goBack()}
           />
